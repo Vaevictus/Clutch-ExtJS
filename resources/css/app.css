@@ -1,0 +1,33 @@
+.add {
+    background-image: url( ../../resources/images/toolbar-folder.png ) !important;
+}
+.remove {
+    background-image: url( ../../resources/images/toolbar-close.png ) !important;
+}
+.remove-small {
+    background-image: url( ../../resources/images/toolbar-close-small.png ) !important;
+}
+
+.pause {
+    background-image: url( ../../resources/images/toolbar-pause.png ) !important;
+}
+
+.resume {
+    background-image: url( ../../resources/images/toolbar-start.png ) !important;
+}
+
+.resume-all {
+    background-image: url( ../../resources/images/toolbar-start-all.png ) !important;
+}
+
+.info {
+    background-image: url( ../../resources/images/toolbar-info.png ) !important;
+}
+
+.settings {
+    background-image: url( ../../resources/images/settings32.png ) !important;
+}
+
+.filter {
+    background-image: url( ../../resources/images/filter.png ) !important;
+}

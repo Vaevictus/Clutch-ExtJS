@@ -31,3 +31,27 @@
 .filter {
     background-image: url( ../../resources/images/filter.png ) !important;
 }
+
+.tree-downloading {
+	background-image: url( ../../resources/images/downloading.png ) !important;	
+}	
+
+.tree-all {
+	background-image: url( ../../resources/images/filterall.png ) !important;	
+}
+
+.tree-paused {
+	background-image: url( ../../resources/images/paused.png ) !important;	
+}
+
+.tree-completed {
+	background-image: url( ../../resources/images/uploading.png ) !important;	
+}
+
+.tree-active {
+	background-image: url( ../../resources/images/filteractive.png ) !important;	
+}
+
+.tree-inactive {
+	background-image: url( ../../resources/images/filterinactive.png ) !important;	
+}

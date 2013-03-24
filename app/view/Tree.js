@@ -16,19 +16,28 @@ Ext.define("Clutch.view.Tree", {
         expanded : true,
         children : [{
             text : 'All',
-            leaf : true
+            leaf : true,
+            iconCls : 'tree-all'
         }, {
             text : 'Downloading',
-            leaf : true
+            leaf : true,
+            iconCls : 'tree-downloading'
         }, {
             text : 'Completed',
-            leaf : true
+            leaf : true,
+            iconCls : 'tree-completed'
+        },{
+            text : 'Paused',
+            leaf : true,
+            iconCls : 'tree-paused'
         }, {
             text : 'Active',
-            leaf : true
+            leaf : true,
+            iconCls : 'tree-active'
         }, {
             text : 'Inactive',
-            leaf : true
+            leaf : true,
+            iconCls : 'tree-inactive'
         }]
     }
 

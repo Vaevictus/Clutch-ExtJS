@@ -1,5 +1,5 @@
 Ext.application({
-    controllers : ['Main', 'TorrentsController', 'SettingsController'],
+    controllers : ['Main', 'TorrentsController', 'SettingsController','StatsController','SearchController'],
 
     //views : ["Main"],
 

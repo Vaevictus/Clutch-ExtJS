@@ -108,13 +108,14 @@ Ext.define("Clutch.view.MainToolbar", {
             iconAlign : 'top',
             arrowAlign : 'right'
         }, {
-            text : 'Inspector',
-            itemId : 'btnInspector',
+            text : 'Statistics',
+            itemId : 'btnStatistics',
             iconCls : 'info',
             scale : 'large',
             rowspan : 3,
             iconAlign : 'top',
-            arrowAlign : 'right'
+            arrowAlign : 'right',
+            action : 'show-statistics'
 
         }, {
             text : 'Settings',

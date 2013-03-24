@@ -1,6 +1,6 @@
 Ext.define('Clutch.controller.Main', {
     extend : 'Ext.app.Controller',
-    stores : ['TorrentTransfers'],
+    stores : ['TorrentTransfers', 'SearchResult'],
     init : function(app) {
 
         var me = this;
@@ -10,24 +10,23 @@ Ext.define('Clutch.controller.Main', {
             statsreceived : me.onStatsReceived,
             scope : me
         });
-        
-         me.control({
-             //empty for now
+
+        me.control({
+            //empty for now
         });
     },
 
     onTorrentdetailsreceived : function(torrentData) {
         var panelsArray = Ext.ComponentQuery.query('torrentsgrid');
-        
+
         Ext.each(panelsArray, function(panel) {
             panel.setTorrents(torrentData.arguments.torrents);
         });
     },
-    
-    onStatsReceived: function(data) {
-     //do nothing for now
+
+    onStatsReceived : function(data) {
+        //do nothing for now
     }
-       
 });
 
 /*

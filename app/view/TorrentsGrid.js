@@ -8,7 +8,8 @@ Ext.define("Clutch.view.TorrentsGrid", {
     store : 'TorrentTransfers',
 
     config : {
-        torrents : null
+        torrents : null,
+        filter : 'all'
     },
 
     contextMenu : Ext.create('Clutch.view.TorrentContextMenu', {}),
@@ -71,7 +72,15 @@ Ext.define("Clutch.view.TorrentsGrid", {
     }),
 
     applyTorrents : function(newValue, oldValue) {
-
-        this.store.loadData(newValue);
+        //newValue is data from the transmission-daemon and is unfiltered
+        //filter the data here against this.getFilter() before loading the data into the store
+        var filter = this.getFilter(),
+            filteredData = [];
+        switch (filter){
+            case 'all':
+            filteredData = newValue;
+            break;
+        }
+        this.store.loadData(filteredData);
     }
 });

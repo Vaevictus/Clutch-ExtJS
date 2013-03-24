@@ -19,19 +19,25 @@ Ext.define('Clutch.controller.TorrentsController', {
             },
             'torrenttoolbar menuitem[action=remove-all]' : {
                 click : me.removeAllTorrents
+            },
+            'torrenttree' : {
+                itemclick : me.onTreeNodeClick
             }
         });
     },
-    
-    
-    
+
+    onTreeNodeClick : function(treepanel, record, item, index, e, eOpts ) {
+       
+      var grid = this.getTorrentsGrid();
+          grid.setFilter(record.raw.filter);
+    },
     onContextMenu : function(view, record, item, index, e) {
         e.stopEvent();
         var contextMenu = view.up('torrentsgrid').contextMenu;
         contextMenu.showAt(e.getXY());
     },
 
-    onContextMenuClick : function(menu, item, e, eOpts) { 
+    onContextMenuClick : function(menu, item, e, eOpts) {
         var grid = this.getTorrentsGrid();
 
         if (!item) {
@@ -58,32 +64,28 @@ Ext.define('Clutch.controller.TorrentsController', {
         Clutch.util.RPC.startTorrents(torrentIds);
 
     },
-    
+
     startAllTorrents : function() {
-        
-        var grid = this.getTorrentsGri(),
-            store = grid.getSelectionModel().getStore(),
-            selections = store.getRange(), //gets all torrents
-            torrentIds = [], rpcParams;
-        
+
+        var grid = this.getTorrentsGri(), store = grid.getSelectionModel().getStore(), selections = store.getRange(), //gets all torrents
+        torrentIds = [], rpcParams;
+
         Ext.each(selections, function(torrent) {
             torrentIds.push(torrent.data.id);
         });
-        
+
         Clutch.util.RPC.startTorrents(torrentIds);
     },
-    
-      removeAllTorrents : function() {
-       
-        var grid = this.getTorrentsGrid(),
-            store = grid.getSelectionModel().getStore(),
-            selections = store.getRange(), //gets all torrents
-            torrentIds = [], rpcParams;
-        
+
+    removeAllTorrents : function() {
+
+        var grid = this.getTorrentsGrid(), store = grid.getSelectionModel().getStore(), selections = store.getRange(), //gets all torrents
+        torrentIds = [], rpcParams;
+
         Ext.each(selections, function(torrent) {
             torrentIds.push(torrent.data.id);
         });
-              
+
         Clutch.util.RPC.removeTorrents(torrentIds, false);
     },
 

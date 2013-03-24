@@ -16,16 +16,22 @@ Ext.define('Clutch.controller.TorrentsController', {
             },
             'torrentcontextmenu' : {
                 click : me.onContextMenuClick
+            },
+            'torrenttoolbar menuitem[action=remove-all]' : {
+                click : me.removeAllTorrents
             }
         });
     },
+    
+    
+    
     onContextMenu : function(view, record, item, index, e) {
         e.stopEvent();
         var contextMenu = view.up('torrentsgrid').contextMenu;
         contextMenu.showAt(e.getXY());
     },
 
-    onContextMenuClick : function(menu, item, e, eOpts) { debugger;
+    onContextMenuClick : function(menu, item, e, eOpts) { 
         var grid = this.getTorrentsGrid();
 
         if (!item) {
@@ -52,9 +58,37 @@ Ext.define('Clutch.controller.TorrentsController', {
         Clutch.util.RPC.startTorrents(torrentIds);
 
     },
+    
+    startAllTorrents : function() {
+        
+        var grid = this.getTorrentsGri(),
+            store = grid.getSelectionModel().getStore(),
+            selections = store.getRange(), //gets all torrents
+            torrentIds = [], rpcParams;
+        
+        Ext.each(selections, function(torrent) {
+            torrentIds.push(torrent.data.id);
+        });
+        
+        Clutch.util.RPC.startTorrents(torrentIds);
+    },
+    
+      removeAllTorrents : function() {
+       
+        var grid = this.getTorrentsGrid(),
+            store = grid.getSelectionModel().getStore(),
+            selections = store.getRange(), //gets all torrents
+            torrentIds = [], rpcParams;
+        
+        Ext.each(selections, function(torrent) {
+            torrentIds.push(torrent.data.id);
+        });
+              
+        Clutch.util.RPC.removeTorrents(torrentIds, false);
+    },
 
     removeSelectedTorrents : function(grid) {
-        var sm = grid.getSelectionModel(), selections = sm.getSelection(), torrentIds = [], rpcParams;
+        var sm = grid.getSelectionModel(), selections = sm.getSelection(), torrentIds = [];
 
         Ext.each(selections, function(torrent) {
             torrentIds.push(torrent.data.id);

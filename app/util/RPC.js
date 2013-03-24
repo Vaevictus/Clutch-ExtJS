@@ -14,7 +14,7 @@ Ext.define('Clutch.util.RPC', {
         checkInterval : 1000
 
     },
-
+    
     constructor : function(config) {
 
         var me = this;
@@ -78,14 +78,7 @@ Ext.define('Clutch.util.RPC', {
 
     },
 
-    // @private
-    onDoneCheckNotifications : function(result) {
-
-        var me = this; debugger;
-        me.fireEvent(event, notification);
-        me.fireEvent(event, notification);
-
-    },
+    
 
     startTorrents : function(torrentIds) {
         var rpcParams = {
@@ -101,12 +94,12 @@ Ext.define('Clutch.util.RPC', {
             headers : {
                 'X-Transmission-Session-Id' : window.sessionId
             },
-            success : function(response) { debugger;
+            success : function(response) { 
                 Clutch.app.fireEvent('torrentsstarted', Ext.JSON.decode(response.responseText));
 
             },
             scope : this,
-            failure : function(response) { debugger;
+            failure : function(response) { 
             }
         });
 
@@ -152,12 +145,12 @@ Ext.define('Clutch.util.RPC', {
                 'X-Transmission-Session-Id' : window.sessionId
             },
             success : function(response) {
-                debugger;
+              
                 Clutch.app.fireEvent('torrentsremoved', Ext.JSON.decode(response.responseText));
             },
             scope : this,
             failure : function(response) {
-                debugger;
+                
                 Ext.emptyFn
             }
         });
@@ -182,8 +175,10 @@ Ext.define('Clutch.util.RPC', {
             },
             scope : this,
             failure : function(response) {
-                Ext.emptyFn
+                Ext.emptyFn;
             }
         });
-    }
+    },
+    
+   
 });

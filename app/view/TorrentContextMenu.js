@@ -15,6 +15,9 @@ Ext.define('Clutch.view.TorrentContextMenu', {
     {
         text: 'Remove',
         action: 'remove'
+    },{
+        text: 'Set transfer limits',
+        action: 'throttle'
     }
     
     

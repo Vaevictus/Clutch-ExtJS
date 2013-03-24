@@ -29,7 +29,7 @@ Ext.define("Clutch.view.TorrentsGrid", {
         width : 110,
        // renderer : Clutch.util.RPC.progressRenderer
        renderer: function (v, m, r) {
-           console.log(v);
+        
                         var tmpValue = Math.round(v * 10000) /100; //rounds the number to 0-100 with 2 decimal places
                         var tmpText = tmpValue + '%';
                             

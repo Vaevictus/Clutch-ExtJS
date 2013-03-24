@@ -29,7 +29,7 @@ Ext.define('Clutch.model.TorrentTransfers', {
         type : 'string'
     }, {
         name : 'id',
-        type : 'string'
+        type : 'number'
     }, {
         name : 'leftUntilDone',
         type : 'string'

@@ -48,7 +48,8 @@ Ext.define("Clutch.view.MainToolbar", {
             }, {
                 text : 'Remove all',
                 itemId : 'btnRemoveAll',
-                iconCls : 'remove-small'
+                iconCls : 'remove-small',
+                action : 'remove-all'
             }, {
                 text : 'Remove finished',
                 itemId : 'btnRemoveFinished',

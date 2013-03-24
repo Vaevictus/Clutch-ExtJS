@@ -30,8 +30,8 @@ Ext.define('Clutch.view.Viewport', {
     },
     {
         region: 'center',
-        xtype: 'torrentsgrid',
-        title: 'Torrents'
+        xtype: 'torrentsgrid'
+        
         
     },
     {

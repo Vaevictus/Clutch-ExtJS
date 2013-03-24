@@ -4,6 +4,8 @@ Ext.define("Clutch.view.MainToolbar", {
     alias : 'widget.torrenttoolbar',
     //config: [],
     border : false,
+    
+    frame : false,
 
     items : [{
         xtype : 'buttongroup',
@@ -44,7 +46,8 @@ Ext.define("Clutch.view.MainToolbar", {
             menu : [{
                 text : 'Remove selected',
                 itemId : 'btnRemoveSelected',
-                iconCls : 'remove-small'
+                iconCls : 'remove-small',
+                action : 'remove-selected'
             }, {
                 text : 'Remove all',
                 itemId : 'btnRemoveAll',
@@ -53,7 +56,8 @@ Ext.define("Clutch.view.MainToolbar", {
             }, {
                 text : 'Remove finished',
                 itemId : 'btnRemoveFinished',
-                iconCls : 'remove-small'
+                iconCls : 'remove-small',
+                action : 'remove-finished'
             }]
         }, {
             xtype : 'splitbutton',
@@ -67,7 +71,8 @@ Ext.define("Clutch.view.MainToolbar", {
             menu : [{
                 text : 'Pause All',
                 itemId : 'btnPauseAll',
-                iconCls : 'pause'
+                iconCls : 'pause',
+                action : 'pause-all'
             }]
         }, {
             xtype : 'splitbutton',
@@ -81,7 +86,8 @@ Ext.define("Clutch.view.MainToolbar", {
             menu : [{
                 text : 'Resume All',
                 itemId : 'btnResumeAll',
-                iconCls : 'resume-all'
+                iconCls : 'resume-all',
+                action : 'resume-all'
             }]
         }]
 
@@ -117,7 +123,8 @@ Ext.define("Clutch.view.MainToolbar", {
             scale : 'large',
             rowspan : 3,
             iconAlign : 'top',
-            arrowAlign : 'right'
+            arrowAlign : 'right',
+            action : 'show-settings'
 
         }]
 

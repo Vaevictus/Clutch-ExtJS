@@ -7,7 +7,12 @@ Ext.define('Clutch.controller.Main', {
 
         app.on({
             torrentdetailsreceived : me.onTorrentdetailsreceived,
+            statsreceived : me.onStatsReceived,
             scope : me
+        });
+        
+         me.control({
+             //empty for now
         });
     },
 
@@ -17,7 +22,12 @@ Ext.define('Clutch.controller.Main', {
         Ext.each(panelsArray, function(panel) {
             panel.setTorrents(torrentData.arguments.torrents);
         });
+    },
+    
+    onStatsReceived: function(data) {
+     //do nothing for now
     }
+       
 });
 
 /*

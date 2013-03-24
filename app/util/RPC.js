@@ -11,7 +11,7 @@ Ext.define('Clutch.util.RPC', {
 
     config : {
 
-        checkInterval : 1000
+        checkInterval : 2000
 
     },
     
@@ -39,7 +39,7 @@ Ext.define('Clutch.util.RPC', {
     startTorrentsCheckTask : function() {
 
         Ext.TaskManager.start({
-            run : this.onGetTorrentsDetails,
+            run : this.onRunTask,
             interval : this.getCheckInterval(),
             scope : this
         });
@@ -47,7 +47,41 @@ Ext.define('Clutch.util.RPC', {
     },
 
     // @private
-    onGetTorrentsDetails : function() {
+    onRunTask: function() {
+      this.getLoadedTorrents();
+      this.getStats();
+      
+    },
+    getStats: function() {
+        var params = {
+            "method" : "session-stats",
+            "arguments" : {
+           }
+        };
+        
+        Ext.Ajax.request({
+            url : '/transmission/rpc',
+            jsonData : params,
+            headers : {
+                'X-Transmission-Session-Id' : window.sessionId
+            },
+            success : function(response) {
+
+                Clutch.app.fireEvent('statsreceived', Ext.JSON.decode(response.responseText));
+
+            },
+            scope : this,
+
+            failure : function(response) {
+                var x = response.getResponseHeader('X-Transmission-Session-Id');
+                if (x) {
+                    window.sessionId = x;
+                }
+            }
+        });
+    },
+    
+    getLoadedTorrents : function() {
         var params = {
             "method" : "torrent-get",
             "arguments" : {
@@ -82,7 +116,7 @@ Ext.define('Clutch.util.RPC', {
 
     startTorrents : function(torrentIds) {
         var rpcParams = {
-            "method" : "torrent-start",
+            "method" : "torrent-start-now",
             "arguments" : {
                 "ids" : torrentIds
             }

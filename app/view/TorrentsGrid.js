@@ -53,11 +53,19 @@ Ext.define("Clutch.view.TorrentsGrid", {
     }, {
         header : 'Upload Speed',
         flex : 1,
-        dataIndex : 'rateUpload'
+        dataIndex : 'rateUpload',
+        renderer: function (v, m, r) {
+            var value =  Ext.util.Format.fileSize(v);
+            return value !== '-' ? value + '/sec' : value;
+        }
     }, {
         header : 'Download Speed',
         flex : 1,
-        dataIndex : 'rateDownload'
+        dataIndex : 'rateDownload',
+        renderer: function (v, m, r) {
+            var value =  Ext.util.Format.fileSize(v);
+            return value !== '-' ? value + '/sec' : value;
+        }
     }],
 
     selModel : new Ext.selection.RowModel({

@@ -2,7 +2,7 @@ Ext.define("Clutch.view.MainToolbar", {
     extend : 'Ext.toolbar.Toolbar',
 
     alias : 'widget.torrenttoolbar',
-    //config: [],
+        
     border : false,
     
     frame : false,
@@ -100,14 +100,6 @@ Ext.define("Clutch.view.MainToolbar", {
 
         },
         items : [{
-            text : 'Filter',
-            itemId : 'btnFilter',
-            iconCls : 'filter',
-            scale : 'large',
-            rowspan : 3,
-            iconAlign : 'top',
-            arrowAlign : 'right'
-        }, {
             text : 'Statistics',
             itemId : 'btnStatistics',
             iconCls : 'info',

@@ -11,6 +11,12 @@ Ext.define('Clutch.controller.SearchController', {
 
             'searchresultgrid button' : {
                 click : me.doSearch
+            },
+             'searchcontextmenu' : {
+                click : me.onContextMenuClick
+            },
+            'searchresultgrid' : {
+                beforeitemcontextmenu : me.onContextMenu
             }
         });
         app.on({
@@ -31,5 +37,32 @@ Ext.define('Clutch.controller.SearchController', {
 
     onStatsReceived : function(data) {
         //alert('from the other contorller');
-    }
+    },
+    
+    onContextMenu : function(view, record, item, index, e) {
+        e.stopEvent();
+        debugger;
+        var contextMenu = view.up('searchresultgrid').down('searchcontextmenu');
+        //var contextMenu = view.up('searchresultgrid').contextMenu;
+        contextMenu.showAt(e.getXY());
+    },
+    
+     onContextMenuClick : function(menu, item, e, eOpts) {
+         debugger;
+        var grid = menu.up('searchresultgrid');
+        debugger;
+
+        if (!item) {
+            return;
+        }
+
+        switch (item.action) {
+            case 'start':
+                this.startSelectedTorrents(grid);
+                break;
+            case 'remove':
+                this.removeSelectedTorrents(grid);
+                break;
+        }
+    },
 });

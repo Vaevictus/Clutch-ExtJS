@@ -52,6 +52,11 @@ Ext.define('Clutch.util.RPC', {
       this.getStats();
       
     },
+    
+    
+    getSettings: function() {
+        
+    },
     getStats: function() {
         var params = {
             "method" : "session-stats",

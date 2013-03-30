@@ -13,7 +13,11 @@ Ext.define("Clutch.view.search.SearchResultGrid", {
     alias : 'widget.searchresultgrid',
 
     //contextMenu : Ext.create('Clutch.view.TorrentContextMenu', {}),
-
+    //items : [Ext.create('Clutch.view.search.SearchContextMenu', {})],
+    items : [{
+        xtype: 'searchcontextmenu'
+    }],
+    
     columns : [{
         header : 'Name',
         flex : 1,

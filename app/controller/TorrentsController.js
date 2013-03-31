@@ -25,6 +25,9 @@ Ext.define('Clutch.controller.TorrentsController', {
             },
             'addtorrentdialog button[action=add-torrent]' : {
                 click : me.onConfirmAddTorrent
+            },
+            'torrenttoolbar menuitem[action=pause-all]' : {
+                click : me.pauseAllTorrents
             }
         });
     },
@@ -81,7 +84,7 @@ Ext.define('Clutch.controller.TorrentsController', {
     },
 
     removeAllTorrents : function() {
-
+        
         var grid = this.getTorrentsGrid(), store = grid.getSelectionModel().getStore(), selections = store.getRange(), //gets all torrents
         torrentIds = [], rpcParams;
 
@@ -90,6 +93,28 @@ Ext.define('Clutch.controller.TorrentsController', {
         });
 
         Clutch.util.RPC.removeTorrents(torrentIds, false);
+    },
+     pauseAllTorrents : function() {
+       
+        var grid = this.getTorrentsGrid(), store = grid.getSelectionModel().getStore(), selections = store.getRange(), //gets all torrents
+        torrentIds = [], rpcParams;
+
+        Ext.each(selections, function(torrent) {
+            torrentIds.push(torrent.data.id);
+        });
+
+        Clutch.util.RPC.pauseTorrents(torrentIds);
+    },
+    
+     pauseSelectedTorrents : function(grid) {
+        var sm = grid.getSelectionModel(), selections = sm.getSelection(), torrentIds = [];
+
+        Ext.each(selections, function(torrent) {
+            torrentIds.push(torrent.data.id);
+        });
+
+        Clutch.util.RPC.pauseTorrents(torrentIds);
+
     },
 
     removeSelectedTorrents : function(grid) {

@@ -3,7 +3,7 @@ Ext.define("Clutch.view.TorrentsGrid", {
 
     alias : 'widget.torrentsgrid',
 
-    requires : ['Clutch.view.TorrentContextMenu', 'Clutch.view.column.StatusColumn', 'Clutch.view.column.TorrentProgressColumn','Clutch.view.column.SpeedColumn'],
+    requires : ['Clutch.view.TorrentContextMenu', 'Clutch.view.column.StatusColumn', 'Clutch.view.column.TorrentProgressColumn', 'Clutch.view.column.SpeedColumn'],
 
     store : 'TorrentTransfers',
 
@@ -44,7 +44,7 @@ Ext.define("Clutch.view.TorrentsGrid", {
         width : 120,
         dataIndex : 'rateUpload',
         xtype : 'speedcolumn'
-        
+
     }, {
         header : 'Download Speed',
         flex : 1,
@@ -55,6 +55,14 @@ Ext.define("Clutch.view.TorrentsGrid", {
         mode : 'MULTI'
     }),
 
+    applyFilter : function(f, oldValue) {
+        debugger;
+        var currentData = this.getTorrents();
+        var filteredData = this.filterIndividualTorrents(currentData);
+        this.store.loadData(filteredData);
+        return f;
+    },
+
     applyTorrents : function(newValue, oldValue) {
         //newValue is data from the transmission-daemon and is unfiltered
         //filter the data here against this.getFilter() before loading the data into the store
@@ -63,7 +71,35 @@ Ext.define("Clutch.view.TorrentsGrid", {
             case 'all':
                 filteredData = newValue;
                 break;
+            default:
+                //a filter other than 'all' is set
+                filteredData = this.filterIndividualTorrents(newValue);
         }
         this.store.loadData(filteredData);
+        return newValue;
+    },
+    filterIndividualTorrents : function(unfilteredData) {
+        var data = [], f = this.getFilter();
+
+        Ext.each(unfilteredData, function(torrent) {
+            switch (f) {
+                case 'downloading':
+                    if (torrent.status === 3 || torrent.status === 4) {
+                        data.push(torrent);
+                    }
+                    break;
+                case 'completed':
+                    if (torrent.status > 4) {
+                        data.push(torrent);
+                    }
+                    break;
+                case 'paused':
+                    if (torrent.status < 3) {
+                        data.push(torrent);
+                    }
+                    break;
+            }
+        });
+        return data;
     }
 });

@@ -181,7 +181,7 @@ Ext.define('Clutch.util.RPC', {
 
     },
 
-    stopTorrents : function(torrentIds) {
+    pauseTorrents : function(torrentIds) {
         var rpcParams = {
             "method" : "torrent-stop",
             "arguments" : {

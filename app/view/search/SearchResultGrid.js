@@ -12,8 +12,6 @@ Ext.define("Clutch.view.search.SearchResultGrid", {
 
     alias : 'widget.searchresultgrid',
 
-    //contextMenu : Ext.create('Clutch.view.TorrentContextMenu', {}),
-    //items : [Ext.create('Clutch.view.search.SearchContextMenu', {})],
     contextMenu : Ext.create('Clutch.view.search.SearchContextMenu'),
 
     columns : [{

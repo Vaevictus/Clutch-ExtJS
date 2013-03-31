@@ -14,6 +14,8 @@ Ext.application({
         Ext.tip.QuickTipManager.init();
 
         Clutch.util.RPC.startTorrentsCheckTask();
+        
+        
 
     }
 });

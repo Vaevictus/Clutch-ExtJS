@@ -9,60 +9,74 @@ Ext.define('Clutch.controller.SearchController', {
 
         me.control({
 
-            'searchresultgrid button' : {
-                click : me.doSearch
-            },
-             'searchcontextmenu' : {
+            'searchcontextmenu' : {
                 click : me.onContextMenuClick
             },
             'searchresultgrid' : {
-                beforeitemcontextmenu : me.onContextMenu
+                beforeitemcontextmenu : me.onContextMenu,
+                afterrender : me.onAfterRender
+            },
+
+            'addtorrentdialog button[action=add-torrent]' : {
+                click : me.onAddTorrentClick
             }
         });
         app.on({
 
-            statsreceived : me.onStatsReceived
+            statsreceived : me.onStatsReceived,
+            dosearch : me.doSearch
 
         });
     },
 
-    doSearch : function(btn) {
-        var searchText = btn.up('searchresultgrid').down('#searchField').getValue(),
-            grid = btn.up('searchresultgrid');
-            grid.setLoading(true);
-            grid.setSearchTerm(searchText);
-        
-        
+    doSearch : function(searchTerm) {
+        Ext.ComponentQuery.query('searchresultgrid')[0].setSearchTerm(searchTerm);
+
     },
 
+    onAfterRender : function(gridPanel) {
+        gridPanel.contextMenu.gridPanel = gridPanel;
+    },
     onStatsReceived : function(data) {
         //alert('from the other contorller');
     },
-    
+
     onContextMenu : function(view, record, item, index, e) {
-        e.stopEvent();
-        debugger;
-        var contextMenu = view.up('searchresultgrid').down('searchcontextmenu');
+        e.stopEvent(); debugger;
+        var contextMenu = view.up('searchresultgrid').contextMenu;
         //var contextMenu = view.up('searchresultgrid').contextMenu;
         contextMenu.showAt(e.getXY());
     },
-    
-     onContextMenuClick : function(menu, item, e, eOpts) {
-         debugger;
-        var grid = menu.up('searchresultgrid');
-        debugger;
+
+    onContextMenuClick : function(menu, item, e, eOpts) { debugger;
+        var grid = menu.gridPanel;
 
         if (!item) {
             return;
         }
 
         switch (item.action) {
-            case 'start':
-                this.startSelectedTorrents(grid);
+            case 'download':
+                this.downloadSelectedTorrents(grid);
                 break;
             case 'remove':
                 this.removeSelectedTorrents(grid);
                 break;
         }
     },
+
+    downloadSelectedTorrents : function(grid) {
+        var selected = grid.getSelectionModel().getSelection();
+        Ext.each(selected, function(item) {
+            var url = item.get('enclosure_url');
+            Ext.create("Clutch.view.AddTorrentDialog", {
+                url : url
+            }).show();
+        });
+    },
+
+    onAddTorrentClick : function(btn) {
+        var dialog = btn.up('addtorrentdialog'), form = dialog.down('form');
+
+    }
 });

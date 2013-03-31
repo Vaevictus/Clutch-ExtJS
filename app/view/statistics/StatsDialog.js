@@ -6,7 +6,11 @@ Ext.define("Clutch.view.statistics.StatsDialog", {
     alias : 'widget.statsdialog',
 
     constrain : true,
-    
+
+    config : {
+        data : null
+    },
+
     items : [{
 
         xtype : 'form',
@@ -16,23 +20,28 @@ Ext.define("Clutch.view.statistics.StatsDialog", {
             items : [{
                 fieldLabel : 'Active Torrents',
                 xtype : 'numberfield',
+                itemId : 'activeTorrentCount',
                 readOnly : true
             }, {
                 fieldLabel : 'Paused Torrents',
                 readOnly : true,
-                xtype : 'numberfield'
+                xtype : 'numberfield',
+                itemId : 'pausedTorrentCount'
             }, {
                 fieldLabel : 'Total Torrents',
                 readOnly : true,
-                xtype : 'numberfield'
+                xtype : 'numberfield',
+                itemId : 'torrentCount'
             }, {
                 fieldLabel : 'Download Speed',
                 readOnly : true,
-                xtype : 'numberfield'
+                xtype : 'numberfield',
+                itemId : 'downloadSpeed'
             }, {
                 fieldLabel : 'Upload Speed',
                 readOnly : true,
-                xtype : 'numberfield'
+                xtype : 'numberfield',
+                itemId : 'uploadSpeed'
             }]
         }, {
             xtype : 'fieldset',
@@ -40,19 +49,23 @@ Ext.define("Clutch.view.statistics.StatsDialog", {
             items : [{
                 fieldLabel : 'Uploaded',
                 readOnly : true,
-                xtype : 'numberfield'
+                xtype : 'numberfield',
+                itemId : 'c-uploadedBytes'
             }, {
                 fieldLabel : 'Downloaded',
                 readOnly : true,
-                xtype : 'numberfield'
+                xtype : 'numberfield',
+                itemId : 'c-downloadedBytes'
             }, {
                 fieldLabel : 'Torrents Added',
                 readOnly : true,
-                xtype : 'numberfield'
+                xtype : 'numberfield',
+                itemId : 'c-filesAdded'
             }, {
                 fieldLabel : 'Time Active',
                 readOnly : true,
-                xtype : 'numberfield'
+                xtype : 'numberfield',
+                itemId : 'c-secondsActive'
             }]
         }, {
             xtype : 'fieldset',
@@ -60,19 +73,23 @@ Ext.define("Clutch.view.statistics.StatsDialog", {
             items : [{
                 fieldLabel : 'Uploaded',
                 readOnly : true,
-                xtype : 'numberfield'
+                xtype : 'numberfield',
+                itemId : 'h-uploadedBytes'
             }, {
                 fieldLabel : 'Downloaded',
                 readOnly : true,
-                xtype : 'numberfield'
+                xtype : 'numberfield',
+                itemId : 'h-downloadedBytes'
             }, {
                 fieldLabel : 'Torrents Added',
                 readOnly : true,
-                xtype : 'numberfield'
+                xtype : 'numberfield',
+                itemId : 'h-filesAdded'
             }, {
                 fieldLabel : 'Time Active',
                 readOnly : true,
-                xtype : 'numberfield'
+                xtype : 'numberfield',
+                itemId : 'h-secondsActive'
             }]
         }]
     }],
@@ -84,6 +101,30 @@ Ext.define("Clutch.view.statistics.StatsDialog", {
     constructor : function(config) {
         this.callParent(arguments);
         this.initConfig(config);
+    },
+    applyData : function(d, oldData) {
+        debugger;
+        this.traverse(d, "", this.processField);
+        this.traverse(d["cumulative-stats"], "h-", this.processField);
+        this.traverse(d["current-stats"], "c-", this.processField);
+        return d;
+    },
+
+    processField : function(key, value) {
+        var field = this.down('#' + key);
+        if (!field)
+            return;
+        field.setValue(value);
+    },
+
+    traverse : function(o, prefix, func) {
+        var i = null;
+        for (i in o) {
+            if (typeof (o[i]) !== "object") {
+
+                func.apply(this, [prefix + i, o[i]]);
+            }
+        }
     }
 });
 

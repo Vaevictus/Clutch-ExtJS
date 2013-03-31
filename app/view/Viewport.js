@@ -4,13 +4,7 @@ Ext.define('Clutch.view.Viewport', {
 
     extend : 'Ext.container.Viewport',
 
-    requires : ['Ext.tab.Panel',
-                'Ext.layout.container.Border',
-                'Clutch.view.Tree',
-                'Clutch.view.StatusToolbar',
-                'Clutch.view.MainToolbar',
-                'Clutch.view.search.SearchResultGrid',
-                'Clutch.view.TorrentsGrid'],
+    requires : ['Ext.tab.Panel', 'Ext.layout.container.Border', 'Clutch.view.Tree', 'Clutch.view.StatusToolbar', 'Clutch.view.MainToolbar', 'Clutch.view.search.SearchResultGrid', 'Clutch.view.TorrentsGrid'],
 
     layout : {
         type : 'border'
@@ -23,6 +17,15 @@ Ext.define('Clutch.view.Viewport', {
     }, {
         region : 'center',
         xtype : 'tabpanel',
+        tabBar : {
+            items : [{
+                xtype : 'tbfill'
+            }, {
+                xtype : 'textfield',
+                itemId : 'searchField',
+                emptyText : 'Search isohunt.com'
+            }]
+        },
 
         items : [{
             xtype : 'panel',
@@ -47,7 +50,7 @@ Ext.define('Clutch.view.Viewport', {
             }]
         }, {
             xtype : 'searchresultgrid',
-            title : 'Search'
+            title : 'Search Results'
         }]
 
     }]

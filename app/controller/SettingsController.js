@@ -6,7 +6,7 @@ Ext.define('Clutch.controller.SettingsController', {
 
     init : function(app) {
         var me = this;
-
+       
         me.control({
 
             'torrenttoolbar button[action=show-settings]' : {
@@ -29,6 +29,7 @@ Ext.define('Clutch.controller.SettingsController', {
             }
         });
     },
+
 
     showSettingsDialog : function() {
 
@@ -80,13 +81,13 @@ Ext.define('Clutch.controller.SettingsController', {
             }
         });
     },
-    
-    onAdvancedPropertyChanged : function(  editor, e, eOpts ) {
+
+    onAdvancedPropertyChanged : function(editor, e, eOpts) {
         //persist the value to the server
         debugger;
-         var params = {
+        var params = {
             "method" : "session-set",
-            "arguments" : { 
+            "arguments" : {
             }
         };
         params.arguments[e.record.data.name] = e.value;

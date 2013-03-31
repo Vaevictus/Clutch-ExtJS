@@ -1,7 +1,7 @@
 Ext.define("Clutch.view.Tree", {
     extend : 'Ext.tree.Panel',
 
-    title: 'Torrents',
+    title: 'Filters',
     
     alias : 'widget.torrenttree',
 

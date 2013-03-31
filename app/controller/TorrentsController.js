@@ -22,6 +22,9 @@ Ext.define('Clutch.controller.TorrentsController', {
             },
             'torrenttree' : {
                 itemclick : me.onTreeNodeClick
+            },
+            'addtorrentdialog button[action=add-torrent]' : {
+                click : me.onConfirmAddTorrent
             }
         });
     },
@@ -98,5 +101,13 @@ Ext.define('Clutch.controller.TorrentsController', {
 
         Clutch.util.RPC.removeTorrents(torrentIds, false);
 
+    },
+    
+    //todo - actually use the rest of the values from the form
+    onConfirmAddTorrent : function(btn) {
+        var dialog = btn.up('addtorrentdialog'),
+        url = dialog.getUrl();
+        
+         Clutch.util.RPC.addTorrent(url);
     }
 });

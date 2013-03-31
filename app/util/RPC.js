@@ -1,6 +1,7 @@
 /**
- * @class NITB.util.NotificationManager
- * NITB Notification utility system
+ * @class Clutch.util.RPC
+ * Utility class for invoking RPC methods against the transmission-daemon RPC server
+ * The RPC spec can be found here: https://trac.transmissionbt.com/browser/trunk/extras/rpc-spec.txt
  */
 Ext.define('Clutch.util.RPC', {
     requires : ['Ext.TaskManager'],
@@ -14,7 +15,7 @@ Ext.define('Clutch.util.RPC', {
         checkInterval : 2000
 
     },
-    
+
     constructor : function(config) {
 
         var me = this;
@@ -28,9 +29,22 @@ Ext.define('Clutch.util.RPC', {
         /**
          * @event torrentdetailsreceived
          * Fires when the client has received a list of torrents and their associated properties (speed, progress etc.)
-         * @param {Object} notification The Notification Object
-         */'torrentdetailsreceived');
+         * @param {Object} responseArgs The response arguments
+         */'torrentdetailsreceived',
 
+        /**
+         * @event settingsreceived
+         * Fires when the client has received a list of config arguments eg download directory, limits etc.
+         * @param {Object} responseArgs The response arguments
+         */
+        'settingsreceived',
+
+        /**
+         * @event statsreceived
+         * Fires when the client has received a list of session and historic stats
+         * @param {Object} responseArgs The Response arguments
+         */
+        'statsreceived');
     },
 
     /**
@@ -47,23 +61,48 @@ Ext.define('Clutch.util.RPC', {
     },
 
     // @private
-    onRunTask: function() {
-      this.getLoadedTorrents();
-      this.getStats();
-      
+    onRunTask : function() {
+        this.getLoadedTorrents();
+        this.getSettings();
+        this.getStats();
+
     },
-    
-    
-    getSettings: function() {
-        
+
+    getSettings : function() {
+        var params = {
+            "method" : "session-get",
+            "arguments" : {
+            }
+        };
+
+        Ext.Ajax.request({
+            url : '/transmission/rpc',
+            jsonData : params,
+            headers : {
+                'X-Transmission-Session-Id' : window.sessionId
+            },
+            success : function(response) {
+
+                Clutch.app.fireEvent('settingsreceived', Ext.JSON.decode(response.responseText));
+
+            },
+            scope : this,
+
+            failure : function(response) {
+                var x = response.getResponseHeader('X-Transmission-Session-Id');
+                if (x) {
+                    window.sessionId = x;
+                }
+            }
+        });
     },
-    getStats: function() {
+    getStats : function() {
         var params = {
             "method" : "session-stats",
             "arguments" : {
-           }
+            }
         };
-        
+
         Ext.Ajax.request({
             url : '/transmission/rpc',
             jsonData : params,
@@ -85,7 +124,7 @@ Ext.define('Clutch.util.RPC', {
             }
         });
     },
-    
+
     getLoadedTorrents : function() {
         var params = {
             "method" : "torrent-get",
@@ -117,8 +156,6 @@ Ext.define('Clutch.util.RPC', {
 
     },
 
-    
-
     startTorrents : function(torrentIds) {
         var rpcParams = {
             "method" : "torrent-start-now",
@@ -133,12 +170,12 @@ Ext.define('Clutch.util.RPC', {
             headers : {
                 'X-Transmission-Session-Id' : window.sessionId
             },
-            success : function(response) { 
+            success : function(response) {
                 Clutch.app.fireEvent('torrentsstarted', Ext.JSON.decode(response.responseText));
 
             },
             scope : this,
-            failure : function(response) { 
+            failure : function(response) {
             }
         });
 
@@ -184,12 +221,12 @@ Ext.define('Clutch.util.RPC', {
                 'X-Transmission-Session-Id' : window.sessionId
             },
             success : function(response) {
-              
+
                 Clutch.app.fireEvent('torrentsremoved', Ext.JSON.decode(response.responseText));
             },
             scope : this,
             failure : function(response) {
-                
+
                 Ext.emptyFn
             }
         });
@@ -205,7 +242,7 @@ Ext.define('Clutch.util.RPC', {
 
         Ext.Ajax.request({
             url : '/transmission/rpc',
-            jsonData : params,
+            jsonData : rpcParams,
             headers : {
                 'X-Transmission-Session-Id' : window.sessionId
             },
@@ -214,10 +251,46 @@ Ext.define('Clutch.util.RPC', {
             },
             scope : this,
             failure : function(response) {
-                Ext.emptyFn;
+                Ext.emptyFn
             }
         });
     },
-    
-   
+
+    addTorrent : function(url) {
+        //var url = options.url;
+        // "cookies"            | string      pointer to a string of one or more cookies.
+        // 365    "download-dir"       | string      path to download the torrent to
+        // 366    "filename"           | string      filename or URL of the .torrent file
+        // 367    "metainfo"           | string      base64-encoded .torrent content
+        // 368    "paused"             | boolean     if true, don't start the torrent
+        // 369    "peer-limit"         | number      maximum number of peers
+        // 370    "bandwidthPriority"  | number      torrent's bandwidth tr_priority_t
+        // 371    "files-wanted"       | array       indices of file(s) to download
+        // 372    "files-unwanted"     | array       indices of file(s) to not download
+        // 373    "priority-high"      | array       indices of high-priority file(s)
+        // 374    "priority-low"       | array       indices of low-priority file(s)
+        // 375    "priority-normal"    | array       indices of normal-priority file(s)
+
+        var rpcParams = {
+            "method" : "torrent-add",
+            "arguments" : {
+                "filename" : url
+            }
+        };
+
+        Ext.Ajax.request({
+            url : '/transmission/rpc',
+            jsonData : rpcParams,
+            headers : {
+                'X-Transmission-Session-Id' : window.sessionId
+            },
+            success : function(response) {
+                Clutch.app.fireEvent('torrentadded', Ext.JSON.decode(response.responseText));
+            },
+            scope : this,
+            failure : function(response) {
+                Ext.emptyFn
+            }
+        });
+    }
 });

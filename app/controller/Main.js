@@ -7,12 +7,13 @@ Ext.define('Clutch.controller.Main', {
 
         app.on({
             torrentdetailsreceived : me.onTorrentdetailsreceived,
-            statsreceived : me.onStatsReceived,
             scope : me
         });
 
         me.control({
-            //empty for now
+            '#searchField' : {
+                specialkey : me.onSearchFieldEnterPress
+            }
         });
     },
 
@@ -23,10 +24,17 @@ Ext.define('Clutch.controller.Main', {
             panel.setTorrents(torrentData.arguments.torrents);
         });
     },
+     onSearchFieldEnterPress : function(field, e) {
+      
+        if (e.getKey() === e.ENTER) {
+            var searchText = field.getValue();
+            Clutch.app.fireEvent('dosearch', searchText);
+           
+        }
 
-    onStatsReceived : function(data) {
-        //do nothing for now
     }
+   
+    
 });
 
 /*

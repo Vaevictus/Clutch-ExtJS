@@ -14,10 +14,8 @@ Ext.define("Clutch.view.search.SearchResultGrid", {
 
     //contextMenu : Ext.create('Clutch.view.TorrentContextMenu', {}),
     //items : [Ext.create('Clutch.view.search.SearchContextMenu', {})],
-    items : [{
-        xtype: 'searchcontextmenu'
-    }],
-    
+    contextMenu : Ext.create('Clutch.view.search.SearchContextMenu'),
+
     columns : [{
         header : 'Name',
         flex : 1,
@@ -43,52 +41,45 @@ Ext.define("Clutch.view.search.SearchResultGrid", {
         mode : 'MULTI'
     }),
 
-    tbar : ['Search', {
-        xtype : 'textfield',
-        itemId: 'searchField',
-        emptyText : 'Search isohunt.com'
-    }, {
-        text : 'Go'
-    }],
-
     applyResults : function(newValue, oldValue) {
         //newValue is data from the transmission-daemon and is unfiltered
         //filter the data here against this.getFilter() before loading the data into the store
         // var filter = this.getFilter(), filteredData = [];
         // switch (filter) {
-            // case 'all':
-                // filteredData = newValue;
-                // break;
+        // case 'all':
+        // filteredData = newValue;
+        // break;
         // }
-        this.setLoading(false);
+
         this.store.loadData(newValue);
     },
 
     applySearchTerm : function(newValue, oldValue) {
 
         var proxy = 'http://query.yahooapis.com/v1/public/yql?{0}', test = {
-            q : Ext.String.format('select * from json where url="http://isohunt.com/js/json.php?ihq={0}"',newValue),
+            q : Ext.String.format('select * from json where url="http://isohunt.com/js/json.php?ihq={0}"', newValue),
             format : 'json'
         }, encodedQuery = Ext.Object.toQueryString(test);
-       var url = Ext.String.format(proxy, encodedQuery);
-     
-       Ext.data.JsonP.request({
+        var url = Ext.String.format(proxy, encodedQuery);
+        this.show();
+        this.setLoading(true);
+
+        Ext.data.JsonP.request({
             url : url,
             //method: 'GET',
             success : function(response) {
-               
-               var results = response.query.results.json.items.list;
-               this.setResults(results);
+                this.setLoading(false);
+                var results = response.query.results.json.items.list;
+                this.setResults(results);
 
             },
             scope : this,
 
             failure : function(response) {
-               this.setLoading(false);
-               alert('Failed to get results')
+                this.setLoading(false);
+                alert('Failed to get results')
             }
         });
-       
 
     }
 });

@@ -7,6 +7,7 @@ Ext.define('Clutch.controller.Main', {
 
         app.on({
             torrentdetailsreceived : me.onTorrentdetailsreceived,
+            statsreceived : me.onStatsReceived,
             scope : me
         });
 
@@ -32,6 +33,14 @@ Ext.define('Clutch.controller.Main', {
            
         }
 
+    },
+    onStatsReceived : function(data){
+        
+        var args = data.arguments;
+        Ext.each(Ext.ComponentQuery.query('speedcomponent'), function(control){
+           control.setSpeedUp(args.downloadSpeed);
+           control.setSpeedDown(args.uploadSpeed); 
+        });
     }
    
     

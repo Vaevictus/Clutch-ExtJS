@@ -3,7 +3,7 @@ Ext.define("Clutch.view.TorrentsGrid", {
 
     alias : 'widget.torrentsgrid',
 
-    requires : ['Clutch.view.TorrentContextMenu'],
+    requires : ['Clutch.view.TorrentContextMenu', 'Clutch.view.column.StatusColumn', 'Clutch.view.column.TorrentProgressColumn','Clutch.view.column.SpeedColumn'],
 
     store : 'TorrentTransfers',
 
@@ -23,25 +23,14 @@ Ext.define("Clutch.view.TorrentsGrid", {
         flex : 1,
         dataIndex : 'name'
     }, {
+        header : 'Status',
+        xtype : 'torrentstatuscolumn',
+        dataIndex : 'status'
+    }, {
         header : 'Progress',
         dataIndex : 'percentDone',
-        width : 110,
-        // renderer : Clutch.util.RPC.progressRenderer
-        renderer : function(v, m, r) {
-
-            var tmpValue = Math.round(v * 10000) / 100;
-            //rounds the number to 0-100 with 2 decimal places
-            var tmpText = tmpValue + '%';
-
-            var progressRenderer = (function(pValue, pText) {
-                var b = new Ext.ProgressBar();
-                return function(pValue, pText) {
-                    b.updateProgress(pValue, pText, true);
-                    return Ext.DomHelper.markup(b.getRenderTree());
-                };
-            })(tmpValue, tmpText);
-            return progressRenderer(v, tmpText);
-        }
+        xtype : 'torrentprogresscolumn',
+        width : 110
     }, {
         header : 'Seeds',
         width : 50,
@@ -52,20 +41,15 @@ Ext.define("Clutch.view.TorrentsGrid", {
         dataIndex : 'peersConnected'
     }, {
         header : 'Upload Speed',
-       width : 120,
+        width : 120,
         dataIndex : 'rateUpload',
-        renderer : function(v, m, r) {
-            var value = Ext.util.Format.fileSize(v);
-            return value !== '-' ? value + '/sec' : value;
-        }
+        xtype : 'speedcolumn'
+        
     }, {
         header : 'Download Speed',
         flex : 1,
         dataIndex : 'rateDownload',
-        renderer : function(v, m, r) {
-            var value = Ext.util.Format.fileSize(v);
-            return value !== '-' ? value + '/sec' : value;
-        }
+        xtype : 'speedcolumn'
     }],
     selModel : new Ext.selection.RowModel({
         mode : 'MULTI'
@@ -74,12 +58,11 @@ Ext.define("Clutch.view.TorrentsGrid", {
     applyTorrents : function(newValue, oldValue) {
         //newValue is data from the transmission-daemon and is unfiltered
         //filter the data here against this.getFilter() before loading the data into the store
-        var filter = this.getFilter(),
-            filteredData = [];
-        switch (filter){
+        var filter = this.getFilter(), filteredData = [];
+        switch (filter) {
             case 'all':
-            filteredData = newValue;
-            break;
+                filteredData = newValue;
+                break;
         }
         this.store.loadData(filteredData);
     }

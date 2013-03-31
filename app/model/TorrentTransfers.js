@@ -62,7 +62,7 @@ Ext.define('Clutch.model.TorrentTransfers', {
         type : 'string'
     }, {
         name : 'status',
-        type : 'string'
+        type : 'number'
     }, {
         name : 'totalSize',
         type : 'string'

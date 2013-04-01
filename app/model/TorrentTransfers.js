@@ -75,17 +75,19 @@ Ext.define('Clutch.model.TorrentTransfers', {
     }, {
         name : 'uploadedEver',
         type : 'auto'
-    },
-    {
+    }, {
+        name : 'peers',
+        //mapping : 'peers'
+    }, {
         name : 'peersConnected',
         type : 'number'
-    },
-     {
+    }, {
         name : 'seedsConnected',
         type : 'number'
-    },
-    {
+    }, {
         name : 'percentDone',
         type : 'number'
+    }, {
+        name : 'files'
     }]
 });

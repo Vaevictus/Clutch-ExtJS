@@ -69,7 +69,7 @@ Ext.define('Clutch.controller.SearchController', {
         var selected = grid.getSelectionModel().getSelection();
         Ext.each(selected, function(item) {
             var url = item.get('enclosure_url');
-            Ext.create("Clutch.view.AddTorrentDialog", {
+            Ext.create("Clutch.view.torrent.AddTorrentDialog", {
                 url : url
             }).show();
         });

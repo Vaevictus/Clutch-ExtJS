@@ -1,4 +1,4 @@
-Ext.define('Clutch.view.TorrentContextMenu', {
+Ext.define('Clutch.view.torrent.TorrentContextMenu', {
     extend : 'Ext.menu.Menu',
     
     alias: 'widget.torrentcontextmenu',

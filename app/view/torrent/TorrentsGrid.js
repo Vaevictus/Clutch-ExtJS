@@ -1,9 +1,9 @@
-Ext.define("Clutch.view.TorrentsGrid", {
+Ext.define("Clutch.view.torrent.TorrentsGrid", {
     extend : 'Ext.grid.Panel',
 
     alias : 'widget.torrentsgrid',
 
-    requires : ['Clutch.view.TorrentContextMenu', 'Clutch.view.column.StatusColumn', 'Clutch.view.column.TorrentProgressColumn', 'Clutch.view.column.SpeedColumn'],
+    requires : ['Clutch.view.torrent.TorrentContextMenu', 'Clutch.view.column.StatusColumn', 'Clutch.view.column.TorrentProgressColumn', 'Clutch.view.column.SpeedColumn'],
 
     store : 'TorrentTransfers',
 
@@ -12,7 +12,7 @@ Ext.define("Clutch.view.TorrentsGrid", {
         filter : 'all'
     },
 
-    contextMenu : Ext.create('Clutch.view.TorrentContextMenu', {}),
+    contextMenu : Ext.create('Clutch.view.torrent.TorrentContextMenu', {}),
 
     viewConfig : {
         preserveScrollOnRefresh : true //doesn't quite work how desired
@@ -75,6 +75,7 @@ Ext.define("Clutch.view.TorrentsGrid", {
                 //a filter other than 'all' is set
                 filteredData = this.filterIndividualTorrents(newValue);
         }
+        debugger;
         this.store.loadData(filteredData);
         return newValue;
     },

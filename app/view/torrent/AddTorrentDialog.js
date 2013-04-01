@@ -1,4 +1,4 @@
-Ext.define("Clutch.view.AddTorrentDialog", {
+Ext.define("Clutch.view.torrent.AddTorrentDialog", {
     
     extend : 'Ext.window.Window',
 

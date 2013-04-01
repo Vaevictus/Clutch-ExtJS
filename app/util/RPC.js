@@ -129,7 +129,7 @@ Ext.define('Clutch.util.RPC', {
         var params = {
             "method" : "torrent-get",
             "arguments" : {
-                "fields" : ["peersConnected", "percentDone", "seedsConnected", "id", "name", "status", "totalSize", "sizeWhenDone", "haveValid", "leftUntilDone", "haveUnchecked", "eta", "uploadedEver", "uploadRatio", "rateDownload", "rateUpload", "metadataPercentComplete", "addedDate", "trackerStats", "error", "errorString", "recheckProgress", "bandwidthPriority", "seedRatioMode", "seedRatioLimit"]
+                "fields" : ["peersConnected","peers","files", "percentDone", "seedsConnected", "id", "name", "status", "totalSize", "sizeWhenDone", "haveValid", "leftUntilDone", "haveUnchecked", "eta", "uploadedEver", "uploadRatio", "rateDownload", "rateUpload", "metadataPercentComplete", "addedDate", "trackerStats", "error", "errorString", "recheckProgress", "bandwidthPriority", "seedRatioMode", "seedRatioLimit"]
             }
         };
 

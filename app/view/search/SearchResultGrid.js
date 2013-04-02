@@ -53,7 +53,7 @@ Ext.define("Clutch.view.search.SearchResultGrid", {
     },
 
     applySearchTerm : function(newValue, oldValue) {
-        debugger;
+        
         newValue = encodeURIComponent(newValue);
         var proxy = 'http://query.yahooapis.com/v1/public/yql?&q={0}&format=json', q = encodeURIComponent(Ext.String.format('select * from json where url="http://isohunt.com/js/json.php?ihq={0}"', newValue));
             //format : 'json'

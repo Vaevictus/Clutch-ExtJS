@@ -6,12 +6,8 @@ Ext.define('Clutch.controller.SettingsController', {
 
     init : function(app) {
         var me = this;
-       
-        me.control({
 
-            'torrenttoolbar button[action=show-settings]' : {
-                click : me.showSettingsDialog
-            },
+        me.control({
             'settingsdialog treepanel' : {
                 itemclick : me.onSettingsNodeClick
             },
@@ -28,13 +24,6 @@ Ext.define('Clutch.controller.SettingsController', {
                 edit : me.onAdvancedPropertyChanged
             }
         });
-    },
-
-
-    showSettingsDialog : function() {
-
-        var dialog = Ext.create('Clutch.view.settings.SettingsDialog');
-        dialog.show();
     },
 
     onSettingsNodeClick : function(treepanel, record, item, index, e, eOpts) {

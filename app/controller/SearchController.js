@@ -8,7 +8,6 @@ Ext.define('Clutch.controller.SearchController', {
         var me = this;
 
         me.control({
-
             'searchcontextmenu' : {
                 click : me.onContextMenuClick
             },
@@ -16,7 +15,6 @@ Ext.define('Clutch.controller.SearchController', {
                 beforeitemcontextmenu : me.onContextMenu,
                 afterrender : me.onAfterRender
             },
-
             'addtorrentdialog button[action=add-torrent]' : {
                 click : me.onAddTorrentClick
             }
@@ -48,7 +46,7 @@ Ext.define('Clutch.controller.SearchController', {
     },
 
     onContextMenuClick : function(menu, item, e, eOpts) {
-        
+
         var grid = menu.gridPanel;
 
         if (!item) {

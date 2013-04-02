@@ -11,11 +11,6 @@ Ext.define('Clutch.controller.StatsController', {
         });
 
         me.control({
-
-            'torrenttoolbar button[action=show-statistics]' : {
-                click : me.showStatisticsDialog
-            },
-
             'statsdialog  button[action=cancel]' : {
                 click : me.onCancelButtonClick
             }
@@ -27,18 +22,10 @@ Ext.define('Clutch.controller.StatsController', {
         });
     },
 
-    showStatisticsDialog : function() {
-
-        var dialog = Ext.create('Clutch.view.statistics.StatsDialog', {
-
-        });
-        dialog.show();
-    },
-
     onStatsReceived : function(data) {
-        
+
         Ext.each(Ext.ComponentQuery.query('statsdialog'), function(dialog) {
-           dialog.setData(data.arguments); 
+            dialog.setData(data.arguments);
         });
     },
 

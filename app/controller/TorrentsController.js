@@ -6,15 +6,12 @@ Ext.define('Clutch.controller.TorrentsController', {
         ref : 'torrentsGrid',
         selector : 'torrentsgrid'
     }],
-    
+
     requires : ['Ext.ux.window.Notification'],
-    
 
     init : function(app) {
         var me = this;
-        
-        app.on('torrentadded', me.onTorrentAddedOK);
-        
+
         me.control({
             'torrentsgrid' : {
                 beforeitemcontextmenu : me.onContextMenu
@@ -37,10 +34,10 @@ Ext.define('Clutch.controller.TorrentsController', {
         });
     },
 
-    onTreeNodeClick : function(treepanel, record, item, index, e, eOpts ) {
-       
-      var grid = this.getTorrentsGrid();
-          grid.setFilter(record.raw.filter);
+    onTreeNodeClick : function(treepanel, record, item, index, e, eOpts) {
+
+        var grid = this.getTorrentsGrid();
+        grid.setFilter(record.raw.filter);
     },
     onContextMenu : function(view, record, item, index, e) {
         e.stopEvent();
@@ -89,7 +86,7 @@ Ext.define('Clutch.controller.TorrentsController', {
     },
 
     removeAllTorrents : function() {
-        
+
         var grid = this.getTorrentsGrid(), store = grid.getSelectionModel().getStore(), selections = store.getRange(), //gets all torrents
         torrentIds = [], rpcParams;
 
@@ -99,8 +96,8 @@ Ext.define('Clutch.controller.TorrentsController', {
 
         Clutch.util.RPC.removeTorrents(torrentIds, false);
     },
-     pauseAllTorrents : function() {
-       
+    pauseAllTorrents : function() {
+
         var grid = this.getTorrentsGrid(), store = grid.getSelectionModel().getStore(), selections = store.getRange(), //gets all torrents
         torrentIds = [], rpcParams;
 
@@ -110,8 +107,8 @@ Ext.define('Clutch.controller.TorrentsController', {
 
         Clutch.util.RPC.pauseTorrents(torrentIds);
     },
-    
-     pauseSelectedTorrents : function(grid) {
+
+    pauseSelectedTorrents : function(grid) {
         var sm = grid.getSelectionModel(), selections = sm.getSelection(), torrentIds = [];
 
         Ext.each(selections, function(torrent) {
@@ -132,29 +129,12 @@ Ext.define('Clutch.controller.TorrentsController', {
         Clutch.util.RPC.removeTorrents(torrentIds, false);
 
     },
-    
+
     //todo - actually use the rest of the values from the form
     onConfirmAddTorrent : function(btn) {
-        var dialog = btn.up('addtorrentdialog'),
-        url = dialog.getUrl();
-        
+        var dialog = btn.up('addtorrentdialog'), url = dialog.getUrl();
+
         Clutch.util.RPC.addTorrent(url);
         dialog.close();
-    },
-    
-    onTorrentAddedOK : function() {
-        Ext.create('widget.uxNotification', {
-                                                title: 'Notification',
-                                                position: 'tr',
-                                                manager: 'instructions',
-                                                cls: 'ux-notification-light',
-                                                iconCls: 'ux-notification-icon-information',
-                                                html: 'Using bounceOut/easeIn animation effect.',
-                                                autoCloseDelay: 4000,
-                                                slideBackDuration: 500,
-                                                slideInAnimation: 'bounceOut',
-                                                slideBackAnimation: 'easeIn'
-                                            }).show();
-
     }
 });

@@ -285,7 +285,7 @@ Ext.define('Clutch.util.RPC', {
                 'X-Transmission-Session-Id' : window.sessionId
             },
             success : function(response) {
-                Clutch.app.fireEvent('torrentadded', Ext.JSON.decode(response.responseText));
+                Clutch.app.fireEvent('torrentadded', Ext.JSON.decode(response.responseText).arguments["torrent-added"]);
             },
             scope : this,
             failure : function(response) {

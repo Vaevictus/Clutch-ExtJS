@@ -14,8 +14,17 @@ Ext.define('Clutch.controller.Main', {
         me.control({
             '#searchField' : {
                 specialkey : me.onSearchFieldEnterPress
+            },
+            'torrenttoolbar #btnAddViaUrl' : {
+                click : me.createAddTorrentUrlDialog
             }
         });
+    },
+    
+    createAddTorrentUrlDialog : function(item) {
+        Ext.create("Clutch.view.torrent.AddTorrentDialog", {
+                
+            }).show();
     },
 
     onTorrentdetailsreceived : function(torrentData) {

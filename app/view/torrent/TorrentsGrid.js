@@ -56,7 +56,7 @@ Ext.define("Clutch.view.torrent.TorrentsGrid", {
     }),
 
     applyFilter : function(f, oldValue) {
-        debugger;
+      
         var currentData = this.getTorrents();
         var filteredData = this.filterIndividualTorrents(currentData);
         this.store.loadData(filteredData);
@@ -75,7 +75,7 @@ Ext.define("Clutch.view.torrent.TorrentsGrid", {
                 //a filter other than 'all' is set
                 filteredData = this.filterIndividualTorrents(newValue);
         }
-        debugger;
+      
         this.store.loadData(filteredData);
         return newValue;
     },

@@ -10,14 +10,11 @@ Ext.define("Clutch.view.torrent.AddTorrentDialog", {
         url : null
     },
 
-    height : 300,
-
-    width : 300,
-
     title : 'Add torrent',
 
     items : [{
         xtype : 'form',
+        bodyPadding : '10px',
         items : [{
             xtype : 'textfield',
             fieldLabel : 'Url',

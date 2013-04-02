@@ -42,13 +42,13 @@ Ext.define('Clutch.controller.SearchController', {
     },
 
     onContextMenu : function(view, record, item, index, e) {
-        e.stopEvent(); debugger;
+        e.stopEvent();
         var contextMenu = view.up('searchresultgrid').contextMenu;
-        //var contextMenu = view.up('searchresultgrid').contextMenu;
         contextMenu.showAt(e.getXY());
     },
 
-    onContextMenuClick : function(menu, item, e, eOpts) { debugger;
+    onContextMenuClick : function(menu, item, e, eOpts) {
+        
         var grid = menu.gridPanel;
 
         if (!item) {

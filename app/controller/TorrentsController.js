@@ -6,10 +6,15 @@ Ext.define('Clutch.controller.TorrentsController', {
         ref : 'torrentsGrid',
         selector : 'torrentsgrid'
     }],
+    
+    requires : ['Ext.ux.window.Notification'],
+    
 
     init : function(app) {
         var me = this;
-
+        
+        app.on('torrentadded', me.onTorrentAddedOK);
+        
         me.control({
             'torrentsgrid' : {
                 beforeitemcontextmenu : me.onContextMenu
@@ -133,6 +138,23 @@ Ext.define('Clutch.controller.TorrentsController', {
         var dialog = btn.up('addtorrentdialog'),
         url = dialog.getUrl();
         
-         Clutch.util.RPC.addTorrent(url);
+        Clutch.util.RPC.addTorrent(url);
+        dialog.close();
+    },
+    
+    onTorrentAddedOK : function() {
+        Ext.create('widget.uxNotification', {
+                                                title: 'Notification',
+                                                position: 'tr',
+                                                manager: 'instructions',
+                                                cls: 'ux-notification-light',
+                                                iconCls: 'ux-notification-icon-information',
+                                                html: 'Using bounceOut/easeIn animation effect.',
+                                                autoCloseDelay: 4000,
+                                                slideBackDuration: 500,
+                                                slideInAnimation: 'bounceOut',
+                                                slideBackAnimation: 'easeIn'
+                                            }).show();
+
     }
 });

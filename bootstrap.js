@@ -1,4 +1,5 @@
 Ext.Loader.addClassPathMappings({
+  "Ext.ux" : "app/ux",
   "Clutch": "app",
   "Ext": "ext/src",
   "Ext.ux.GroupTreeChunker": "ext/src/ux/GroupTabPanel.js"

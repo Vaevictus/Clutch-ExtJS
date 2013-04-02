@@ -53,12 +53,13 @@ Ext.define("Clutch.view.search.SearchResultGrid", {
     },
 
     applySearchTerm : function(newValue, oldValue) {
-
-        var proxy = 'http://query.yahooapis.com/v1/public/yql?{0}', test = {
-            q : Ext.String.format('select * from json where url="http://isohunt.com/js/json.php?ihq={0}"', newValue),
-            format : 'json'
-        }, encodedQuery = Ext.Object.toQueryString(test);
-        var url = Ext.String.format(proxy, encodedQuery);
+        debugger;
+        newValue = encodeURIComponent(newValue);
+        var proxy = 'http://query.yahooapis.com/v1/public/yql?&q={0}&format=json', q = encodeURIComponent(Ext.String.format('select * from json where url="http://isohunt.com/js/json.php?ihq={0}"', newValue));
+            //format : 'json'
+        
+        //encodedQuery = Ext.Object.toQueryString(test);
+        var url = Ext.String.format(proxy, q);
         this.show();
         this.setLoading(true);
 
@@ -78,6 +79,6 @@ Ext.define("Clutch.view.search.SearchResultGrid", {
                 alert('Failed to get results')
             }
         });
-
+        return newValue;
     }
 });

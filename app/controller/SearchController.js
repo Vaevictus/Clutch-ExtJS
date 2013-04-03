@@ -14,9 +14,6 @@ Ext.define('Clutch.controller.SearchController', {
             'searchresultgrid' : {
                 beforeitemcontextmenu : me.onContextMenu,
                 afterrender : me.onAfterRender
-            },
-            'addtorrentdialog button[action=add-torrent]' : {
-                click : me.onAddTorrentClick
             }
         });
         app.on({
@@ -71,10 +68,5 @@ Ext.define('Clutch.controller.SearchController', {
                 url : url
             }).show();
         });
-    },
-
-    onAddTorrentClick : function(btn) {
-        var dialog = btn.up('addtorrentdialog'), form = dialog.down('form');
-
     }
 });

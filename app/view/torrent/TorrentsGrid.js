@@ -3,7 +3,7 @@ Ext.define("Clutch.view.torrent.TorrentsGrid", {
 
     alias : 'widget.torrentsgrid',
 
-    requires : ['Clutch.view.torrent.TorrentContextMenu', 'Clutch.view.column.StatusColumn', 'Clutch.view.column.TorrentProgressColumn', 'Clutch.view.column.SpeedColumn'],
+    requires : ['Clutch.view.torrent.TorrentContextMenu', 'Clutch.view.column.StatusColumn','Clutch.view.column.EtaColumn', 'Clutch.view.column.TorrentProgressColumn', 'Clutch.view.column.SpeedColumn'],
 
     store : 'TorrentTransfers',
 
@@ -47,9 +47,13 @@ Ext.define("Clutch.view.torrent.TorrentsGrid", {
 
     }, {
         header : 'Download Speed',
-        flex : 1,
         dataIndex : 'rateDownload',
         xtype : 'speedcolumn'
+    },{
+        header : 'ETA',
+        flex : 1,
+        dataIndex : 'eta',
+        xtype : 'etacolumn'
     }],
     selModel : new Ext.selection.RowModel({
         mode : 'MULTI'

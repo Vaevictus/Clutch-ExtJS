@@ -20,7 +20,7 @@ Ext.define('Clutch.model.TorrentTransfers', {
         type : 'string'
     }, {
         name : 'eta',
-        type : 'string'
+        type : 'number'
     }, {
         name : 'haveUnchecked',
         type : 'string'
@@ -67,7 +67,7 @@ Ext.define('Clutch.model.TorrentTransfers', {
         name : 'totalSize',
         type : 'string'
     }, {
-        name : 'trackerStats', //todo - there is nesting here
+        name : 'trackerStats' //todo - there is nesting here
         //type : 'object'
     }, {
         name : 'uploadRatio',
@@ -76,7 +76,7 @@ Ext.define('Clutch.model.TorrentTransfers', {
         name : 'uploadedEver',
         type : 'auto'
     }, {
-        name : 'peers',
+        name : 'peers'
         //mapping : 'peers'
     }, {
         name : 'peersConnected',

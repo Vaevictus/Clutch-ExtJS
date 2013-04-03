@@ -1,7 +1,7 @@
 Ext.define("Clutch.view.search.SearchResultGrid", {
     extend : 'Ext.grid.Panel',
 
-    //requires : ['Clutch.view.search.SearchContextMenu'],
+    requires : ['Clutch.view.column.SizeColumn'],
 
     store : 'SearchResult',
 
@@ -28,44 +28,38 @@ Ext.define("Clutch.view.search.SearchResultGrid", {
         dataIndex : 'leechers'
     }, {
         header : 'Size',
-        flex : 1,
         dataIndex : 'length',
-        renderer : function(v, m, r) {
-            var value = Ext.util.Format.fileSize(v);
-            return value;
-        }
+        xtype : 'sizecolumn'
+    },{
+        header : 'Date Added',
+        flex : 1,
+        xtype : 'datecolumn',
+        dataIndex : 'pubDate',
+        format : 'F j, Y, g:i a'
     }],
     selModel : new Ext.selection.RowModel({
         mode : 'MULTI'
     }),
 
     applyResults : function(newValue, oldValue) {
-        //newValue is data from the transmission-daemon and is unfiltered
-        //filter the data here against this.getFilter() before loading the data into the store
-        // var filter = this.getFilter(), filteredData = [];
-        // switch (filter) {
-        // case 'all':
-        // filteredData = newValue;
-        // break;
-        // }
-
+        debugger;
         this.store.loadData(newValue);
+        return newValue;
     },
 
     applySearchTerm : function(newValue, oldValue) {
-        
+
         newValue = encodeURIComponent(newValue);
         var proxy = 'http://query.yahooapis.com/v1/public/yql?&q={0}&format=json', q = encodeURIComponent(Ext.String.format('select * from json where url="http://isohunt.com/js/json.php?ihq={0}"', newValue));
-            //format : 'json'
         
-        //encodedQuery = Ext.Object.toQueryString(test);
         var url = Ext.String.format(proxy, q);
+        
         this.show();
         this.setLoading(true);
 
         Ext.data.JsonP.request({
             url : url,
-            //method: 'GET',
+            
             success : function(response) {
                 this.setLoading(false);
                 var results = response.query.results.json.items.list;

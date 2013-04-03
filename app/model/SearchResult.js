@@ -67,7 +67,7 @@ Ext.define('Clutch.model.SearchResult', {
         name : 'hash',
         type : 'string'
     }, {
-        name : 'pubdate',
+        name : 'pubDate',
         type : 'date'
     }]
 });

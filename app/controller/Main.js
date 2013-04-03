@@ -91,36 +91,3 @@ Ext.define('Clutch.controller.Main', {
 
     }
 });
-
-/*
- var arguments =  {
- "method":"torrent-get",
- "arguments":{
- "fields":[
- "id",
- "name",
- "status",
- "totalSize",
- "sizeWhenDone",
- "haveValid",
- "leftUntilDone",
- "haveUnchecked",
- "eta",
- "uploadedEver",
- "uploadRatio",
- "rateDownload",
- "rateUpload",
- "metadataPercentComplete",
- "addedDate",
- "trackerStats",
- "error",
- "errorString",
- "recheckProgress",
- "bandwidthPriority",
- "seedRatioMode",
- "seedRatioLimit"
- ]
- }
- }
-
- */

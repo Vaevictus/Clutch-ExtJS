@@ -6,6 +6,8 @@ Ext.define("Clutch.view.torrent.AddTorrentDialog", {
     
     constrain : true, 
     
+    closeAction : 'destroy',
+    
     config : {
         url : null
     },
@@ -17,21 +19,26 @@ Ext.define("Clutch.view.torrent.AddTorrentDialog", {
         bodyPadding : '10px',
         items : [{
             xtype : 'textfield',
+            itemId : 'url',
             fieldLabel : 'Url',
             allowBlank : false
         }, {
             xtype : 'textfield',
-            fieldLabel : 'Save location'
+            fieldLabel : 'Save location',
+            itemId : 'downloadDirectory'
         }, {
             xtype : 'checkbox',
             fieldLabel : 'Start Paused',
-            checked : true
+            checked : true,
+            itemId : 'startPaused'
         }, {
             xtype : 'numberfield',
-            fieldLabel : 'Bandwidth Priority'
+            fieldLabel : 'Bandwidth Priority',
+            itemId : 'bandwidthPriority'
         }, {
             xtype : 'numberfield',
-            fieldLabel : 'Peer Limit'
+            fieldLabel : 'Peer Limit',
+            itemId : 'peerLimit'
         }]
     }],
     
@@ -50,8 +57,24 @@ Ext.define("Clutch.view.torrent.AddTorrentDialog", {
     },
     
     applyUrl : function (newValue, oldValue) {
-        this.down('textfield[fieldLabel=Url]').setValue(newValue);
+        this.down('#url').setValue(newValue);
         return newValue;
+    },
+    
+    getValue : function() {
+        var options = {};
+        options.url = this.down('#url').getValue();
+        options.startPaused = this.down('#startPaused').getValue() === 'checked';
+        options.bandwidthPriority = this.down('#bandwidthPriority').getValue();
+        options.peerLimit = this.down('#peerLimit').getValue();
+        options.downloadDirectory = this.down('#downloadDirectory').getValue();
+        
+        return options;
+        // "filename" : options.url,
+                // "paused" : options.startPaused,
+                // "bandwidthPriority" : options.bandwidthPriority,
+                // "peer-limit" : options.peerLimit,
+                // "download-dir" : options.downloadDirectory
     }
 
 });

@@ -12,7 +12,7 @@ Ext.define('Clutch.util.RPC', {
 
     config : {
 
-        checkInterval : 2000
+        checkInterval : 4000
 
     },
 
@@ -96,6 +96,7 @@ Ext.define('Clutch.util.RPC', {
             }
         });
     },
+    
     getStats : function() {
         var params = {
             "method" : "session-stats",
@@ -256,7 +257,8 @@ Ext.define('Clutch.util.RPC', {
         });
     },
 
-    addTorrent : function(url) {
+    addTorrent : function(options) {
+        debugger;
         //var url = options.url;
         // "cookies"            | string      pointer to a string of one or more cookies.
         // 365    "download-dir"       | string      path to download the torrent to
@@ -274,7 +276,11 @@ Ext.define('Clutch.util.RPC', {
         var rpcParams = {
             "method" : "torrent-add",
             "arguments" : {
-                "filename" : url
+                "filename" : options.url,
+                "paused" : options.startPaused,
+                "bandwidthPriority" : options.bandwidthPriority,
+                "peer-limit" : options.peerLimit,
+                "download-dir" : options.downloadDirectory
             }
         };
 

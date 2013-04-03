@@ -3,7 +3,7 @@ Ext.define("Clutch.view.torrent.TorrentsGrid", {
 
     alias : 'widget.torrentsgrid',
 
-    requires : ['Clutch.view.torrent.TorrentContextMenu', 'Clutch.view.column.StatusColumn','Clutch.view.column.EtaColumn', 'Clutch.view.column.TorrentProgressColumn', 'Clutch.view.column.SpeedColumn'],
+    requires : ['Clutch.view.torrent.TorrentContextMenu', 'Clutch.view.column.StatusColumn', 'Clutch.view.column.EtaColumn', 'Clutch.view.column.TorrentProgressColumn', 'Clutch.view.column.SpeedColumn'],
 
     store : 'TorrentTransfers',
 
@@ -12,10 +12,10 @@ Ext.define("Clutch.view.torrent.TorrentsGrid", {
         filter : 'all'
     },
 
-    contextMenu : Ext.create('Clutch.view.torrent.TorrentContextMenu', {}),
-
     viewConfig : {
-        preserveScrollOnRefresh : true //doesn't quite work how desired
+        preserveScrollOnRefresh : true, //TODO - doesn't quite work how desired when there are many torrents in the grid
+        emptyText: 'No torrents to show',
+        deferEmptyText: false
     },
 
     columns : [{
@@ -49,7 +49,7 @@ Ext.define("Clutch.view.torrent.TorrentsGrid", {
         header : 'Download Speed',
         dataIndex : 'rateDownload',
         xtype : 'speedcolumn'
-    },{
+    }, {
         header : 'ETA',
         flex : 1,
         dataIndex : 'eta',
@@ -59,8 +59,14 @@ Ext.define("Clutch.view.torrent.TorrentsGrid", {
         mode : 'MULTI'
     }),
 
+    initComponent : function(cfg) {
+        this.contextMenu = Ext.create('Clutch.view.torrent.TorrentContextMenu', {
+            grid : this
+        });
+        this.callParent(arguments);
+    },
     applyFilter : function(f, oldValue) {
-      
+
         var currentData = this.getTorrents();
         var filteredData = this.filterIndividualTorrents(currentData);
         this.store.loadData(filteredData);
@@ -79,7 +85,7 @@ Ext.define("Clutch.view.torrent.TorrentsGrid", {
                 //a filter other than 'all' is set
                 filteredData = this.filterIndividualTorrents(newValue);
         }
-      
+
         this.store.loadData(filteredData);
         return newValue;
     },
@@ -106,5 +112,34 @@ Ext.define("Clutch.view.torrent.TorrentsGrid", {
             }
         });
         return data;
+    },
+
+    getSelectedTorrentIds : function() {
+        var torrentIds = [], selections = this.getSelectionModel().getSelection();
+
+        Ext.each(selections, function(torrent) {
+            torrentIds.push(torrent.data.id);
+        });
+        return torrentIds;
+    },
+    getAllTorrentIds : function() {
+
+        var torrentIds = [], torrents = this.getTorrents();
+
+        Ext.each(torrents, function(torrent) {
+            torrentIds.push(torrent.id);
+        });
+        return torrentIds;
+    },
+    getFinishedTorrentIds : function() {
+
+        var torrentIds = [], torrents = this.getTorrents();
+
+        Ext.each(torrents, function(torrent) {
+            if (torrent.status === 5 || torrent.status === 6) {
+                torrentIds.push(torrent.id);
+            }
+        });
+        return torrentIds;
     }
 });

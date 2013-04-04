@@ -4,7 +4,7 @@ Ext.define('Clutch.view.Viewport', {
 
     extend : 'Ext.container.Viewport',
 
-    requires : ['Ext.tab.Panel', 'Ext.layout.container.Border', 'Clutch.view.statistics.SpeedComponent', 'Clutch.view.torrent.Tree', 'Clutch.view.MainToolbar', 'Clutch.view.search.SearchResultGrid', 'Clutch.view.torrent.TorrentsGrid'],
+    requires : ['Clutch.view.torrent.properties.DetailsPanel', 'Ext.layout.container.Border', 'Clutch.view.statistics.SpeedComponent', 'Clutch.view.torrent.Tree', 'Clutch.view.MainToolbar', 'Clutch.view.search.SearchResultGrid', 'Clutch.view.torrent.TorrentsGrid'],
 
     layout : {
         type : 'border'
@@ -22,32 +22,38 @@ Ext.define('Clutch.view.Viewport', {
                 xtype : 'tbfill'
             }, {
                 xtype : 'speedcomponent'
-            }, {
-                xtype : 'textfield',
-                itemId : 'searchField',
-                emptyText : 'Search isohunt.com'
             }]
         },
 
         items : [{
+            selectable : true,
             xtype : 'panel',
             title : 'Torrents',
             layout : 'border',
             items : [{
                 region : 'west',
-                xtype : 'torrenttree'
+                xtype : 'torrenttree',
+                split : true,
+                collapsible : true,
+                collapsed : false
+
+            }, {
+                xtype : 'toolbar',
+                region : 'south',
+                items : ['Hello']
 
             }, {
                 region : 'center',
                 xtype : 'torrentsgrid'
 
             }, {
-                region : 'south',
-                xtype : 'panel',
-                title : 'Details',
-                height : 200,
+                region : 'east',
+                xtype : 'torrentdetailspanel',
+                width : 500,
                 collapsible : true,
-                collapsed : true
+                collapsed : true,
+                split : true
+                
 
             }]
         }, {
@@ -56,4 +62,5 @@ Ext.define('Clutch.view.Viewport', {
         }]
 
     }]
+
 });

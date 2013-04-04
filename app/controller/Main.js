@@ -1,6 +1,6 @@
 Ext.define('Clutch.controller.Main', {
     extend : 'Ext.app.Controller',
-    stores : ['TorrentTransfers', 'SearchResult'],
+    stores : ['TorrentTransfers', 'SearchResult','PeersStore'],
     init : function(app) {
 
         var me = this;
@@ -47,9 +47,9 @@ Ext.define('Clutch.controller.Main', {
     },
 
     onTorrentdetailsreceived : function(torrentData) {
-        var panelsArray = Ext.ComponentQuery.query('torrentsgrid');
+        var grids = Ext.ComponentQuery.query('torrentsgrid');
 
-        Ext.each(panelsArray, function(panel) {
+        Ext.each(grids, function(panel) {
             panel.setTorrents(torrentData.arguments.torrents);
         });
     },

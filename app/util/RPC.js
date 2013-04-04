@@ -96,7 +96,7 @@ Ext.define('Clutch.util.RPC', {
             }
         });
     },
-    
+
     getStats : function() {
         var params = {
             "method" : "session-stats",
@@ -130,9 +130,15 @@ Ext.define('Clutch.util.RPC', {
         var params = {
             "method" : "torrent-get",
             "arguments" : {
-                "fields" : ["peersConnected","peers","files", "percentDone", "seedsConnected", "id", "name", "status", "totalSize", "sizeWhenDone", "haveValid", "leftUntilDone", "haveUnchecked", "eta", "uploadedEver", "uploadRatio", "rateDownload", "rateUpload", "metadataPercentComplete", "addedDate", "trackerStats", "error", "errorString", "recheckProgress", "bandwidthPriority", "seedRatioMode", "seedRatioLimit"]
+                "fields" : []
             }
         };
+
+        var model = Ext.create('Clutch.model.Torrent'); //TODO - create once as right now this is probably expensive
+       
+        Ext.each(model.fields.items, function(field) {
+            params.arguments.fields.push(field.name); //SAVES DEFINING HUGE MODEL AS WELL AS NAMINCG FIELDS EXPLICITLY HERE
+        });
 
         Ext.Ajax.request({
             url : '/transmission/rpc',
@@ -257,8 +263,7 @@ Ext.define('Clutch.util.RPC', {
         });
     },
 
-    addTorrent : function(options) {
-        debugger;
+    addTorrent : function(options) { debugger;
         //var url = options.url;
         // "cookies"            | string      pointer to a string of one or more cookies.
         // 365    "download-dir"       | string      path to download the torrent to
@@ -300,3 +305,4 @@ Ext.define('Clutch.util.RPC', {
         });
     }
 });
+

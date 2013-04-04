@@ -92,6 +92,12 @@ Ext.define("Clutch.view.MainToolbar", {
         }]
 
     }, '->', {
+                xtype : 'textfield',
+                itemId : 'searchField',
+                emptyText : 'Search isohunt.com',
+               // height : 40,
+                width : 200
+            },{
         xtype : 'buttongroup',
         frame : false,
         columns : 3,

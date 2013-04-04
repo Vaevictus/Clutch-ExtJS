@@ -7,6 +7,8 @@ Ext.define("Clutch.view.torrent.TorrentsGrid", {
 
     store : 'TorrentTransfers',
 
+    emptyTextPrefix : 'No torrents to show',
+
     config : {
         torrents : null,
         filter : 'all'
@@ -14,8 +16,7 @@ Ext.define("Clutch.view.torrent.TorrentsGrid", {
 
     viewConfig : {
         preserveScrollOnRefresh : true, //TODO - doesn't quite work how desired when there are many torrents in the grid
-        emptyText: 'No torrents to show',
-        deferEmptyText: false
+        stripeRows : true
     },
 
     columns : [{
@@ -63,6 +64,8 @@ Ext.define("Clutch.view.torrent.TorrentsGrid", {
         this.contextMenu = Ext.create('Clutch.view.torrent.TorrentContextMenu', {
             grid : this
         });
+        
+
         this.callParent(arguments);
     },
     applyFilter : function(f, oldValue) {

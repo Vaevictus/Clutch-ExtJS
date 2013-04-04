@@ -10,7 +10,8 @@ Ext.define("Clutch.view.search.SearchResultGrid", {
         searchTerm : null
     },
     viewConfig : {
-        emptyText : 'No results'
+        emptyText : 'No results',
+        stripeRows: true
 
     },
 

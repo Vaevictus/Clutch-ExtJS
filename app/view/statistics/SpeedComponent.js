@@ -3,7 +3,8 @@ Ext.define('Clutch.view.statistics.SpeedComponent', {
     extend : 'Ext.container.Container',
 
     alias : 'widget.speedcomponent',
-
+    
+     
     config : {
         speedUp : 0,
         speedDown : 0
@@ -11,28 +12,19 @@ Ext.define('Clutch.view.statistics.SpeedComponent', {
     layout : 'hbox',
 
     items : [{
-        xtype : 'text',
+        xtype : 'menuitem',
         text : 'Down: '
     }, {
-        xtype : 'tbspacer',
-        width : 2
-    },{
-        xtype : 'text',
+        xtype : 'menuitem',
         itemId : 'speeddown',
-        width : 80
+        //width : 80
     }, {
-        xtype : 'tbspacer',
-        width : 10
-    }, {
-        xtype : 'text',
+        xtype : 'menuitem',
         text : 'Up: '
-    }, {
-        xtype : 'tbspacer',
-        width : 2
     },{
-        xtype : 'text',
+        xtype : 'menuitem',
         itemId : 'speedup',
-         width : 80
+        // width : 80
     }],
 
     constructor : function(cfg) {
@@ -42,12 +34,14 @@ Ext.define('Clutch.view.statistics.SpeedComponent', {
 
     applySpeedUp : function(v, oldValue) {
         var corrected = Ext.util.Format.fileSize(v);
+        if (corrected !== '-') corrected += '/s';
         this.down('#speedup').setText(corrected);
         return v;
     },
 
     applySpeedDown : function(v, oldValue) {
         var corrected = Ext.util.Format.fileSize(v);
+        if (corrected !== '-') corrected += '/s';
         this.down('#speeddown').setText(corrected);
         return v;
     }

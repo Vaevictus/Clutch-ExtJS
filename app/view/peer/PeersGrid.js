@@ -7,8 +7,6 @@ Ext.define("Clutch.view.peer.PeersGrid", {
     
     store : 'PeersStore',
 
-    emptyTextPrefix : 'No peers to show',
-
     config : {
         value : null
 
@@ -16,7 +14,10 @@ Ext.define("Clutch.view.peer.PeersGrid", {
 
     viewConfig : {
         preserveScrollOnRefresh : true, //TODO - doesn't quite work how desired when there are many torrents in the grid
-        stripeRows : true
+        stripeRows : true,
+        emptyText : 'No Peers to show',
+        deferEmptyText : false
+        
     },
 
     columns : [{

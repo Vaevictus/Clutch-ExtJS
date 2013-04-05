@@ -20,7 +20,8 @@ Ext.define('Clutch.controller.TorrentsController', {
                 beforeitemcontextmenu : me.onContextMenu,
                 afterrender : me.onAfterRenderGrid,
                 storeload : me.onTorrentSelect,
-                itemclick : me.onTorrentSelect
+                itemclick : me.onTorrentSelect,
+                itemdblclick : me.onTorrentDoubleClick
             },
             'torrentcontextmenu' : {
                 click : me.onContextMenuClick
@@ -54,6 +55,9 @@ Ext.define('Clutch.controller.TorrentsController', {
 
             grid.fireEvent('storeload', grid);
         });
+    },
+    onTorrentDoubleClick : function(grid, record, index, eOpts) {
+        this.getDetailsPanel().expand();
     },
     onTorrentSelect : function(grid, record, index, eOpts) {
 

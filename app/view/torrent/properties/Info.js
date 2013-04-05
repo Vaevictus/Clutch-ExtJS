@@ -1,7 +1,9 @@
 Ext.define('Clutch.view.torrent.properties.Info', {
 
     extend : 'Ext.form.Panel',
-
+    
+    requires : ['Clutch.view.field.BytesField','Clutch.view.field.TextTimeField','Clutch.view.field.TimestampField'],
+    
     alias : 'widget.torrentinfo',
 
     items : [{
@@ -13,26 +15,32 @@ Ext.define('Clutch.view.torrent.properties.Info', {
             width : 400
         },
         items : [{
+            
             fieldLabel : 'Availability',
             name : 'metadataPercentComplete'
         }, {
             fieldLabel : 'Downloaded',
+            xtype : 'bytesfield',
             name : 'downloadedEver'
         }, {
             fieldLabel : 'Uploaded',
-            name : 'uploadedEver'
+            name : 'uploadedEver',
+            xtype : 'bytesfield'
         }, {
             fieldLabel : 'State',
             name : 'status'
         }, {
             fieldLabel : 'Running Time',
-            name : 'runningTime'
+            name : 'runningTime',
+            xtype : 'secondsfield'
         }, {
             fieldLabel : 'Remaining Time',
-            name : 'remainingTime'
+            name : 'eta',
+            xtype : 'secondsfield'
         }, {
             fieldLabel : 'Last Activity',
-            name : 'activityDate'
+            name : 'activityDate',
+            xtype : 'timestampfield'
         }, {
             fieldLabel : 'Errors',
             name : 'error'
@@ -47,7 +55,8 @@ Ext.define('Clutch.view.torrent.properties.Info', {
         },
         items : [{
             fieldLabel : 'Size',
-            name : 'sizeWhenDone'
+            name : 'sizeWhenDone',
+            xtype : 'bytesfield'
         }, {
             fieldLabel : 'Location',
             name : 'downloadDir'

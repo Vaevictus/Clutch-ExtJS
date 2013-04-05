@@ -2,7 +2,9 @@ Ext.define("Clutch.view.statistics.StatsDialog", {
     extend : 'Ext.window.Window',
 
     title : 'Statistics',
-
+    
+    requires : ['Clutch.view.field.BytesField','Clutch.view.field.TextTimeField','Clutch.view.field.TimestampField'],
+    
     alias : 'widget.statsdialog',
 
     constrain : true,
@@ -35,12 +37,14 @@ Ext.define("Clutch.view.statistics.StatsDialog", {
             }, {
                 fieldLabel : 'Download Speed',
                 readOnly : true,
-                xtype : 'numberfield',
+                xtype : 'bytesfield',
+                suffix : '/sec',
                 itemId : 'downloadSpeed'
             }, {
                 fieldLabel : 'Upload Speed',
                 readOnly : true,
-                xtype : 'numberfield',
+                xtype : 'bytesfield',
+                suffix : '/sec',
                 itemId : 'uploadSpeed'
             }]
         }, {
@@ -49,12 +53,12 @@ Ext.define("Clutch.view.statistics.StatsDialog", {
             items : [{
                 fieldLabel : 'Uploaded',
                 readOnly : true,
-                xtype : 'numberfield',
+                xtype : 'bytesfield',
                 itemId : 'c-uploadedBytes'
             }, {
                 fieldLabel : 'Downloaded',
                 readOnly : true,
-                xtype : 'numberfield',
+                xtype : 'bytesfield',
                 itemId : 'c-downloadedBytes'
             }, {
                 fieldLabel : 'Torrents Added',
@@ -64,7 +68,7 @@ Ext.define("Clutch.view.statistics.StatsDialog", {
             }, {
                 fieldLabel : 'Time Active',
                 readOnly : true,
-                xtype : 'numberfield',
+                xtype : 'secondsfield',
                 itemId : 'c-secondsActive'
             }]
         }, {
@@ -73,12 +77,12 @@ Ext.define("Clutch.view.statistics.StatsDialog", {
             items : [{
                 fieldLabel : 'Uploaded',
                 readOnly : true,
-                xtype : 'numberfield',
+                xtype : 'bytesfield',
                 itemId : 'h-uploadedBytes'
             }, {
                 fieldLabel : 'Downloaded',
                 readOnly : true,
-                xtype : 'numberfield',
+                xtype : 'bytesfield',
                 itemId : 'h-downloadedBytes'
             }, {
                 fieldLabel : 'Torrents Added',
@@ -88,7 +92,7 @@ Ext.define("Clutch.view.statistics.StatsDialog", {
             }, {
                 fieldLabel : 'Time Active',
                 readOnly : true,
-                xtype : 'numberfield',
+                xtype : 'secondsfield',
                 itemId : 'h-secondsActive'
             }]
         }]

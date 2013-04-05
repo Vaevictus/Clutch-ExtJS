@@ -8,7 +8,7 @@ Ext.define('Clutch.model.Torrent', {
     extend : 'Ext.data.Model',
     fields : [{
         name : 'activityDate',
-        type : 'date'
+        type : 'number'
     }, {
         name : 'addedDate',
         type : 'date'

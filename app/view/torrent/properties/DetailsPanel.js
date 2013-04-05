@@ -4,7 +4,7 @@ Ext.define('Clutch.view.torrent.properties.DetailsPanel', {
 
     alias : 'widget.torrentdetailspanel',
 
-    requires : ['Clutch.view.peer.PeersGrid', 'Clutch.view.torrent.properties.Info', 'Clutch.view.torrent.properties.Trackers', 'Clutch.view.torrent.properties.Files'],
+    requires : ['Clutch.view.peer.PeersGrid', 'Clutch.view.torrent.properties.Info', 'Clutch.view.torrent.properties.TrackersGrid', 'Clutch.view.torrent.properties.Files'],
 
     title : 'Details',
     
@@ -15,7 +15,7 @@ Ext.define('Clutch.view.torrent.properties.DetailsPanel', {
         xtype : 'peersgrid',
         title : 'Peers'
     }, {
-        xtype : 'torrenttrackers',
+        xtype : 'trackersgrid',
         title : 'Trackers'
     }, {
         xtype : 'torrentfiles',
@@ -25,6 +25,7 @@ Ext.define('Clutch.view.torrent.properties.DetailsPanel', {
     setValue : function(torrentData){
         this.setTitle('Details: ' + torrentData.get('name'));
         this.down('torrentinfo').setValue(torrentData);
+         this.down('trackersgrid').setValue(torrentData.get('trackerStats'));
         this.down('peersgrid').setValue(torrentData.get('peers'));
     }
 

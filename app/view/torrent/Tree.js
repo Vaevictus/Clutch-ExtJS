@@ -83,7 +83,7 @@ Ext.define("Clutch.view.torrent.Tree", {
     filterInactive : function(record) {
         var up = record.get('rateUpload'), down = record.get('rateDownload');
         
-        return (up === 0 || down === 0);
+        return (up === 0 && down === 0);
     }
     // typedef enum
     // {

@@ -19,7 +19,8 @@ Ext.define('Clutch.controller.TorrentsController', {
             'torrentsgrid' : {
                 beforeitemcontextmenu : me.onContextMenu,
                 afterrender : me.onAfterRenderGrid,
-                storeload : me.onTorrentSelect
+                storeload : me.onTorrentSelect,
+                itemclick : me.onTorrentSelect
             },
             'torrentcontextmenu' : {
                 click : me.onContextMenuClick

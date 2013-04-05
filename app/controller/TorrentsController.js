@@ -5,7 +5,7 @@ Ext.define('Clutch.controller.TorrentsController', {
     refs : [{
         ref : 'torrentsGrid',
         selector : 'torrentsgrid'
-    },{
+    }, {
         ref : 'detailsPanel',
         selector : 'torrentdetailspanel'
     }],
@@ -48,23 +48,27 @@ Ext.define('Clutch.controller.TorrentsController', {
             }
         });
     },
-    onAfterRenderGrid: function(grid){
+    onAfterRenderGrid : function(grid) {
 
-      grid.store.on('datachanged', function(store) {
-          
+        grid.store.on('datachanged', function(store) {
+
             grid.fireEvent('storeload', grid);
-        });  
+        });
     },
     onTorrentSelect : function(grid, record, index, eOpts) {
-        
+
         var selection = grid.getSelectionModel().getSelection()[0];
-        if (!selection) return;
+
+        if (!selection)
+            return;
+
         this.getDetailsPanel().setValue(selection);
     },
     onTreeNodeClick : function(treepanel, record, item, index, e, eOpts) {
 
         var grid = this.getTorrentsGrid();
-        grid.setFilter(record.raw.filter);
+
+        grid.setFilterFn(record.raw.filterFn);
     },
     onContextMenu : function(view, record, item, index, e) {
         e.stopEvent();

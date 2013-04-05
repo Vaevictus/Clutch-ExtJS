@@ -13,7 +13,8 @@ Ext.define('Clutch.controller.SearchController', {
             },
             'searchresultgrid' : {
                 beforeitemcontextmenu : me.onContextMenu,
-                afterrender : me.onAfterRender
+                afterrender : me.onAfterRender,
+                itemdblclick : me.onSearchResultDoubleClick
             }
         });
         app.on({
@@ -35,7 +36,10 @@ Ext.define('Clutch.controller.SearchController', {
     onStatsReceived : function(data) {
         //alert('from the other contorller');
     },
-
+    onSearchResultDoubleClick : function(grid, record, item, index, e, eOpts) {
+        var url = record.get('enclosure_url');
+        this.downloadTorrent(url);
+    },
     onContextMenu : function(view, record, item, index, e) {
         e.stopEvent();
         var contextMenu = view.up('searchresultgrid').contextMenu;
@@ -62,11 +66,14 @@ Ext.define('Clutch.controller.SearchController', {
 
     downloadSelectedTorrents : function(grid) {
         var selected = grid.getSelectionModel().getSelection();
-        Ext.each(selected, function(item) {
-            var url = item.get('enclosure_url');
-            Ext.create("Clutch.view.torrent.AddTorrentDialog", {
-                url : url
-            }).show();
+        Ext.each(selected, function(record) {
+            var url = record.get('enclosure_url');
+            this.downloadTorrent(url);
         });
+    },
+    downloadTorrent : function(url) {
+        Ext.create("Clutch.view.torrent.AddTorrentDialog", {
+            url : url
+        }).show();
     }
 });

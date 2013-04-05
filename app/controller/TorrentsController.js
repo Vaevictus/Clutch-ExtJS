@@ -58,7 +58,6 @@ Ext.define('Clutch.controller.TorrentsController', {
         
         var selection = grid.getSelectionModel().getSelection()[0];
         if (!selection) return;
-        debugger;
         this.getDetailsPanel().setValue(selection);
     },
     onTreeNodeClick : function(treepanel, record, item, index, e, eOpts) {

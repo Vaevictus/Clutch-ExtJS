@@ -25,7 +25,6 @@ Ext.define('Clutch.view.torrent.properties.DetailsPanel', {
     setValue : function(torrentData){
         this.setTitle('Details: ' + torrentData.get('name'));
         this.down('torrentinfo').setValue(torrentData);
-        debugger;
         this.down('peersgrid').setValue(torrentData.get('peers'));
     }
 

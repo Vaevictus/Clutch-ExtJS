@@ -82,7 +82,6 @@ Ext.define('Clutch.view.torrent.properties.Info', {
     },
 
     setValue : function(torrentData) {
-        debugger;
         this.loadRecord(torrentData);
     }
 });

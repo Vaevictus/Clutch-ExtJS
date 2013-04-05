@@ -2,7 +2,7 @@ Ext.define('Clutch.view.torrent.properties.Info', {
 
     extend : 'Ext.form.Panel',
     
-    requires : ['Clutch.view.field.BytesField','Clutch.view.field.TextTimeField','Clutch.view.field.TimestampField'],
+    requires : ['Clutch.view.field.TorrentStateField', 'Clutch.view.field.BytesField','Clutch.view.field.TextTimeField','Clutch.view.field.TimestampField'],
     
     alias : 'widget.torrentinfo',
 
@@ -28,7 +28,8 @@ Ext.define('Clutch.view.torrent.properties.Info', {
             xtype : 'bytesfield'
         }, {
             fieldLabel : 'State',
-            name : 'status'
+            name : 'status',
+            xtype : 'torrentstatefield'
         }, {
             fieldLabel : 'Running Time',
             name : 'runningTime',

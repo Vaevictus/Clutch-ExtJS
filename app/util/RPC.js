@@ -134,10 +134,12 @@ Ext.define('Clutch.util.RPC', {
             }
         };
 
-        var model = Ext.create('Clutch.model.Torrent'); //TODO - create once as right now this is probably expensive
-       
+        var model = Ext.create('Clutch.model.Torrent');
+        //TODO - create once as right now this is probably expensive
+
         Ext.each(model.fields.items, function(field) {
-            params.arguments.fields.push(field.name); //SAVES DEFINING HUGE MODEL AS WELL AS NAMINCG FIELDS EXPLICITLY HERE
+            params.arguments.fields.push(field.name);
+            //SAVES DEFINING HUGE MODEL AS WELL AS NAMINCG FIELDS EXPLICITLY HERE
         });
 
         Ext.Ajax.request({
@@ -303,6 +305,34 @@ Ext.define('Clutch.util.RPC', {
                 Ext.emptyFn
             }
         });
+    },
+
+    parseTorrentState : function(v) {
+        switch (v) {
+            case 0:
+                return "Stopped";
+
+            case 1:
+                return "Waiting Check";
+
+            case 2:
+                return "Checking";
+
+            case 3:
+                return "Queued Download";
+
+            case 4:
+                return "Downloading";
+
+            case 5:
+                return "Queued Seed";
+
+            case 6:
+                return "Seeding";
+
+            default:
+                return "Unknown";
+        }
     }
 });
 

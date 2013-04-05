@@ -4,36 +4,7 @@ Ext.define('Clutch.view.column.StatusColumn', {
     alias : 'widget.torrentstatuscolumn',
 
     renderer : function(value) {
-        var v;
-       
-        switch (value) {
-            case 0:
-                v = "Stopped";
-                break;
-            case 1:
-                v = "Waiting Check";
-                break;
-            case 2:
-                v = "Checking";
-                break;
-            case 3:
-                v = "Queued Download";
-                break;
-            case 4:
-                v = "Downloading";
-                break;
-            case 5:
-                v = "Queued Seed";
-                break;
-            case 6:
-                v = "Seeding";
-                break;
-            default:
-                v = "Unknown";
-                break;
-
-        }
-        return v;
+        return Clutch.util.RPC.parseTorrentState(value);
     }
 });
 

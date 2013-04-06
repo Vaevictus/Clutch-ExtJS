@@ -4,7 +4,7 @@ Ext.define('Clutch.view.Viewport', {
 
     extend : 'Ext.container.Viewport',
 
-    requires : ['Clutch.view.BottomToolbar','Clutch.view.torrent.properties.DetailsPanel', 'Ext.layout.container.Border', 'Clutch.view.statistics.SpeedComponent', 'Clutch.view.torrent.Tree', 'Clutch.view.MainToolbar', 'Clutch.view.search.SearchResultGrid', 'Clutch.view.torrent.TorrentsGrid'],
+    requires : ['Clutch.view.BottomToolbar', 'Clutch.view.torrent.properties.DetailsPanel', 'Ext.layout.container.Border', 'Clutch.view.statistics.SpeedComponent', 'Clutch.view.torrent.Tree', 'Clutch.view.MainToolbar', 'Clutch.view.search.SearchResultGrid', 'Clutch.view.torrent.TorrentsGrid'],
 
     layout : {
         type : 'border'
@@ -15,9 +15,12 @@ Ext.define('Clutch.view.Viewport', {
         xtype : 'torrenttoolbar'
 
     }, {
+        xtype : 'bottomtoolbar',
+        region : 'south'
+    }, {
         region : 'center',
         xtype : 'tabpanel',
-        
+
         items : [{
             selectable : true,
             xtype : 'panel',
@@ -30,9 +33,6 @@ Ext.define('Clutch.view.Viewport', {
                 collapsible : true,
                 collapsed : false
 
-            }, {
-                xtype : 'bottomtoolbar',
-                region : 'south'
             }, {
                 region : 'center',
                 xtype : 'torrentsgrid'

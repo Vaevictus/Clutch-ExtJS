@@ -1383,6 +1383,7 @@ Ext.Number = new function() {
     ExtArray = Ext.Array = {
         
         each: function(array, fn, scope, reverse) {
+            
             array = ExtArray.from(array);
 
             var i,
@@ -88609,6 +88610,7 @@ Ext.define('Ext.form.Basic', {
             v, vLen, val, field;
 
         function setVal(fieldId, val) {
+            debugger;
             var field = me.findField(fieldId);
             if (field) {
                 field.setValue(val);

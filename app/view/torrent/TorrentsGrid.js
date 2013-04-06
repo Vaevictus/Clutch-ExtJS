@@ -77,7 +77,7 @@ Ext.define("Clutch.view.torrent.TorrentsGrid", {
 
     applyTorrents : function(newValue, oldValue) {
 
-        this.store.loadData(newValue);
+        this.store.loadRawData(newValue);
         return newValue;
     },
 

@@ -5,14 +5,21 @@ Ext.define("Clutch.view.search.SearchResultGrid", {
 
     store : 'SearchResult',
 
+    title : 'Search Results',
+
     config : {
         results : null,
-        searchTerm : null
+
+        searchTerm : null,
+
+        filterCat : 'all'
     },
     viewConfig : {
         emptyText : 'No results',
-        stripeRows: true
 
+        stripeRows : true,
+
+        deferEmptyText : false
     },
 
     alias : 'widget.searchresultgrid',
@@ -28,90 +35,80 @@ Ext.define("Clutch.view.search.SearchResultGrid", {
         width : 50,
         dataIndex : 'Seeds'
     }, {
-        header : 'Peers',
+        header : 'Leechers',
         width : 50,
         dataIndex : 'leechers'
     }, {
         header : 'Size',
-        dataIndex : 'length',
+        dataIndex : 'Size',
         xtype : 'sizecolumn'
     }, {
         header : 'Date Added',
-        flex : 1,
         xtype : 'datecolumn',
         dataIndex : 'pubDate',
         format : 'F j, Y, g:i a'
+    }, {
+        header : 'Downloads',
+        dataIndex : 'downloads'
+    }, {
+        header : 'Category',
+        dataIndex : 'category'
+    }, {
+        header : 'Votes',
+        dataIndex : 'votes',
+        flex : 1
     }],
     selModel : new Ext.selection.RowModel({
         mode : 'MULTI'
     }),
 
-    applyResults : function(newValue, oldValue) { 
-        this.store.loadData(newValue);
+    applyResults : function(newValue, oldValue) {
+        this.store.loadRawData(newValue); //must use loadRawData here as loadData does not supporting mapping in the fields which we need for other ext bugs
+        console.log(this.store.data.items[0].data)
+        debugger;
         return newValue;
     },
 
-    applySearchTerm : function(newValue, oldValue) {
+    applyFilterCat : function(cat, oldCat) {
 
-        newValue = encodeURIComponent(newValue);
-        var proxy = 'http://query.yahooapis.com/v1/public/yql?&q={0}&format=json', q = encodeURIComponent(Ext.String.format('select * from json where url="http://isohunt.com/js/json.php?ihq={0}"', newValue));
-
-        var url = Ext.String.format(proxy, q);
-
-        this.show();
-        this.setLoading(true);
-
-        Ext.data.JsonP.request({
-            url : url,
-
-            success : function(response) {
-                this.setLoading(false);
-                var YQLResultObject = response.query.results.json;
-                if (YQLResultObject.total_results > 0) {
-                    var searchResults = response.query.results.json.items.list;
-                    this.setResults(searchResults);
-                } else {
-                    this.setResults([]);
-                }
-
-            },
-            scope : this,
-
-            failure : function(response) {
-                this.setLoading(false);
-                alert('Failed to get results')
-            }
-        });
-        return newValue;
+        this.store.clearFilter(false);
+        if (cat !== 'all') {
+            this.store.filter('category', cat, true, true);
+        }
+        return cat;
+    },
+    applySearchTerm : function(s, oldValue) {
+        this.setTitle('Search Results: ' + s);
+        return s;
     }
 });
 /*
-var example_query_with_no_results = {
-    "query" : {
-        "count" : 1,
-        "created" : "2013-04-03T17:27:22Z",
-        "lang" : "en-US",
-        "results" : {
-            "json" : {
-                "title" : "isoHunt > All > whhhrr",
-                "link" : "http://isohunt.com",
-                "description" : "BitTorrent Search > All > whhhrr",
-                "language" : "en-us",
-                "category" : "All",
-                "max_results" : "1000",
-                "ttl" : "15",
-                "image" : {
-                    "title" : "isoHunt > All > whhhrr",
-                    "url" : "http://isohunt.com/img/buttons/isohunt-02.gif",
-                    "link" : "http://isohunt.com/",
-                    "width" : "157",
-                    "height" : "45"
-                },
-                "lastBuildDate" : "Wed, 03 Apr 2013 17:26:29 GMT",
-                "pubDate" : "Wed, 03 Apr 2013 17:26:29 GMT",
-                "total_results" : "0",
-                "censored" : "0"
-            }
-        }
-    }
-}; */
+ var example_query_with_no_results = {
+ "query" : {
+ "count" : 1,
+ "created" : "2013-04-03T17:27:22Z",
+ "lang" : "en-US",
+ "results" : {
+ "json" : {
+ "title" : "isoHunt > All > whhhrr",
+ "link" : "http://isohunt.com",
+ "description" : "BitTorrent Search > All > whhhrr",
+ "language" : "en-us",
+ "category" : "All",
+ "max_results" : "1000",
+ "ttl" : "15",
+ "image" : {
+ "title" : "isoHunt > All > whhhrr",
+ "url" : "http://isohunt.com/img/buttons/isohunt-02.gif",
+ "link" : "http://isohunt.com/",
+ "width" : "157",
+ "height" : "45"
+ },
+ "lastBuildDate" : "Wed, 03 Apr 2013 17:26:29 GMT",
+ "pubDate" : "Wed, 03 Apr 2013 17:26:29 GMT",
+ "total_results" : "0",
+ "censored" : "0"
+ }
+ }
+ }
+ }; */

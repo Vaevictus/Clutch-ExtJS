@@ -13,9 +13,7 @@ Ext.define('Clutch.controller.Main', {
         });
 
         me.control({
-            '#searchField' : {
-                specialkey : me.onSearchFieldEnterPress
-            },
+            
             'torrenttoolbar #btnAddViaUrl' : {
                 click : me.showAddTorrentUrlDialog
             },
@@ -53,15 +51,7 @@ Ext.define('Clutch.controller.Main', {
             panel.setTorrents(torrentData.arguments.torrents);
         });
     },
-    onSearchFieldEnterPress : function(field, e) {
 
-        if (e.getKey() === e.ENTER) {
-            var searchText = field.getValue();
-            Clutch.app.fireEvent('dosearch', searchText);
-
-        }
-
-    },
     onStatsReceived : function(data) {
 
         var args = data.arguments;

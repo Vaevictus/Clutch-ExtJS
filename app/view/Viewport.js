@@ -4,7 +4,7 @@ Ext.define('Clutch.view.Viewport', {
 
     extend : 'Ext.container.Viewport',
 
-    requires : ['Clutch.view.BottomToolbar', 'Clutch.view.torrent.properties.DetailsPanel', 'Ext.layout.container.Border', 'Clutch.view.statistics.SpeedComponent', 'Clutch.view.torrent.Tree', 'Clutch.view.MainToolbar', 'Clutch.view.search.SearchResultGrid', 'Clutch.view.torrent.TorrentsGrid'],
+    requires : ['Clutch.view.search.properties.DetailsPanel','Clutch.view.search.SearchTree', 'Clutch.view.BottomToolbar', 'Clutch.view.torrent.properties.DetailsPanel', 'Ext.layout.container.Border', 'Clutch.view.statistics.SpeedComponent', 'Clutch.view.torrent.Tree', 'Clutch.view.MainToolbar', 'Clutch.view.search.SearchResultGrid', 'Clutch.view.torrent.TorrentsGrid'],
 
     layout : {
         type : 'border'
@@ -47,10 +47,33 @@ Ext.define('Clutch.view.Viewport', {
 
             }]
         }, {
-            xtype : 'searchresultgrid',
-            title : 'Search Results'
+            selectable : true,
+            xtype : 'panel',
+            title : 'Search',
+            layout : 'border',
+            items : [{
+                xtype : 'searchtree',
+                region : 'west',
+                collapsible : true,
+                split : true
+            }, {
+                xtype : 'searchresultgrid',
+                region : 'center',
+                title : 'Search Results'
+            }
+            ,{
+                xtype : 'searchresultdetailspanel',
+                region : 'east',
+                collapsed : true,
+                collapsible : true,
+                split : true,
+                width : 400
+            }
+            ]
+
         }]
 
     }]
 
 });
+

@@ -3,7 +3,12 @@ Ext.define('Clutch.store.SearchResult', {
     requires : ['Clutch.model.SearchResult'],
     model : 'Clutch.model.SearchResult',
     proxy : {
-        type : 'memory'
+        type : 'memory',
+        reader: {
+            type: 'json',
+            root : ''
+            //useSimpleAccessors: true
+        }
     },
     type : 'json'
 }); 

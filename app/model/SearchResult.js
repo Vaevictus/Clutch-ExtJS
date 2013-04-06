@@ -6,6 +6,9 @@
  */
 Ext.define('Clutch.model.SearchResult', {
     extend : 'Ext.data.Model',
+
+    idProperty : 'guid',
+
     fields : [{
         name : 'title',
         type : 'string'
@@ -19,8 +22,10 @@ Ext.define('Clutch.model.SearchResult', {
         name : 'enclosure_url',
         type : 'string'
     }, {
-        name : 'length',
-        type : 'number'
+        name : 'Size',
+        type : 'number',
+        mapping : 'length'
+        
     }, {
         name : 'tracker',
         type : 'string'
@@ -47,13 +52,13 @@ Ext.define('Clutch.model.SearchResult', {
         type : 'string'
     }, {
         name : 'files',
-        type : 'string'
+        type : 'number'
     }, {
         name : 'Seeds',
         type : 'number'
     }, {
         name : 'leechers',
-        type : 'string'
+        type : 'number'
     }, {
         name : 'downloads',
         type : 'number'
@@ -73,30 +78,30 @@ Ext.define('Clutch.model.SearchResult', {
 });
 
 // var x = {
-    // "title" : "Jay-Z Ft <b>Rihanna</b> & Kanye West - Run This Town-MIXFIEND.mp3",
-    // "link" : "http:\/\/isohunt.com\/torrent_details\/108828493\/rihanna?tab=summary",
-    // "guid" : "108828493",
-    // "enclosure_url" : "http://ca.isohunt.com/download/108828493/rihanna.torrent",
-// 
-    // "length" : 6606029,
-    // "tracker" : "mixfiend.com",
-    // "tracker_url" : "http:\/\/mixfiend.com:6969\/announce",
-// 
-    // "kws" : "Rap",
-    // "exempts" : "",
-    // "category" : "Audio",
-    // "original_site" : "www.mininova.org",
-    // "original_link" : "http:\/\/www.mininova.org\/get\/2791443",
-// 
-    // "size" : "6.3 MB",
-    // "files" : 1,
-    // "Seeds" : 38,
-    // "leechers" : 1,
-// 
-    // "downloads" : 96892,
-    // "votes" : 5,
-    // "comments" : 1,
-// 
-    // "hash" : "57b53a233b3a72a5b5ed37d175d266f1e75abc03",
-    // "pubDate" : "Fri, 24 Jul 2009 15:14:37 GMT"
+// "title" : "Jay-Z Ft <b>Rihanna</b> & Kanye West - Run This Town-MIXFIEND.mp3",
+// "link" : "http:\/\/isohunt.com\/torrent_details\/108828493\/rihanna?tab=summary",
+// "guid" : "108828493",
+// "enclosure_url" : "http://ca.isohunt.com/download/108828493/rihanna.torrent",
+//
+// "length" : 6606029,
+// "tracker" : "mixfiend.com",
+// "tracker_url" : "http:\/\/mixfiend.com:6969\/announce",
+//
+// "kws" : "Rap",
+// "exempts" : "",
+// "category" : "Audio",
+// "original_site" : "www.mininova.org",
+// "original_link" : "http:\/\/www.mininova.org\/get\/2791443",
+//
+// "size" : "6.3 MB",
+// "files" : 1,
+// "Seeds" : 38,
+// "leechers" : 1,
+//
+// "downloads" : 96892,
+// "votes" : 5,
+// "comments" : 1,
+//
+// "hash" : "57b53a233b3a72a5b5ed37d175d266f1e75abc03",
+// "pubDate" : "Fri, 24 Jul 2009 15:14:37 GMT"
 // };

@@ -1,9 +1,9 @@
-Ext.define("Clutch.view.search.SearchResultGrid", {
+Ext.define("Clutch.view.search.SearchResultGridBase", {
     extend : 'Ext.grid.Panel',
 
     requires : ['Clutch.view.column.SizeColumn'],
 
-    store : 'SearchResult',
+    store : Ext.create('Clutch.store.SearchResult'),
 
     title : 'Search Results',
 
@@ -29,18 +29,18 @@ Ext.define("Clutch.view.search.SearchResultGrid", {
     columns : [{
         header : 'Name',
         flex : 1,
-        dataIndex : 'title'
+        dataIndex : 'name'
     }, {
         header : 'Seeds',
         width : 50,
-        dataIndex : 'Seeds'
+        dataIndex : 'seeds'
     }, {
         header : 'Leechers',
         width : 50,
         dataIndex : 'leechers'
     }, {
         header : 'Size',
-        dataIndex : 'Size',
+        dataIndex : 'size',
         xtype : 'sizecolumn'
     }, {
         header : 'Date Added',
@@ -54,18 +54,18 @@ Ext.define("Clutch.view.search.SearchResultGrid", {
         header : 'Category',
         dataIndex : 'category'
     }, {
-        header : 'Votes',
-        dataIndex : 'votes',
+        header : 'Comments',
+        dataIndex : 'comments',
         flex : 1
     }],
+    
     selModel : new Ext.selection.RowModel({
         mode : 'MULTI'
     }),
 
     applyResults : function(newValue, oldValue) {
-        this.store.loadRawData(newValue); //must use loadRawData here as loadData does not supporting mapping in the fields which we need for other ext bugs
-        console.log(this.store.data.items[0].data)
-        debugger;
+        this.store.loadRawData(newValue);
+        //must use loadRawData here as loadData does not supporting mapping in the fields which we need for other ext bugs
         return newValue;
     },
 

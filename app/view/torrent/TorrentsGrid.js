@@ -1,4 +1,4 @@
-Ext.define("Clutch.view.torrent.TorrentsGrid", {
+Ext.define('Clutch.view.torrent.TorrentsGrid', {
     extend : 'Ext.grid.Panel',
 
     alias : 'widget.torrentsgrid',
@@ -9,6 +9,7 @@ Ext.define("Clutch.view.torrent.TorrentsGrid", {
 
     config : {
         torrents : null,
+        
         filterFn : function() {
             return true;
         }

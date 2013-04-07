@@ -4,7 +4,7 @@ Ext.define('Clutch.view.Viewport', {
 
     extend : 'Ext.container.Viewport',
 
-    requires : ['Clutch.view.search.properties.DetailsPanel','Clutch.view.search.SearchTree', 'Clutch.view.BottomToolbar', 'Clutch.view.torrent.properties.DetailsPanel', 'Ext.layout.container.Border', 'Clutch.view.statistics.SpeedComponent', 'Clutch.view.torrent.Tree', 'Clutch.view.MainToolbar', 'Clutch.view.search.SearchResultGrid', 'Clutch.view.torrent.TorrentsGrid'],
+    requires : ['Clutch.view.search.SearchField', 'Clutch.view.torrent.TorrentsPanel', 'Clutch.view.search.piratebay.SearchPanel', 'Clutch.view.search.piratebay.TopPanel', 'Clutch.view.BottomToolbar', 'Ext.layout.container.Border', 'Clutch.view.MainToolbar', 'Clutch.view.search.isohunt.SearchPanel', 'Clutch.view.torrent.TorrentsGrid'],
 
     layout : {
         type : 'border'
@@ -22,55 +22,13 @@ Ext.define('Clutch.view.Viewport', {
         xtype : 'tabpanel',
 
         items : [{
-            selectable : true,
-            xtype : 'panel',
-            title : 'Torrents',
-            layout : 'border',
-            items : [{
-                region : 'west',
-                xtype : 'torrenttree',
-                split : true,
-                collapsible : true,
-                collapsed : false
-
-            }, {
-                region : 'center',
-                xtype : 'torrentsgrid'
-
-            }, {
-                region : 'east',
-                xtype : 'torrentdetailspanel',
-                width : 500,
-                collapsible : true,
-                collapsed : true,
-                split : true
-
-            }]
+            xtype : 'torrentspanel'
         }, {
-            selectable : true,
-            xtype : 'panel',
-            title : 'Search',
-            layout : 'border',
-            items : [{
-                xtype : 'searchtree',
-                region : 'west',
-                collapsible : true,
-                split : true
-            }, {
-                xtype : 'searchresultgrid',
-                region : 'center',
-                title : 'Search Results'
-            }
-            ,{
-                xtype : 'searchresultdetailspanel',
-                region : 'east',
-                collapsed : true,
-                collapsible : true,
-                split : true,
-                width : 400
-            }
-            ]
-
+            xtype : 'isohuntsearchpanel'
+        },{
+          xtype : 'piratebaysearchpanel'  
+        }, {
+            xtype : 'piratebaytoppanel'
         }]
 
     }]

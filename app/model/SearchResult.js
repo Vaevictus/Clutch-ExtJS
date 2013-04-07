@@ -1,8 +1,5 @@
 /**
- * @class NITB.model.MD_Notification
- * @extend Ext.data.Model
- * Data Model which contains all the informations related
- * to a single incoming Notification.
+ * @class Clutch.model.SearchResult
  */
 Ext.define('Clutch.model.SearchResult', {
     extend : 'Ext.data.Model',
@@ -10,98 +7,46 @@ Ext.define('Clutch.model.SearchResult', {
     idProperty : 'guid',
 
     fields : [{
-        name : 'title',
-        type : 'string'
+        name : 'comment_link',
+        convert : function(value, record) {
+
+            var link = record.get('link') || "";
+
+            return link.replace('tab=summary', 'tab=comments');
+        }
     }, {
-        name : 'link',
-        type : 'string'
-    }, {
-        name : 'guid',
-        type : 'string'
-    }, {
-        name : 'enclosure_url',
-        type : 'string'
-    }, {
-        name : 'Size',
-        type : 'number',
-        mapping : 'length'
-        
-    }, {
-        name : 'tracker',
-        type : 'string'
-    }, {
-        name : 'tracker_url',
-        type : 'string'
-    }, {
-        name : 'kws',
-        type : 'string'
-    }, {
-        name : 'exempts',
+        name : 'name',
         type : 'string'
     }, {
         name : 'category',
         type : 'string'
     }, {
-        name : 'original_site',
-        type : 'string'
-    }, {
-        name : 'original_link',
-        type : 'string'
-    }, {
-        name : 'size',
-        type : 'string'
-    }, {
-        name : 'files',
-        type : 'number'
-    }, {
-        name : 'Seeds',
+        name : 'seeds',
         type : 'number'
     }, {
         name : 'leechers',
         type : 'number'
     }, {
-        name : 'downloads',
-        type : 'number'
+        name : 'torrentLink',
+        type : 'string'        
     }, {
-        name : 'votes',
-        type : 'number'
-    }, {
-        name : 'comments',
-        type : 'number'
-    }, {
-        name : 'hash',
+        name : 'provider',
         type : 'string'
     }, {
         name : 'pubDate',
         type : 'date'
+    }, {
+        name : 'id',
+        type : 'string'
+    }, {
+        name : 'size',
+        type : 'string'
+    },{
+        name : 'comments',
+        type : 'number'
+    },
+    {
+        name : 'downloads',
+        type : 'number'
     }]
 });
-
-// var x = {
-// "title" : "Jay-Z Ft <b>Rihanna</b> & Kanye West - Run This Town-MIXFIEND.mp3",
-// "link" : "http:\/\/isohunt.com\/torrent_details\/108828493\/rihanna?tab=summary",
-// "guid" : "108828493",
-// "enclosure_url" : "http://ca.isohunt.com/download/108828493/rihanna.torrent",
-//
-// "length" : 6606029,
-// "tracker" : "mixfiend.com",
-// "tracker_url" : "http:\/\/mixfiend.com:6969\/announce",
-//
-// "kws" : "Rap",
-// "exempts" : "",
-// "category" : "Audio",
-// "original_site" : "www.mininova.org",
-// "original_link" : "http:\/\/www.mininova.org\/get\/2791443",
-//
-// "size" : "6.3 MB",
-// "files" : 1,
-// "Seeds" : 38,
-// "leechers" : 1,
-//
-// "downloads" : 96892,
-// "votes" : 5,
-// "comments" : 1,
-//
-// "hash" : "57b53a233b3a72a5b5ed37d175d266f1e75abc03",
-// "pubDate" : "Fri, 24 Jul 2009 15:14:37 GMT"
-// };

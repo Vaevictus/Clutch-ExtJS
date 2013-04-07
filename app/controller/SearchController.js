@@ -2,9 +2,9 @@ Ext.define('Clutch.controller.SearchController', {
 
     extend : 'Ext.app.Controller',
 
-    views : ['search.SearchResultGrid'],
+    //views : ['search.SearchResultGrid'],
 
-    requires : ['Clutch.util.IsoHunt'],
+    requires : ['Clutch.util.IsoHunt', 'Clutch.util.PirateBay', 'Clutch.util.Harmoniser'],
 
     refs : [{
         ref : 'searchTree',
@@ -12,8 +12,7 @@ Ext.define('Clutch.controller.SearchController', {
     }, {
         ref : 'resultsGrid',
         selector : 'searchresultgrid'
-    },
-    {
+    }, {
         ref : 'detailsPanel',
         selector : 'searchresultdetailspanel'
     }],
@@ -28,13 +27,17 @@ Ext.define('Clutch.controller.SearchController', {
             'searchresultgrid' : {
                 beforeitemcontextmenu : me.onContextMenu,
                 afterrender : me.onAfterRender,
-                itemdblclick : me.onSearchResultDoubleClick
+                itemdblclick : me.onSearchResultDoubleClick,
+                itemclick : me.onSearchResultSingleClick
             },
             'searchtree' : {
                 itemclick : me.onTreeNodeClick
             },
-            '#searchField' : {
+            'searchfield' : {
                 specialkey : me.onSearchFieldEnterPress
+            },
+            'commentsgrid' : {
+                show : me.onCommentsGridShow
             }
         });
         app.on({
@@ -44,26 +47,29 @@ Ext.define('Clutch.controller.SearchController', {
             scope : me
         });
     },
-    onBeforeSearch : function(searchTerm, category) {
-        var me = this, grid = this.getResultsGrid();
-        grid.setSearchTerm(searchTerm);
-        grid.up('panel').show();
+    onCommentsGridShow : function(commentsGrid) {
+        var url = commentsGrid.getValue();
+        commentsGrid.loadComments(url);
+    },
+
+    onBeforeSearch : function(searchTerm, grid) {
+               
         grid.setLoading(true);
 
     },
-    onAfterSearch : function(searchResults) {
-        var searchTree = this.getSearchTree(), resultsGrid = this.getResultsGrid(), cats = [];
-        resultsGrid.setLoading(false);
+    onAfterSearch : function(searchResults, grid) {
+        var searchTree = grid.up('panel').down('searchtree'), cats = [];
+        grid.setLoading(false);
 
         Ext.each(searchResults, function(res) {
             Ext.Array.include(cats, res.category);
         });
         searchTree.setCategories(cats);
-        resultsGrid.setResults(searchResults);
+        grid.setResults(searchResults);
 
     },
-    onSearchFail : function(response) { debugger;
-        this.getResultsGrid().setLoading(false);
+    onSearchFail : function(response, grid) {
+        grid.setLoading(false);
         Ext.Msg.alert('Error', 'Error performing search: ' + response.error);
     },
     onTreeNodeClick : function(treeview, record, item, index, e, eOpts) {
@@ -77,12 +83,6 @@ Ext.define('Clutch.controller.SearchController', {
         gridPanel.contextMenu.gridPanel = gridPanel;
     },
 
-    onSearchResultDoubleClick : function(grid, record, item, index, e, eOpts) {
-        //var url = record.get('enclosure_url');
-        //this.downloadTorrent(url);
-        var grid = this.getResultsGrid(), selection = grid.getSelectionModel().getSelection()[0];
-        this.getDetailsPanel().setValue(selection);
-    },
     onContextMenu : function(view, record, item, index, e) {
         e.stopEvent();
         var contextMenu = view.up('searchresultgrid').contextMenu;
@@ -106,19 +106,19 @@ Ext.define('Clutch.controller.SearchController', {
                 break;
         }
     },
-    openHomeUrl: function(grid){
-        debugger;
-         var selected = grid.getSelectionModel().getSelection()[0];
-         if(selected){
-             window.open(selected.get('link'));
-         }
+    openHomeUrl : function(grid) { debugger;
+        var selected = grid.getSelectionModel().getSelection()[0];
+        if (selected) {
+            window.open(selected.get('link'));
+        }
     },
 
-    onSearchFieldEnterPress : function(field, e) {
+    onSearchFieldEnterPress : function(field, e) { debugger;
 
         if (e.getKey() === e.ENTER) {
-            var searchText = field.getValue();
-            Clutch.util.IsoHunt.search(searchText, '');
+
+            var grid = field.up('gridpanel');
+            grid.setSearchTerm(field.getValue());
 
         }
 
@@ -127,13 +127,28 @@ Ext.define('Clutch.controller.SearchController', {
     downloadSelectedTorrents : function(grid) {
         var selected = grid.getSelectionModel().getSelection();
         Ext.each(selected, function(record) {
-            var url = record.get('enclosure_url');
+            var url = record.get('torrentLink');
             this.downloadTorrent(url);
-        });
+        }, this);
     },
     downloadTorrent : function(url) {
         Ext.create("Clutch.view.torrent.AddTorrentDialog", {
             url : url
         }).show();
+    },
+
+    onSearchResultSingleClick : function(view, record, item, index, e, eOpts) {
+        var grid = view.up('gridpanel'), detailsPanel = this.getDetailsPanel();
+        // selection = grid.getSelectionModel().getSelection()[0];
+        //detailsPanel.expand();
+        detailsPanel.setValue(record);
+    },
+
+    onSearchResultDoubleClick : function(view, record, item, index, e, eOpts) {
+        debugger;
+        var url = record.get('torrentLink'), detailsPanel = this.getDetailsPanel();
+        detailsPanel.expand();
+        // this.downloadTorrent(url);
+
     }
 });

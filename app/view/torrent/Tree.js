@@ -1,4 +1,4 @@
-Ext.define("Clutch.view.torrent.Tree", {
+Ext.define('Clutch.view.torrent.Tree', {
     extend : 'Ext.tree.Panel',
 
     title : 'Filters',

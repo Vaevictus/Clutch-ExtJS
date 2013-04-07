@@ -27,7 +27,7 @@ Ext.define('Clutch.view.torrent.properties.TrackersGrid', {
     
     applyValue : function(trackers, oldVale) {
        
-        this.store.loadData(trackers);
+        this.store.loadRawData(trackers);
         return trackers;
     }  
     

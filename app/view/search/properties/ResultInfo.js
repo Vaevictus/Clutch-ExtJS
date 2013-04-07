@@ -11,8 +11,8 @@ Ext.define('Clutch.view.search.properties.ResultInfo', {
     },
 
     items : [{
-        fieldLabel : 'Title',
-        name : 'title',
+        fieldLabel : 'Name',
+        name : 'name',
         xtype : 'textfield',
         readOnly : true
     }, {
@@ -27,7 +27,7 @@ Ext.define('Clutch.view.search.properties.ResultInfo', {
         readOnly : true
     }],
 
-    setValue : function(searchResult) { debugger;
+    setValue : function(searchResult) { 
         this.loadRecord(searchResult);
     }
 });

@@ -3,6 +3,10 @@ Ext.define('Clutch.view.search.SearchTree', {
 
     title : 'Search Filters',
 
+    collapsible : true,
+
+    split : true,
+
     config : {
         categories : []
     },
@@ -18,15 +22,15 @@ Ext.define('Clutch.view.search.SearchTree', {
 
     applyCategories : function(cats, oldCats) {
         var root = this.getRootNode();
-        
+
         root.removeAll();
-        
+
         root.appendChild({
-                text : 'All',
-                filter : 'all',
-                leaf : true
-                //iconCls : 'tree-downloading'
-            });
+            text : 'All',
+            filter : 'all',
+            leaf : true
+            //iconCls : 'tree-downloading'
+        });
         Ext.each(cats, function(category) {
             root.appendChild({
                 text : category,

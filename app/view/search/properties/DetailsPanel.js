@@ -8,19 +8,27 @@ Ext.define('Clutch.view.search.properties.DetailsPanel', {
 
     title : 'Details',
 
+    collapsed : true,
+
+    collapsible : true,
+
+    split : true,
+
+    width : 400,
+
     items : [{
         xtype : 'searchresultinfo',
         title : 'Info'
-    },{
+    }, {
         xtype : 'commentsgrid',
         title : 'Comments'
     }],
 
     setValue : function(searchResult) {
-   
-         this.setTitle('Details: ' + searchResult.get('name'));
-         this.down('searchresultinfo').setValue(searchResult);
-         this.down('commentsgrid').setValue(searchResult.get('comment_url'));
-        
+
+        this.setTitle('Details: ' + searchResult.get('name'));
+        this.down('searchresultinfo').setValue(searchResult);
+        this.down('commentsgrid').setValue(searchResult.get('comment_url'));
+
     }
 });

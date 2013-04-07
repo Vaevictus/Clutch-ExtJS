@@ -58,10 +58,15 @@ Ext.define("Clutch.view.search.SearchResultGridBase", {
         dataIndex : 'comments',
         flex : 1
     }],
-    
-    selModel : new Ext.selection.RowModel({
-        mode : 'MULTI'
-    }),
+    initComponent : function(cfg) {
+        this.selModel = Ext.create('Ext.selection.RowModel', {
+            mode : 'MULTI'
+        });
+        this.callParent(arguments);
+    },
+    // selModel : Ext.create('Ext.selection.RowModel', {
+    // mode : 'MULTI'
+    // }),
 
     applyResults : function(newValue, oldValue) {
         this.store.loadRawData(newValue);

@@ -6,17 +6,6 @@ Ext.define('Clutch.controller.SearchController', {
 
     requires : ['Clutch.util.IsoHunt', 'Clutch.util.PirateBay', 'Clutch.util.Harmoniser'],
 
-    refs : [{
-        ref : 'searchTree',
-        selector : 'searchtree'
-    }, {
-        ref : 'resultsGrid',
-        selector : 'searchresultgrid'
-    }, {
-        ref : 'detailsPanel',
-        selector : 'searchresultdetailspanel'
-    }],
-
     init : function(app) {
         var me = this;
 
@@ -38,6 +27,9 @@ Ext.define('Clutch.controller.SearchController', {
             },
             'commentsgrid' : {
                 show : me.onCommentsGridShow
+            },
+            'piratebaytopresultsgrid' : {
+                afterrender : me.onAfterRenderPirateBayTop
             }
         });
         app.on({
@@ -47,13 +39,16 @@ Ext.define('Clutch.controller.SearchController', {
             scope : me
         });
     },
+    onAfterRenderPirateBayTop : function(topGrid) {
+        topGrid.loadResults();
+    },
     onCommentsGridShow : function(commentsGrid) {
         var url = commentsGrid.getValue();
         commentsGrid.loadComments(url);
     },
 
     onBeforeSearch : function(searchTerm, grid) {
-               
+
         grid.setLoading(true);
 
     },
@@ -72,9 +67,8 @@ Ext.define('Clutch.controller.SearchController', {
         grid.setLoading(false);
         Ext.Msg.alert('Error', 'Error performing search: ' + response.error);
     },
-    onTreeNodeClick : function(treeview, record, item, index, e, eOpts) {
-
-        var grid = this.getResultsGrid();
+    onTreeNodeClick : function(treeview, record, item, index, e, eOpts) { debugger;
+        var grid = treeview.up('panel').up('panel').down('searchresultgrid');
         grid.setFilterCat(record.raw.filter);
 
     },
@@ -138,15 +132,14 @@ Ext.define('Clutch.controller.SearchController', {
     },
 
     onSearchResultSingleClick : function(view, record, item, index, e, eOpts) {
-        var grid = view.up('gridpanel'), detailsPanel = this.getDetailsPanel();
+        var grid = view.up('gridpanel'), detailsPanel = grid.up('panel').down('searchresultdetailspanel');
         // selection = grid.getSelectionModel().getSelection()[0];
         //detailsPanel.expand();
         detailsPanel.setValue(record);
     },
 
-    onSearchResultDoubleClick : function(view, record, item, index, e, eOpts) {
-        debugger;
-        var url = record.get('torrentLink'), detailsPanel = this.getDetailsPanel();
+    onSearchResultDoubleClick : function(view, record, item, index, e, eOpts) { debugger;
+        var url = record.get('torrentLink'), detailsPanel = view.up('gridpanel').up('panel').down('searchresultdetailspanel');
         detailsPanel.expand();
         // this.downloadTorrent(url);
 

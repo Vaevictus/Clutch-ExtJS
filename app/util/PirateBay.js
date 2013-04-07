@@ -12,7 +12,9 @@ Ext.define('Clutch.util.PirateBay', {
 
     config : {
 
-        apiUrl : 'http://apify.ifc0nfig.com/tpb/search?id={0}'
+        apiUrl : 'http://apify.ifc0nfig.com/tpb/search?id={0}',
+
+        topUrl : 'http://apify.ifc0nfig.com/tpb/top?id=all'
 
     },
 
@@ -71,6 +73,28 @@ Ext.define('Clutch.util.PirateBay', {
             }
         });
 
+    },
+    getTopResults : function(callingGrid) {
+        var url = this.getTopUrl();
+        Clutch.app.fireEvent('beforesearch', 'Top in "All"', callingGrid);
+        Ext.data.JsonP.request({
+            url : url,
+
+            success : function(results) {
+                var clutchResults = [];
+                Ext.each(results, function(r) {
+                    clutchResults.push(Clutch.util.Harmoniser.harmonisePirateBay(r));
+                }, this);
+                Clutch.app.fireEvent('aftersearch', clutchResults, callingGrid);
+
+            },
+            scope : this,
+
+            failure : function(response) {
+
+                Clutch.app.fireEvent('searchfail', response, callingGrid);
+            }
+        });
     }
 });
 

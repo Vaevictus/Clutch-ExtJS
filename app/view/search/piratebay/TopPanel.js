@@ -2,7 +2,7 @@ Ext.define('Clutch.view.search.piratebay.TopPanel', {
 
     extend : 'Ext.panel.Panel',
     
-    requires : ['Clutch.view.search.piratebay.SearchResultGrid'],
+    requires : ['Clutch.view.search.piratebay.TopResultsGrid'],
 
     alias : 'widget.piratebaytoppanel',
 
@@ -15,13 +15,14 @@ Ext.define('Clutch.view.search.piratebay.TopPanel', {
 
         region : 'west'
     }, {
-        xtype : 'piratebaysearchresultgrid',
+        xtype : 'piratebaytopresultsgrid',
         region : 'center',
         store : Ext.create('Clutch.store.SearchResult')
+      
     }, {
         xtype : 'searchresultdetailspanel',
         region : 'east',
         width : 300
-    }]
+    }]    
 
 });

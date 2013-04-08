@@ -22,51 +22,92 @@ Ext.define('Clutch.util.Harmoniser', {
 
             provider : 'The Pirate Bay',
 
-            pubDate : r.uploaded, //todo convert this crap
+            pubDate : this.tryParsePirateBayDate(r.uploaded), //todo convert this crap
 
             id : r.id,
-            
-            size : r.size, //also needs converting,
-            
+
+            size : this.tryParsePirateBaySize(r.size), //also needs converting,
+
             downloads : 0,
-            
+
             comments : 0,
-            
+
             commentsUrl : "n/a"
 
         }
         return SearchResult;
     },
-    
+
+    tryParsePirateBayDate : function(badDate) {
+        var prefixYear = (new Date().getYear() + 1900) + " ";
+        // Date.getYear() gives the current year - 1900
+        var dateFormat1 = "yyyy MM-dd HH:mm";
+        var dateFormat2 = "MM-dd yyyy";
+
+        var possGoodDate = new Date(Date.parse(prefixYear + badDate, dateFormat1));
+        if (possGoodDate != 'Invalid Date') {//MAKE SURE TO KEEP !=, using !== always returns true
+            return possGoodDate;
+        }
+
+        possGoodDate = new Date(Date.parse(badDate, dateFormat2));
+        if (possGoodDate != 'Invalid Date') {
+            return possGoodDate;
+        }
+        //must be in "Today/Y-Day" format, just return todays date
+        return new Date();
+    },
+
+    tryParsePirateBaySize : function(badSize) {
+        var split = badSize.split(" "), units = split[1], badValue = split[0], goodValue = 0;
+        switch(units) {
+            case 'MiB':
+                goodValue = badValue * 1024 * 1024;
+                break
+            case 'GiB':
+                goodValue = badValue * 1024 * 1024 * 1024;
+                break;
+            case 'KiB':
+                goodValue = badValue * 1024;
+                break;
+            case 'B':
+                goodValue = badValue * 1;
+                break;
+            default:
+                console.log('Unknown unit: ' + units);
+                break;
+        }
+        return goodValue;
+
+    },
     harmoniseIsoHunt : function(r) {
-        
+
         var SearchResult = {
-            
+
             name : r.title,
-            
+
             category : r.category,
-            
+
             seeds : r.Seeds,
-            
+
             leechers : r.leechers,
-            
+
             torrentLink : r.enclosure_url,
-            
+
             provider : 'ISO Hunt',
-            
+
             pubDate : r.pubDate,
-            
+
             id : r.guid,
-            
+
             size : r['length'], //because of terrible choice of property name
-            
+
             comments : r.comments,
-            
+
             commentsUrl : "TODO",
-            
+
             downloads : r.downloads
         }
-        
+
         return SearchResult;
     }
 });
@@ -80,30 +121,29 @@ Ext.define('Clutch.util.Harmoniser', {
 // size: "364.12 MiB"
 // uploaded: "04-01 04:59"
 
-
-/* 
+/*
  * Seeds: "3310"
-category: "TV"
-comments: "30"
-downloads: "10"
-enclosure_url: "http://ca.isohunt.com/download/454568651/walking+dead.torrent"
-exempts: " ... the.<b>walking.dead</b>.s03e10.hdtv.x264-2hd.mp4"
-files: "2"
-guid: "454568651"
-hash: "63db3c2bedc40505d1f548c3a8b3b05597420190"
-kws: "Xvid"
-leechers: "155"
-length: "497690870"
-link: "http://isohunt.com/torrent_details/454568651/walking+dead?tab=summary"
-original_link: "http://1337x.org/torrent/479633/The-Walking-Dead-S03E10-HDTV-x264-2HD-ettv/"
-original_site: "1337x.org"
-pubDate: "Mon, 18 Feb 2013 03:09:51 GMT"
-size: "474.64 MB"
-title: "The <b>Walking Dead</b> S03E10 HDTV x264-2HD[ettv]"
-tracker: "tracker.publicbt.com"
-tracker_url: "http://tracker.publicbt.com:80/announce"
-votes: "31"
- * 
- * 
- * 
+ category: "TV"
+ comments: "30"
+ downloads: "10"
+ enclosure_url: "http://ca.isohunt.com/download/454568651/walking+dead.torrent"
+ exempts: " ... the.<b>walking.dead</b>.s03e10.hdtv.x264-2hd.mp4"
+ files: "2"
+ guid: "454568651"
+ hash: "63db3c2bedc40505d1f548c3a8b3b05597420190"
+ kws: "Xvid"
+ leechers: "155"
+ length: "497690870"
+ link: "http://isohunt.com/torrent_details/454568651/walking+dead?tab=summary"
+ original_link: "http://1337x.org/torrent/479633/The-Walking-Dead-S03E10-HDTV-x264-2HD-ettv/"
+ original_site: "1337x.org"
+ pubDate: "Mon, 18 Feb 2013 03:09:51 GMT"
+ size: "474.64 MB"
+ title: "The <b>Walking Dead</b> S03E10 HDTV x264-2HD[ettv]"
+ tracker: "tracker.publicbt.com"
+ tracker_url: "http://tracker.publicbt.com:80/announce"
+ votes: "31"
+ *
+ *
+ *
  */

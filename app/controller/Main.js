@@ -56,8 +56,8 @@ Ext.define('Clutch.controller.Main', {
 
         var args = data.arguments;
         Ext.each(Ext.ComponentQuery.query('speedcomponent'), function(control) {
-            control.setSpeedUp(args.downloadSpeed);
-            control.setSpeedDown(args.uploadSpeed);
+            control.setSpeedUp(args.uploadSpeed);
+            control.setSpeedDown(args.downloadSpeed);
         });
     },
     showSettingsDialog : function() {

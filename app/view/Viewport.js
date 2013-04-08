@@ -25,8 +25,8 @@ Ext.define('Clutch.view.Viewport', {
             xtype : 'torrentspanel'
         }, {
             xtype : 'isohuntsearchpanel'
-        },{
-          xtype : 'piratebaysearchpanel'  
+        }, {
+            xtype : 'piratebaysearchpanel'
         }, {
             xtype : 'piratebaytoppanel'
         }]

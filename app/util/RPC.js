@@ -69,6 +69,7 @@ Ext.define('Clutch.util.RPC', {
     },
 
     getSettings : function() {
+
         var params = {
             "method" : "session-get",
             "arguments" : {
@@ -98,6 +99,7 @@ Ext.define('Clutch.util.RPC', {
     },
 
     getStats : function() {
+
         var params = {
             "method" : "session-stats",
             "arguments" : {
@@ -127,6 +129,7 @@ Ext.define('Clutch.util.RPC', {
     },
 
     getLoadedTorrents : function() {
+
         var params = {
             "method" : "torrent-get",
             "arguments" : {
@@ -165,7 +168,10 @@ Ext.define('Clutch.util.RPC', {
 
     },
 
-    startTorrents : function(torrentIds) {
+    startTorrents : function(torrents) {
+
+        var torrentIds = this.getTorrentIdsFromTorrents(torrents);
+
         var rpcParams = {
             "method" : "torrent-start-now",
             "arguments" : {
@@ -190,7 +196,9 @@ Ext.define('Clutch.util.RPC', {
 
     },
 
-    pauseTorrents : function(torrentIds) {
+    pauseTorrents : function(torrents) {
+        var torrentIds = this.getTorrentIdsFromTorrents(torrents);
+
         var rpcParams = {
             "method" : "torrent-stop",
             "arguments" : {
@@ -213,8 +221,19 @@ Ext.define('Clutch.util.RPC', {
             }
         });
     },
+    getTorrentIdsFromTorrents : function(torrents) {
 
-    removeTorrents : function(torrentIds, deleteLocalData) {
+        var torrentIds = [];
+
+        Ext.each(torrents, function(t) {
+            torrentIds.push(t.id);
+        }, this);
+        return torrentIds;
+    },
+    removeTorrents : function(torrents, deleteLocalData) {
+
+        var torrentIds = this.getTorrentIdsFromTorrents(torrents);
+
         var rpcParams = {
             "method" : "torrent-remove",
             "arguments" : {
@@ -241,7 +260,10 @@ Ext.define('Clutch.util.RPC', {
         });
     },
 
-    verifyTorrents : function(torrentIds) {
+    verifyTorrents : function(torrents) {
+
+        var torrentIds = this.getTorrentIdsFromTorrents(torrents);
+
         var rpcParams = {
             "method" : "torrent-verify",
             "arguments" : {
@@ -265,7 +287,7 @@ Ext.define('Clutch.util.RPC', {
         });
     },
 
-    addTorrent : function(options) { debugger;
+    addTorrent : function(options) {
         //var url = options.url;
         // "cookies"            | string      pointer to a string of one or more cookies.
         // 365    "download-dir"       | string      path to download the torrent to

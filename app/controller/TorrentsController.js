@@ -27,13 +27,25 @@ Ext.define('Clutch.controller.TorrentsController', {
                 click : me.onContextMenuClick
             },
             'torrenttoolbar menuitem[action=remove-all]' : {
-                click : me.removeAllTorrents
+                click : me.onRemoveAllTorrentsClick
             },
             'torrenttoolbar menuitem[action=remove-selected]' : {
-                click : me.removeSelectedTorrents
+                click : me.onRemoveSelectedTorrentsClick
             },
             'torrenttoolbar menuitem[action=remove-finished]' : {
-                click : me.removeFinishedTorrents
+                click : me.onRemoveFinishedTorrentsClick
+            },
+            'torrenttoolbar menuitem[action=pause-all]' : {
+                click : me.onPauseAllTorrentsClick
+            },
+            'torrenttoolbar splitbutton[action=remove-selected]' : {
+                click : me.onRemoveSelectedTorrentsClick
+            },
+            'torrenttoolbar splitbutton[action=pause-selected]' : {
+                click : me.onPauseSelectedTorrentsClick
+            },
+            'torrenttoolbar splitbutton[action=resume-selected]' : {
+                click : me.onStartSelectedTorrentsClick
             },
             'torrenttree' : {
                 itemclick : me.onTreeNodeClick
@@ -43,10 +55,8 @@ Ext.define('Clutch.controller.TorrentsController', {
             },
             'addtorrentdialog button[action=cancel]' : {
                 click : me.onCancelAddTorrent
-            },
-            'torrenttoolbar menuitem[action=pause-all]' : {
-                click : me.pauseAllTorrents
             }
+
         });
     },
     onAfterRenderGrid : function(grid) {
@@ -90,69 +100,67 @@ Ext.define('Clutch.controller.TorrentsController', {
 
         switch (item.action) {
             case 'start':
-                this.startSelectedTorrentsClick(grid);
+                this.onStartSelectedTorrentsClick();
                 break;
             case 'remove':
-                this.removeSelectedTorrents(grid);
+                this.onRemoveSelectedTorrentsClick();
                 break;
             case 'pause':
-                this.pauseSelectedTorrents(grid);
+                this.onPauseSelectedTorrentsClick();
                 break;
             case 'throttle':
-                this.throttleSelectedTorrents(grid);
+                this.onThrottleSelectedTorrentsClick();
+                break
+            case 'verify':
+                this.onVerifySelectedTorrentsClick();
                 break
         }
     },
 
-    throttleSelectedTorrents : function(grid) {
+    throttleSelectedTorrents : function() {
         var grid = this.getTorrentsGrid(), torrentIds = grid.getSelectedTorrentIds();
         //TODO
     },
 
-    startSelectedTorrentsClick : function(grid) {
-        var grid = this.getTorrentsGrid(), torrentIds = grid.getSelectedTorrentIds();
+    onStartSelectedTorrentsClick : function() {
+        var grid = this.getTorrentsGrid();
+        grid.startSelectedTorrents();
 
-        Clutch.util.RPC.startTorrents(torrentIds);
+    },
+
+    onStartAllTorrentsClick : function() {
+
+        var grid = this.getTorrentsGrid()
+        grid.startAllTorrents();
 
     },
 
-    startAllTorrents : function() {
+    onRemoveAllTorrentsClick : function() {
 
-        var grid = this.getTorrentsGrid(), torrentIds = grid.getAllTorrentIds();
-
-        Clutch.util.RPC.startTorrents(torrentIds);
-    },
-
-    removeAllTorrents : function() {
-
-        var grid = this.getTorrentsGrid(), torrentIds = grid.getAllTorrentIds();
-
-        Clutch.util.RPC.removeTorrents(torrentIds, false);
-    },
-    removeSelectedTorrents : function(grid) {
-        var grid = this.getTorrentsGrid(), torrentIds = grid.getSelectedTorrentIds();
-
-        Clutch.util.RPC.removeTorrents(torrentIds, false);
+        var grid = this.getTorrentsGrid();
+        grid.removeAllTorrents();
 
     },
-    removeFinishedTorrents : function(grid) {
-        var grid = this.getTorrentsGrid(), torrentIds = grid.getFinishedTorrentIds();
-
-        Clutch.util.RPC.removeTorrents(torrentIds, false);
+    onRemoveSelectedTorrentsClick : function() {
+        var grid = this.getTorrentsGrid();
+        grid.removeSelectedTorrents();
 
     },
-    pauseAllTorrents : function() {
-
-        var grid = this.getTorrentsGrid(), torrentIds = grid.getAllTorrentIds();
-
-        Clutch.util.RPC.pauseTorrents(torrentIds);
+    onRemoveFinishedTorrentsClick : function() {
+        var grid = this.getTorrentsGrid();
+        grid.removeFinishedTorrents();
     },
 
-    pauseSelectedTorrents : function(grid) {
-        var grid = this.getTorrentsGrid(), torrentIds = grid.getSelectedTorrentIds();
+    onPauseSelectedTorrentsClick : function() {
 
-        Clutch.util.RPC.pauseTorrents(torrentIds);
+        var grid = this.getTorrentsGrid();
+        grid.pauseSelectedTorrents();
+    },
 
+    onPauseAllTorrentsClick : function() {
+
+        var grid = this.getTorrentsGrid();
+        grid.pauseAllTorrents();
     },
 
     //todo - actually use the rest of the values from the form

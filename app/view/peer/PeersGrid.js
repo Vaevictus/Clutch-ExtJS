@@ -51,6 +51,7 @@ Ext.define("Clutch.view.peer.PeersGrid", {
 
     
     applyValue : function(newValue, oldValue) {
+        
         this.store.loadData(newValue);
         return newValue;
     }

@@ -9,7 +9,7 @@ Ext.define('Clutch.view.torrent.TorrentsGrid', {
 
     config : {
         torrents : null,
-        
+
         filterFn : function() {
             return true;
         }
@@ -82,32 +82,127 @@ Ext.define('Clutch.view.torrent.TorrentsGrid', {
         return newValue;
     },
 
-    getSelectedTorrentIds : function() {
-        var torrentIds = [], selections = this.getSelectionModel().getSelection();
+    getSelectedTorrents : function() {
+        var selectedTorrents = [], selections = this.getSelectionModel().getSelection(), allTorrents = this.getTorrents();
 
-        Ext.each(selections, function(torrent) {
-            torrentIds.push(torrent.data.id);
-        });
-        return torrentIds;
-    },
-    getAllTorrentIds : function() {
-
-        var torrentIds = [], torrents = this.getTorrents();
-
-        Ext.each(torrents, function(torrent) {
-            torrentIds.push(torrent.id);
-        });
-        return torrentIds;
-    },
-    getFinishedTorrentIds : function() {
-
-        var torrentIds = [], torrents = this.getTorrents();
-
-        Ext.each(torrents, function(torrent) {
-            if (torrent.status === 5 || torrent.status === 6) {
-                torrentIds.push(torrent.id);
+        Ext.each(selections, function(s) {
+            var torrent = this.getTorrentById(s.get('id'));
+            if (torrent) {
+                selectedTorrents.push(torrent);
             }
+        }, this);
+
+        return selectedTorrents;
+    },
+
+    getFinishedTorrents : function() {
+
+        var finishedTorrents = [], allTorrents = this.getTorrents();
+
+        Ext.each(allTorrents, function(t) {
+            if (t.status === 5 || t.status === 6) {
+                finishedTorrents.push(t);
+            }
+        }, this);
+
+        return finishedTorrents;
+    },
+
+    removeAllTorrents : function() {
+    
+        var allTorrents = this.getTorrents();
+
+        if (allTorrents.length < 1) {
+            return;
+        }
+        this.promptRemoveTorrents(allTorrents);
+    },
+    removeFinishedTorrents : function() {
+
+        var finishedTorrents = this.getFinishedTorrents();
+
+        if (torrents.length < 1) {
+            return;
+        }
+        this.promptRemoveTorrents(finishedTorrents);
+    },
+    removeSelectedTorrents : function() {
+
+        var torrents = this.getSelectedTorrents();
+
+        if (torrents.length < 1) {
+            return;
+        }
+        this.promptRemoveTorrents(torrents);
+    },
+
+    promptRemoveTorrents : function(torrents) {
+
+        var msg = '';
+
+        Ext.each(torrents, function(t) {
+            msg += (t.name + '<br>');
         });
-        return torrentIds;
+
+        msg += '<b>Do you also want to delete the torrent data? This can not be undone.</b>';
+
+        Ext.MessageBox.show({
+            title : 'Confirm remove torrents?',
+            msg : msg,
+            buttons : Ext.MessageBox.YESNOCANCEL,
+            fn : function(answer) {
+                if (answer === 'cancel') {
+                    return;
+                }
+                var trash = (answer === 'yes')
+
+                Clutch.util.RPC.removeTorrents(torrents, trash);
+
+            },
+            animateTarget : 'mb4',
+            icon : Ext.MessageBox.QUESTION
+        });
+    },
+    pauseAllTorrents : function() {
+
+        Clutch.util.RPC.pauseTorrents(this.getTorrents());
+    },
+
+    pauseSelectedTorrents : function() {
+    
+        var torrents = this.getSelectedTorrents();
+
+        Clutch.util.RPC.pauseTorrents(torrents);
+
+    },
+
+    startSelectedTorrents : function() {
+
+        var torrents = this.getSelectedTorrents();
+
+        if (torrents.length < 1) {
+            return;
+        }
+
+        Clutch.util.RPC.startTorrents(torrents);
+    },
+    startAllTorrents : function() {
+        
+        var torrents = this.getTorrents();
+        
+        Clutch.util.RPC.startTorrents(torrents);
+    },
+    
+    getTorrentById : function(id) {
+    
+        var torrents = this.getTorrents(), desiredTorrent;
+
+        Ext.each(torrents, function(t) {
+            if (t.id === id) {
+                desiredTorrent = t;
+                return true;
+            }
+        }, this);
+        return desiredTorrent;
     }
 });

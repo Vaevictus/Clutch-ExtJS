@@ -7,8 +7,11 @@ Ext.define('Clutch.controller.Main', {
 
         app.on({
             torrentdetailsreceived : me.onTorrentdetailsreceived,
-            torrentadded : me.showTorrentAddedNotification,
+            torrentadded : me.onTorrentAdded,
             statsreceived : me.onStatsReceived,
+            torrentsstarted : me.onTorrentStarted,
+            torrentsstopped : me.onTorrentStopped,
+            torrentsremoved : me.onTorrentRemoved,
             scope : me
         });
 
@@ -65,14 +68,63 @@ Ext.define('Clutch.controller.Main', {
         var dialog = Ext.create('Clutch.view.settings.SettingsDialog');
         dialog.show();
     },
-    showTorrentAddedNotification : function(torrentdetails) { 
+    onTorrentAdded : function(torrentDetails){
+        this.showTorrentAddedNotification(arguments);
+    },
+    onTorrentStopped : function(uselessInfo){
+               
         Ext.create('widget.uxNotification', {
             title : 'Notification',
             position : 't',
             manager : 'instructions',
             cls : 'ux-notification-light',
             iconCls : 'ux-notification-icon-information',
-            html : torrentdetails.name + ' added successfully.',
+            html : 'Torrent(s) stopped successfully',
+            autoCloseDelay : 4000,
+            slideBackDuration : 500,
+            slideInAnimation : 'bounceOut',
+            slideBackAnimation : 'easeIn'
+        }).show();
+    },
+    onTorrentStarted : function(uselessInfo){
+              
+        Ext.create('widget.uxNotification', {
+            title : 'Notification',
+            position : 't',
+            manager : 'instructions',
+            cls : 'ux-notification-light',
+            iconCls : 'ux-notification-icon-information',
+            html : 'Torrent(s) started successfully.',
+            autoCloseDelay : 4000,
+            slideBackDuration : 500,
+            slideInAnimation : 'bounceOut',
+            slideBackAnimation : 'easeIn'
+        }).show();
+    },
+    onTorrentRemoved : function(torrentDetails){
+          
+        Ext.create('widget.uxNotification', {
+            title : 'Notification',
+            position : 't',
+            manager : 'instructions',
+            cls : 'ux-notification-light',
+            iconCls : 'ux-notification-icon-information',
+            html : 'Torrent(s) removed successfully.',
+            autoCloseDelay : 4000,
+            slideBackDuration : 500,
+            slideInAnimation : 'bounceOut',
+            slideBackAnimation : 'easeIn'
+        }).show();
+    },
+    showTorrentAddedNotification : function(torrentdetails) { 
+     
+        Ext.create('widget.uxNotification', {
+            title : 'Notification',
+            position : 't',
+            manager : 'instructions',
+            cls : 'ux-notification-light',
+            iconCls : 'ux-notification-icon-information',
+            html : torrentdetails[0].name + '<br> added successfully.',
             autoCloseDelay : 4000,
             slideBackDuration : 500,
             slideInAnimation : 'bounceOut',

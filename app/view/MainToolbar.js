@@ -25,7 +25,7 @@ Ext.define("Clutch.view.MainToolbar", {
             iconCls : 'add',
             iconAlign : 'top',
             arrowAlign : 'right',
-            //cls : 'x-btn-as-arrow',
+            action : 'add-url',
             menu : [{
                 text : 'Add via URL',
                 itemId : 'btnAddViaUrl',
@@ -43,6 +43,7 @@ Ext.define("Clutch.view.MainToolbar", {
             iconCls : 'remove',
             iconAlign : 'top',
             arrowAlign : 'right',
+            action : 'remove-selected',
             menu : [{
                 text : 'Remove selected',
                 itemId : 'btnRemoveSelected',
@@ -68,6 +69,7 @@ Ext.define("Clutch.view.MainToolbar", {
             iconAlign : 'top',
             arrowAlign : 'right',
             iconCls : 'pause',
+            action : 'pause-selected',
             menu : [{
                 text : 'Pause All',
                 itemId : 'btnPauseAll',
@@ -83,6 +85,7 @@ Ext.define("Clutch.view.MainToolbar", {
             iconAlign : 'top',
             arrowAlign : 'right',
             iconCls : 'resume',
+            action : 'resume-selected',
             menu : [{
                 text : 'Resume All',
                 itemId : 'btnResumeAll',

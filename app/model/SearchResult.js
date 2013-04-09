@@ -7,13 +7,14 @@ Ext.define('Clutch.model.SearchResult', {
     idProperty : 'guid',
 
     fields : [{
-        name : 'comment_link',
-        convert : function(value, record) {
-
-            var link = record.get('link') || "";
-
-            return link.replace('tab=summary', 'tab=comments');
-        }
+        name : 'summaryLink',
+        type : 'string'
+    }, {
+        name : 'commentsLink',
+        type : 'string'
+    }, {
+        name : 'torrentLink',
+        type : 'string'
     }, {
         name : 'name',
         type : 'string'
@@ -27,9 +28,6 @@ Ext.define('Clutch.model.SearchResult', {
         name : 'leechers',
         type : 'number'
     }, {
-        name : 'torrentLink',
-        type : 'string'        
-    }, {
         name : 'provider',
         type : 'string'
     }, {
@@ -41,12 +39,11 @@ Ext.define('Clutch.model.SearchResult', {
     }, {
         name : 'size',
         type : 'string'
-    },{
+    }, {
         name : 'comments',
         type : 'number'
-    },
-    {
+    }, {
         name : 'downloads',
         type : 'number'
     }]
-});
+}); 

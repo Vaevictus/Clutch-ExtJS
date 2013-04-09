@@ -20,6 +20,10 @@ Ext.define('Clutch.util.Harmoniser', {
 
             torrentLink : r.magnet,
 
+            commentsLink : '',
+
+            summaryLink : '',
+
             provider : 'The Pirate Bay',
 
             pubDate : this.tryParsePirateBayDate(r.uploaded), //todo convert this crap
@@ -30,9 +34,7 @@ Ext.define('Clutch.util.Harmoniser', {
 
             downloads : 0,
 
-            comments : 0,
-
-            commentsUrl : "n/a"
+            comments : 0
 
         }
         return SearchResult;
@@ -80,7 +82,7 @@ Ext.define('Clutch.util.Harmoniser', {
 
     },
     harmoniseIsoHunt : function(r) {
-
+        
         var SearchResult = {
 
             name : r.title,
@@ -93,6 +95,10 @@ Ext.define('Clutch.util.Harmoniser', {
 
             torrentLink : r.enclosure_url,
 
+            commentsLink : r.link.replace('tab=summary', 'tab=comments'),
+
+            summaryLink : r.link,
+
             provider : 'ISO Hunt',
 
             pubDate : r.pubDate,
@@ -102,8 +108,6 @@ Ext.define('Clutch.util.Harmoniser', {
             size : r['length'], //because of terrible choice of property name
 
             comments : r.comments,
-
-            commentsUrl : "TODO",
 
             downloads : r.downloads
         }

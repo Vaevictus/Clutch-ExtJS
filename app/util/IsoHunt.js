@@ -59,6 +59,8 @@ Ext.define('Clutch.util.IsoHunt', {
     },
     getComments : function(commentUrl, callback, scope) { 
         
+        debugger; 
+        
         var proxy = this.getJsonpProxy(), query = this.getCommentsQuery();
 
         //format the commentsquery with the url to the torrentpage

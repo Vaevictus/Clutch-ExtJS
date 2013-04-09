@@ -28,7 +28,8 @@ Ext.define('Clutch.view.search.properties.DetailsPanel', {
 
         this.setTitle('Details: ' + searchResult.get('name'));
         this.down('searchresultinfo').setValue(searchResult);
-        this.down('commentsgrid').setValue(searchResult.get('comment_url'));
+        debugger;
+        this.down('commentsgrid').setValue(searchResult.get('commentsLink'));
 
     }
 });

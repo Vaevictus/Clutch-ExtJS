@@ -109,7 +109,7 @@ Ext.define('Clutch.view.torrent.TorrentsGrid', {
     },
 
     removeAllTorrents : function() {
-    
+
         var allTorrents = this.getTorrents();
 
         if (allTorrents.length < 1) {
@@ -121,7 +121,7 @@ Ext.define('Clutch.view.torrent.TorrentsGrid', {
 
         var finishedTorrents = this.getFinishedTorrents();
 
-        if (torrents.length < 1) {
+        if (finishedTorrents.length < 1) {
             return;
         }
         this.promptRemoveTorrents(finishedTorrents);
@@ -164,14 +164,22 @@ Ext.define('Clutch.view.torrent.TorrentsGrid', {
         });
     },
     pauseAllTorrents : function() {
+        var torrents = this.getTorrents();
+
+        if (torrents.length < 1) {
+            return;
+        }
 
         Clutch.util.RPC.pauseTorrents(this.getTorrents());
     },
 
     pauseSelectedTorrents : function() {
-    
-        var torrents = this.getSelectedTorrents();
 
+        var torrents = this.getSelectedTorrents();
+         
+         if (torrents.length < 1) {
+            return;
+        }
         Clutch.util.RPC.pauseTorrents(torrents);
 
     },
@@ -187,14 +195,14 @@ Ext.define('Clutch.view.torrent.TorrentsGrid', {
         Clutch.util.RPC.startTorrents(torrents);
     },
     startAllTorrents : function() {
-        
+
         var torrents = this.getTorrents();
-        
+
         Clutch.util.RPC.startTorrents(torrents);
     },
-    
+
     getTorrentById : function(id) {
-    
+
         var torrents = this.getTorrents(), desiredTorrent;
 
         Ext.each(torrents, function(t) {

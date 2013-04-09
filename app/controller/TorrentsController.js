@@ -8,13 +8,20 @@ Ext.define('Clutch.controller.TorrentsController', {
     }, {
         ref : 'detailsPanel',
         selector : 'torrentdetailspanel'
+    },{
+        ref : 'torrentTree',
+        selector : 'torrenttree'
     }],
 
     requires : ['Ext.ux.window.Notification'],
 
     init : function(app) {
         var me = this;
-
+       
+         app.on({
+            torrentdetailsreceived : me.onTorrentdetailsreceived,
+            scope : me
+        });
         me.control({
             'torrentsgrid' : {
                 beforeitemcontextmenu : me.onContextMenu,
@@ -58,6 +65,10 @@ Ext.define('Clutch.controller.TorrentsController', {
             }
 
         });
+    },
+    onTorrentdetailsreceived : function(response){
+        var torrents = response.arguments.torrents;
+        this.getTorrentTree().setTorrents(torrents);
     },
     onAfterRenderGrid : function(grid) {
 

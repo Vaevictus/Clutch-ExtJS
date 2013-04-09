@@ -22,22 +22,28 @@ Ext.define('Clutch.view.search.properties.CommentsGrid', {
     
     
     loadComments : function(commentsUrl){
+        
         this.setLoading(true);
+        
         Clutch.util.IsoHunt.getComments(commentsUrl, this.processLoadedComments, this);
         
     },
     
     processLoadedComments : function(response) {
+        
         this.setLoading(false);
+        
         if (response.query && response.query.results) {
             this.store.loadRawData(response.query.results.div);
         }
     },
     
     applyValue: function(commentsUrl){
+        
         if (this.isVisible()){
             this.loadComments(commentsUrl);
         }
+        
         return commentsUrl;
     }
     

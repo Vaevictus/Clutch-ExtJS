@@ -5,7 +5,8 @@ Ext.define('Clutch.view.search.SearchContextMenu', {
 
     items : [{
         text : 'Download',
-        action : 'download'
+        action : 'download',
+        iconCls : 'tree-downloading'
     }, {
         text : 'View source page',
         action : 'view'

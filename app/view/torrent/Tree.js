@@ -110,7 +110,8 @@ Ext.define('Clutch.view.torrent.Tree', {
     // TR_STATUS_SEED           = 6  /* Seeding */
     // }
 
-    applyTorrents : function(torrents, oldValue) { debugger;
+    applyTorrents : function(torrents, oldValue) {
+        
         var downloadingCount = 0, completedCount = 0, pausedCount = 0, activeCount = 0, inactiveCount = 0, totalCount = torrents.length;
 
         Ext.each(torrents, function(t) {

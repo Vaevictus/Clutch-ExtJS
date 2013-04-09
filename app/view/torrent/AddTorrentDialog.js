@@ -64,7 +64,7 @@ Ext.define("Clutch.view.torrent.AddTorrentDialog", {
     getValue : function() {
         var options = {};
         options.url = this.down('#url').getValue();
-        options.startPaused = this.down('#startPaused').getValue() === 'checked';
+        options.startPaused = this.down('#startPaused').getValue();
         options.bandwidthPriority = this.down('#bandwidthPriority').getValue();
         options.peerLimit = this.down('#peerLimit').getValue();
         options.downloadDirectory = this.down('#downloadDirectory').getValue();

@@ -332,7 +332,7 @@ Ext.define('Clutch.util.RPC', {
     parseTorrentState : function(v) {
         switch (v) {
             case 0:
-                return "Stopped";
+                return "Paused";
 
             case 1:
                 return "Waiting Check";

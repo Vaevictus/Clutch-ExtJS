@@ -127,7 +127,7 @@ Ext.define('Clutch.view.torrent.Tree', {
                     completedCount = completedCount + 1;
                     break;
             }
-            if (t.rateUpload === 0 && t.dateDownload === 0) {
+            if (t.rateUpload === 0 && t.rateDownload === 0) {
                 inactiveCount = inactiveCount + 1;
             } else {
                 activeCount = activeCount + 1;

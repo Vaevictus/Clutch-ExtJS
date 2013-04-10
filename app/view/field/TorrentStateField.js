@@ -4,7 +4,8 @@ Ext.define('Clutch.view.field.TorrentStateField', {
     alias : 'widget.torrentstatefield',
 
     setValue : function(v) {
-        if (!v) {
+
+        if (v === undefined || v === null) {
             return Ext.form.field.Text.superclass.setRawValue.call(this, this.emptyText);
         }
         var changed = Clutch.util.RPC.parseTorrentState(v);

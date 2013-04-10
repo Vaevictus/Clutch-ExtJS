@@ -31,11 +31,12 @@ Ext.define('Clutch.view.settings.SettingsCardBase', {
 
         Ext.each(fieldsToLookFor, function(f) {
             var component = this.down(Ext.String.format('field[name={0}]', f));
-
-            values[f] = component.getValue();
+            if (component) {
+                values[f] = component.getValue();
+            }
 
         }, this);
-        
+
         return values;
     }
 });

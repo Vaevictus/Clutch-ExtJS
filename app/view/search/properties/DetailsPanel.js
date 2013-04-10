@@ -4,7 +4,7 @@ Ext.define('Clutch.view.search.properties.DetailsPanel', {
 
     alias : 'widget.searchresultdetailspanel',
 
-    requires : ['Clutch.view.search.properties.ResultInfo', 'Clutch.view.search.properties.CommentsGrid'],
+    requires : ['Clutch.view.search.properties.ResultInfo', 'Clutch.view.search.properties.CommentsGrid','Clutch.view.search.properties.MovieInfo'],
 
     title : 'Details',
 
@@ -22,14 +22,16 @@ Ext.define('Clutch.view.search.properties.DetailsPanel', {
     }, {
         xtype : 'commentsgrid',
         title : 'Comments'
+    },{
+        xtype : 'movieinfo',
+        title : 'Movie Information'
     }],
 
     setValue : function(searchResult) {
 
         this.setTitle('Details: ' + searchResult.get('name'));
         this.down('searchresultinfo').setValue(searchResult);
-        debugger;
         this.down('commentsgrid').setValue(searchResult.get('commentsLink'));
-
+        this.down('movieinfo').setTorrentSearchResult(searchResult);
     }
 });

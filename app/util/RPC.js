@@ -260,6 +260,64 @@ Ext.define('Clutch.util.RPC', {
         });
     },
 
+    sessionGet : function(requestedParams, callingPanel) {
+        var params = {
+            "method" : "session-get",
+            "arguments" : requestedParams
+        };
+
+        Ext.Ajax.request({
+            url : '/transmission/rpc',
+            jsonData : params,
+            headers : {
+                'X-Transmission-Session-Id' : window.sessionId
+            },
+            success : function(response) {
+
+                callingPanel.setValue(Ext.JSON.decode(response.responseText).arguments);
+
+            },
+            scope : this,
+
+            failure : function(response) {
+                var x = response.getResponseHeader('X-Transmission-Session-Id');
+                if (x) {
+                    window.sessionId = x;
+                    this.onRender(dialog);
+                }
+            }
+        });
+    },
+
+    sessionSet : function(requestedParams) {
+        var params = {
+            "method" : "session-set",
+            "arguments" : requestedParams
+        };
+        Ext.Ajax.request({
+            url : '/transmission/rpc',
+            jsonData : params,
+            headers : {
+                'X-Transmission-Session-Id' : window.sessionId
+            },
+            success : function(response) {
+
+                Clutch.app.fireEvent('settingschanged');
+                //callingPanel.setValue(Ext.JSON.decode(response.responseText).arguments);
+
+            },
+            scope : this,
+
+            failure : function(response) {
+                var x = response.getResponseHeader('X-Transmission-Session-Id');
+                if (x) {
+                    window.sessionId = x;
+                    this.onRender(dialog);
+                }
+            }
+        });
+    },
+
     verifyTorrents : function(torrents) {
 
         var torrentIds = this.getTorrentIdsFromTorrents(torrents);

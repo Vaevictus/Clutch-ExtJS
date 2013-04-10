@@ -7,6 +7,9 @@ Ext.define('Clutch.controller.SettingsController', {
     init : function(app) {
         var me = this;
 
+        app.on({
+            settingschanged : me.onSettingsChanged
+        });
         me.control({
             'settingsdialog treepanel' : {
                 itemclick : me.onSettingsNodeClick
@@ -17,15 +20,29 @@ Ext.define('Clutch.controller.SettingsController', {
             'settingsdialog  button[action=cancel]' : {
                 click : me.onCancelButtonClick
             },
-            'settingsdialog' : {
-                render : me.onRender
+            'settingsdialog settingscardbase' : {
+                activate : me.onShowSettingsCard
             },
             'advancedsettings' : {
                 edit : me.onAdvancedPropertyChanged
             }
         });
     },
-
+    onSettingsChanged : function() {
+      Ext.create('widget.uxNotification', {
+            title : 'Notification',
+            position : 't',
+            manager : 'instructions',
+            cls : 'ux-notification-light',
+            iconCls : 'ux-notification-icon-information',
+            html : 'Settings changed successfully.',
+            autoCloseDelay : 4000,
+            slideBackDuration : 500,
+            slideInAnimation : 'bounceOut',
+            slideBackAnimation : 'easeIn'
+        }).show();
+    },
+    
     onSettingsNodeClick : function(treepanel, record, item, index, e, eOpts) {
 
         var dialog = treepanel.up('settingsdialog').setActiveItem(record.raw.panel);
@@ -40,35 +57,10 @@ Ext.define('Clutch.controller.SettingsController', {
         btn.up('settingsdialog').saveSettings();
     },
 
-    onRender : function(dialog) {
+    onShowSettingsCard : function(card) {
 
-        var params = {
-            "method" : "session-get",
-            "arguments" : {
-            }
-        };
+        card.getValuesFromServer();
 
-        Ext.Ajax.request({
-            url : '/transmission/rpc',
-            jsonData : params,
-            headers : {
-                'X-Transmission-Session-Id' : window.sessionId
-            },
-            success : function(response) { debugger;
-                Clutch.app.fireEvent('settingssreceived', Ext.JSON.decode(response.responseText));
-                dialog.down('advancedsettings').setSource(Ext.JSON.decode(response.responseText).arguments);
-
-            },
-            scope : this,
-
-            failure : function(response) {
-                var x = response.getResponseHeader('X-Transmission-Session-Id');
-                if (x) {
-                    window.sessionId = x;
-                    this.onRender(dialog);
-                }
-            }
-        });
     },
 
     onAdvancedPropertyChanged : function(editor, e, eOpts) {

@@ -21,8 +21,12 @@ Ext.define("Clutch.view.settings.SettingsDialog", {
         this.callParent(arguments);
         this.initConfig(config);
     },
-    setData : function(responseArguments) {
-        //this.down('advancedsettings')
+   
+    saveSettings : function() {
+        
+        var currentCard = this.down('#cardcontainer').getLayout().getActiveItem();
+        var values = currentCard.getValues();
+        Clutch.util.RPC.sessionSet(values);
     }
 });
 /*

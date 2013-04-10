@@ -7,7 +7,7 @@ Ext.application({
 
     autoCreateViewport : true,
 
-    requires : ['Clutch.util.RPC'],
+    requires : ['Clutch.util.RPC', 'Clutch.util.RottenTomatoes'],
 
     launch : function() {
 

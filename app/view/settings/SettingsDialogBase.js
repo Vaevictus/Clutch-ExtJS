@@ -1,5 +1,8 @@
 Ext.define('Clutch.view.settings.SettingsDialogBase', {
+
     extend : 'Ext.window.Window',
+
+    requires : ['Clutch.view.settings.SettingsCardBase'],
 
     title : 'Settings',
 
@@ -63,7 +66,7 @@ Ext.define('Clutch.view.settings.SettingsDialogBase', {
                 panel : createdPanel
             });
             var cardContainer = this.down('#cardcontainer');
-            cardContainer.getLayout().setActiveItem(createdPanel);
+            //cardContainer.getLayout().setActiveItem(1);
 
         }, this);
         return panels;

@@ -83,8 +83,29 @@ Ext.define("Clutch.view.search.SearchResultGridBase", {
         return cat;
     },
     applySearchTerm : function(s, oldValue) {
+        
         this.setTitle('Search Results: ' + s);
         return s;
+    },
+    downloadSelectedTorrents : function() {
+        
+        var selected = this.getSelectionModel().getSelection();
+        Ext.each(selected, function(record) {
+            var url = record.get('torrentLink');
+            this.downloadTorrent(url);
+        }, this);
+    },
+    downloadTorrent : function(url) {
+        Ext.create("Clutch.view.torrent.AddTorrentDialog", {
+            url : url
+        }).show();
+    },
+    openTorrentUrl : function() {
+        var selected = this.getSelectionModel().getSelection();
+        if (selected.length < 1){
+            return;
+        }
+        window.open(selected[0].get('summaryLink'))
     }
 });
 /*

@@ -11,42 +11,46 @@ Ext.define('Clutch.view.search.properties.CommentsGrid', {
     config : {
         value : ""
     },
-    
-     columns : [{
+
+    viewConfig : {
+        emptyText : 'No comments to display',
+        
+        deferEmptyText : false
+    },
+
+    columns : [{
         header : 'Comment',
         flex : 1,
         dataIndex : 'comment'
     }],
-    
+
     store : Ext.create('Clutch.store.CommentsStore'),
-    
-    
-    loadComments : function(commentsUrl){
-        
+
+    loadComments : function(commentsUrl) {
+
         this.setLoading(true);
-        
+
         Clutch.util.IsoHunt.getComments(commentsUrl, this.processLoadedComments, this);
-        
+
     },
-    
+
     processLoadedComments : function(response) {
-        
+
         this.setLoading(false);
-        
+
         if (response.query && response.query.results) {
             this.store.loadRawData(response.query.results.div);
         }
     },
-    
-    applyValue: function(commentsUrl){
-        
-        if (this.isVisible()){
+
+    applyValue : function(commentsUrl) {
+
+        if (this.isVisible()) {
             this.loadComments(commentsUrl);
         }
-        
+
         return commentsUrl;
     }
-    
 });
 
 /*1.18 MB of 497.6 MB (0.35%), 589.8 kB Unverified

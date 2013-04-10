@@ -1,9 +1,12 @@
 Ext.define('Clutch.view.settings.NetworkSettings', {
-    extend : 'Ext.form.FormPanel',
 
-    //layout : 'form',
+    extend : 'Clutch.view.settings.SettingsCardBase',
 
     title : 'Network',
+
+    config : {
+        fields : ['peer-port', 'peer-port-random-on-start', 'port-forwarding-enabled']
+    },
 
     alias : 'widget.networksettings',
 
@@ -16,13 +19,16 @@ Ext.define('Clutch.view.settings.NetworkSettings', {
             xtype : 'checkbox'
         }, {
             fieldLabel : 'Incoming TCP port number',
-            xtype : 'numberfield'
+            xtype : 'numberfield',
+            name : 'peer-port'
         }, {
             fieldLabel : 'Randomize port on launch',
-            xtype : 'checkbox'
+            xtype : 'checkbox',
+            name : 'peer-port-random-on-start'
         }, {
             fieldLabel : 'Automatically Map Port',
-            xtype : 'checkbox'
+            xtype : 'checkbox',
+            name : 'port-forwarding-enabled'
         }]
     }]
 });

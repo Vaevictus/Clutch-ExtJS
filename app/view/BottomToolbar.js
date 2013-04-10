@@ -3,7 +3,7 @@ Ext.define('Clutch.view.BottomToolbar', {
 
     alias : 'widget.bottomtoolbar',
     
-    requires: 'Clutch.view.statistics.SpeedComponent',
+    requires: ['Clutch.view.statistics.SpeedComponent', 'Clutch.view.settings.SpeedChanger'],
         
     border : false,
     
@@ -11,6 +11,8 @@ Ext.define('Clutch.view.BottomToolbar', {
 
     items : [{
         xtype : 'speedcomponent'
+    },{
+        xtype : 'speedchanger'
     }]
 
 });

@@ -8,7 +8,8 @@ Ext.define('Clutch.controller.SettingsController', {
         var me = this;
 
         app.on({
-            settingschanged : me.onSettingsChanged
+            settingschanged : me.onSettingsChanged,
+            settingsreceived : me.onSettingsReceived
         });
         me.control({
             'settingsdialog treepanel' : {
@@ -27,6 +28,13 @@ Ext.define('Clutch.controller.SettingsController', {
                 edit : me.onAdvancedPropertyChanged
             }
         });
+    },
+    onSettingsReceived : function(newSettings){
+      var speedComponents = Ext.ComponentQuery.query('speedchanger');
+
+        Ext.each(speedComponents, function(c) {
+            c.setValue(newSettings);
+        });  
     },
     onSettingsChanged : function() {
       Ext.create('widget.uxNotification', {
@@ -65,7 +73,6 @@ Ext.define('Clutch.controller.SettingsController', {
 
     onAdvancedPropertyChanged : function(editor, e, eOpts) {
         //persist the value to the server
-        debugger;
         var params = {
             "method" : "session-set",
             "arguments" : {
@@ -79,7 +86,7 @@ Ext.define('Clutch.controller.SettingsController', {
             headers : {
                 'X-Transmission-Session-Id' : window.sessionId
             },
-            success : function(response) { debugger;
+            success : function(response) {
                 Clutch.app.fireEvent('settingssreceived', Ext.JSON.decode(response.responseText));
                 e.grid.down('advancedsettings').setSource(Ext.JSON.decode(response.responseText).arguments);
 

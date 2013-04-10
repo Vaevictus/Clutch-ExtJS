@@ -12,8 +12,17 @@ Ext.application({
     launch : function() {
 
         Ext.tip.QuickTipManager.init();
+        Ext.QuickTips.init();
+        
+        /* Fixes a bug in Extjs 4.2 - see http://www.sencha.com/forum/showthread.php?260106-Tooltips-on-forms-and-grid-are-not-resizing-to-the-size-of-the-text/page3#24*/
+        delete Ext.tip.Tip.prototype.minWidth;
+
+        if (Ext.isIE10) {
+            Ext.supports.Direct2DBug = true;
+        }
 
         Clutch.util.RPC.startTorrentsCheckTask();
+        Clutch.util.RPC.getInitialSettings();
 
     }
 });
@@ -33,7 +42,7 @@ Ext.util.Format.fileSize = function(value) {
 };
 
 Ext.util.Format.secondsToWords = function(seconds) {
-   
+
     var numyears = Math.floor(seconds / 31536000);
     if (numyears) {
         return numyears + ' year' + ((numyears > 1) ? 's' : '');

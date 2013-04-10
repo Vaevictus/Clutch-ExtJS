@@ -9,7 +9,7 @@ Ext.define('Clutch.view.settings.BandwidthSettings', {
     
     config : {
       
-      fields : ['alt-speed-down', 'alt-speed-up', 'speed-limit-up', 'speed-limit-down']  
+      fields : ['alt-speed-enabled','alt-speed-down', 'alt-speed-up', 'speed-limit-up', 'speed-limit-down']  
     },
     items : [{
         xtype : 'fieldset',

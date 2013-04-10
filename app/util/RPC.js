@@ -63,13 +63,16 @@ Ext.define('Clutch.util.RPC', {
     // @private
     onRunTask : function() {
         this.getLoadedTorrents();
-        this.getSettings();
         this.getStats();
 
     },
+    getInitialSettings : function() {
+        
+        this.sessionGet();
+    },
 
-    getSettings : function() {
-
+    getAllPossibleSettings : function() {
+    
         var params = {
             "method" : "session-get",
             "arguments" : {
@@ -97,7 +100,6 @@ Ext.define('Clutch.util.RPC', {
             }
         });
     },
-
     getStats : function() {
 
         var params = {
@@ -127,7 +129,6 @@ Ext.define('Clutch.util.RPC', {
             }
         });
     },
-
     getLoadedTorrents : function() {
 
         var params = {
@@ -167,7 +168,6 @@ Ext.define('Clutch.util.RPC', {
         });
 
     },
-
     startTorrents : function(torrents) {
 
         var torrentIds = this.getTorrentIdsFromTorrents(torrents);
@@ -195,7 +195,6 @@ Ext.define('Clutch.util.RPC', {
         });
 
     },
-
     pauseTorrents : function(torrents) {
         var torrentIds = this.getTorrentIdsFromTorrents(torrents);
 
@@ -259,11 +258,10 @@ Ext.define('Clutch.util.RPC', {
             }
         });
     },
-
     sessionGet : function(requestedParams, callingPanel) {
         var params = {
             "method" : "session-get",
-            "arguments" : requestedParams
+            "arguments" : {}
         };
 
         Ext.Ajax.request({
@@ -274,7 +272,11 @@ Ext.define('Clutch.util.RPC', {
             },
             success : function(response) {
 
-                callingPanel.setValue(Ext.JSON.decode(response.responseText).arguments);
+                if (callingPanel) {
+                    callingPanel.setValue(Ext.JSON.decode(response.responseText).arguments)
+                };
+                
+                Clutch.app.fireEvent('settingsreceived', Ext.JSON.decode(response.responseText).arguments);
 
             },
             scope : this,
@@ -283,12 +285,11 @@ Ext.define('Clutch.util.RPC', {
                 var x = response.getResponseHeader('X-Transmission-Session-Id');
                 if (x) {
                     window.sessionId = x;
-                    this.onRender(dialog);
+                    this.sessionGet(requestedParams, callingPanel);
                 }
             }
         });
     },
-
     sessionSet : function(requestedParams) {
         var params = {
             "method" : "session-set",
@@ -301,9 +302,7 @@ Ext.define('Clutch.util.RPC', {
                 'X-Transmission-Session-Id' : window.sessionId
             },
             success : function(response) {
-
                 Clutch.app.fireEvent('settingschanged');
-                //callingPanel.setValue(Ext.JSON.decode(response.responseText).arguments);
 
             },
             scope : this,
@@ -312,12 +311,10 @@ Ext.define('Clutch.util.RPC', {
                 var x = response.getResponseHeader('X-Transmission-Session-Id');
                 if (x) {
                     window.sessionId = x;
-                    this.onRender(dialog);
                 }
             }
         });
     },
-
     verifyTorrents : function(torrents) {
 
         var torrentIds = this.getTorrentIdsFromTorrents(torrents);
@@ -344,7 +341,6 @@ Ext.define('Clutch.util.RPC', {
             }
         });
     },
-
     addTorrent : function(options) {
         //var url = options.url;
         // "cookies"            | string      pointer to a string of one or more cookies.
@@ -386,7 +382,6 @@ Ext.define('Clutch.util.RPC', {
             }
         });
     },
-
     parseTorrentState : function(v) {
         switch (v) {
             case 0:

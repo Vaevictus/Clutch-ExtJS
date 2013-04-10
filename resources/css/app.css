@@ -55,3 +55,12 @@
 .tree-inactive {
 	background-image: url( ../../resources/images/filterinactive.png ) !important;	
 }
+
+.slowmode {
+	background-image: url( ../../resources/images/slow.png ) !important;	
+}
+
+.fastmode {
+	background-image: url( ../../resources/images/slow_off.png ) !important;	
+}
+}

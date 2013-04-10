@@ -8,7 +8,7 @@ Ext.define('Clutch.model.Torrent', {
     extend : 'Ext.data.Model',
     fields : [{
         name : 'activityDate',
-        type : 'number'
+        type : 'date'
     }, {
         name : 'addedDate',
         type : 'date'
@@ -166,6 +166,52 @@ Ext.define('Clutch.model.Torrent', {
         name : 'webseeds'
     }, {
         name : 'webseedsSendingToUs'
+    }, 
+    
+    /* BEGIN CALCULATED FIELDS BECAUSE TRANSMISSION-DAEOMON DOES NOT PROVIDE US WITH SEED SPEFICIFC PEER INFO*/
+    {
+        name : 'realPeers',
+        convert : function(v, model) {
+            var allPeers = model.get('peers'), nonSeeds = 0;
+            Ext.each(allPeers, function(p) {
+                if (p.progress < 1)
+                    nonSeeds++;
+            }, this);
+            return nonSeeds;
+        }
+    }, {
+        name : 'realPeersSendingToUs',
+        convert : function(v, model) {
+            var allPeers = model.get('peers'), nonSeeds = 0;
+            Ext.each(allPeers, function(p) {
+                if (p.isUploadingTo === true && p.progress < 1)
+                    nonSeeds++;
+            }, this);
+            return nonSeeds;
+        }
+    }, {
+        name : 'realSeeds',
+        convert : function(v, model) {
+
+            var allPeers = model.get('peers'), seeds = 0;
+            Ext.each(allPeers, function(p) {
+                if (p.progress === 1)
+                    seeds++;
+            }, this);
+            return seeds;
+        }
+    }, {
+        name : 'realSeedsSendingToUs',
+        convert : function(v, model) {
+            var allPeers = model.get('peers'), seeds = 0;
+            Ext.each(allPeers, function(p) {
+                console.log(p.progress);
+                if (p.progress === 1 && p.isUploadingTo === true)
+                    seeeds++;
+            }, this);
+            return seeds;
+        }
     }]
+
 });
 

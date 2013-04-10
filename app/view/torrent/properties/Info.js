@@ -32,7 +32,7 @@ Ext.define('Clutch.view.torrent.properties.Info', {
             xtype : 'torrentstatefield'
         }, {
             fieldLabel : 'Running Time',
-            name : 'runningTime',
+            name : 'secondsDownloading',
             xtype : 'secondsfield'
         }, {
             fieldLabel : 'Remaining Time',
@@ -40,6 +40,7 @@ Ext.define('Clutch.view.torrent.properties.Info', {
             xtype : 'secondsfield'
         }, {
             fieldLabel : 'Last Activity',
+            tooltip : 'The last time we uploaded or downloaded piece data on this torrent',
             name : 'activityDate',
             xtype : 'timestampfield'
         }, {

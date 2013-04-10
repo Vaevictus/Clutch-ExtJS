@@ -35,13 +35,15 @@ Ext.define('Clutch.view.torrent.TorrentsGrid', {
         xtype : 'torrentprogresscolumn',
         width : 110
     }, {
+         xtype : 'templatecolumn',
         header : 'Seeds',
-        width : 50,
-        dataIndex : 'seedsConnected'
+        width : 55,
+        tpl : '{realSeedsSendingToUs} ({realSeeds})'
     }, {
         header : 'Peers',
-        width : 50,
-        dataIndex : 'peersConnected'
+        width : 55,
+        xtype : 'templatecolumn',
+        tpl : '{realPeersSendingToUs} ({realPeers})'
     }, {
         header : 'Download Speed',
         dataIndex : 'rateDownload',

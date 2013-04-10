@@ -46,7 +46,7 @@ Ext.define('Clutch.util.RottenTomatoes', {
             },
             scope : this,
 
-            failure : function(response) { debugger;
+            failure : function(response) {
             }
         });
 

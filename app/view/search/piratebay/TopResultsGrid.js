@@ -8,7 +8,6 @@ Ext.define('Clutch.view.search.piratebay.TopResultsGrid', {
     alias : 'widget.piratebaytopresultsgrid',
 
     applySearchTerm : function(v, oldValue) {
-        debugger;
         return v;
     },
     tbar : [],

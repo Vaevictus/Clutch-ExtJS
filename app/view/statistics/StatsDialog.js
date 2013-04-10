@@ -107,7 +107,7 @@ Ext.define("Clutch.view.statistics.StatsDialog", {
         this.initConfig(config);
     },
     applyData : function(d, oldData) {
-        debugger;
+        
         this.traverse(d, "", this.processField);
         this.traverse(d["cumulative-stats"], "h-", this.processField);
         this.traverse(d["current-stats"], "c-", this.processField);

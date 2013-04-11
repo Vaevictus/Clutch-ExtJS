@@ -99,7 +99,7 @@ Ext.define('Clutch.util.IsoHunt', {
                     Clutch.app.fireEvent('searchfail', response, callingGrid);
                     return;
                 }
-
+                if (!response.query.results.json.items) response.query.results.json.items = [];
                 var YQLResultObject = response.query.results.json.items.list, HarmonisedResults = [];
                 Ext.each(YQLResultObject, function(r) {
                     HarmonisedResults.push(Clutch.util.Harmoniser.harmoniseIsoHunt(r));

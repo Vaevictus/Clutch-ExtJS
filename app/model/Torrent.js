@@ -207,7 +207,7 @@ Ext.define('Clutch.model.Torrent', {
             Ext.each(allPeers, function(p) {
                 console.log(p.progress);
                 if (p.progress === 1 && p.isUploadingTo === true)
-                    seeeds++;
+                    seeds++;
             }, this);
             return seeds;
         }

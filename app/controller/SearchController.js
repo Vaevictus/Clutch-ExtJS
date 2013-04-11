@@ -19,12 +19,16 @@ Ext.define('Clutch.controller.SearchController', {
                 itemdblclick : me.onSearchResultDoubleClick,
                 itemclick : me.onSearchResultSingleClick
             },
+            'searchresultgrid searchtoolbarbase searchfield' :{
+                specialkey : me.onSearchFieldEnterPress
+            },
+            'searchresultgrid searchtoolbarbase #gobutton' :{
+                click : me.onSearchGoButtonClick
+            },
             'searchtree' : {
                 itemclick : me.onTreeNodeClick
             },
-            'searchfield' : {
-                specialkey : me.onSearchFieldEnterPress
-            },
+           
             'commentsgrid' : {
                 show : me.onCommentsGridShow
             },
@@ -128,6 +132,11 @@ Ext.define('Clutch.controller.SearchController', {
 
         }
 
+    },
+    
+    onSearchGoButtonClick : function(btn){
+         var grid = btn.up('gridpanel'), field = grid.down('searchfield');
+            grid.setSearchTerm(field.getValue());
     },
 
     onSearchResultSingleClick : function(view, record, item, index, e, eOpts) {

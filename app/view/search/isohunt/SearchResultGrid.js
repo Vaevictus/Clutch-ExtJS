@@ -2,7 +2,7 @@ Ext.define('Clutch.view.search.isohunt.SearchResultGrid', {
 
     extend : 'Clutch.view.search.SearchResultGridBase',
 
-    requires : ['Clutch.view.search.SearchResultGridBase'],
+    requires : ['Clutch.view.search.SearchResultGridBase', 'Clutch.view.search.SearchToolbar'],
 
     store : Ext.create('Clutch.store.SearchResult'),
 
@@ -10,11 +10,9 @@ Ext.define('Clutch.view.search.isohunt.SearchResultGrid', {
 
     alias : 'widget.isohuntsearchresultgrid',
 
-    tbar : [{
-        xtype : 'searchfield',
-        emptyText : 'Search isohunt.com',
-        width : 200
-    }],
+    tbar : Ext.create('Clutch.view.search.SearchToolbar', {
+        searchEmptyText : 'Search isohunt.com'
+    }),
 
     applySearchTerm : function(searchTerm, oldValue) {
 

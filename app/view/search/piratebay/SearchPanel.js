@@ -27,7 +27,8 @@ Ext.define('Clutch.view.search.piratebay.SearchPanel', {
         collapsed : true,
         collapsible : true,
         split : true,
-        width : 400
+        width : 400,
+        hideComments : true
     }]
    
 

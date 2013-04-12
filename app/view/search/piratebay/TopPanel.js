@@ -21,7 +21,8 @@ Ext.define('Clutch.view.search.piratebay.TopPanel', {
       
     }, {
         xtype : 'searchresultdetailspanel',
-        region : 'east'
+        region : 'east',
+        hideComments : true
     }]    
 
 });

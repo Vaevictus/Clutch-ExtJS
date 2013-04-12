@@ -2,7 +2,7 @@ Ext.define("Clutch.view.settings.SettingsDialog", {
 
     extend : 'Ext.window.Window',
 
-    requires : ['Clutch.view.settings.GeneralSettings', 'Clutch.view.settings.TransfersSettings', 'Clutch.view.settings.NetworkSettings', 'Clutch.view.settings.BandwidthSettings'],
+    requires : ['Clutch.view.settings.GeneralSettings', 'Clutch.view.settings.PeerSettings', 'Clutch.view.settings.TransfersSettings', 'Clutch.view.settings.NetworkSettings'],
 
     title : 'Settings',
 
@@ -15,7 +15,7 @@ Ext.define("Clutch.view.settings.SettingsDialog", {
     modal : true,
 
     config : {
-        cards : ['widget.generalsettings', 'widget.bandwidthsettings', 'widget.networksettings', 'widget.transferssettings']
+        cards : ['widget.generalsettings', 'widget.peersettings','widget.networksettings', 'widget.transferssettings']
     },
     width : 600,
 
@@ -41,7 +41,7 @@ Ext.define("Clutch.view.settings.SettingsDialog", {
         text : 'Save',
         action : 'save'
     }, {
-        text : 'Cancel',
+        text : 'Close',
         action : 'cancel'
     }],
 

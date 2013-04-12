@@ -5,19 +5,47 @@ Ext.define('Clutch.view.settings.NetworkSettings', {
     title : 'Network',
 
     config : {
-        fields : ['peer-port', 'peer-port-random-on-start', 'port-forwarding-enabled']
+        fields : ['peer-port', 'peer-port-random-on-start', 'port-forwarding-enabled', 'alt-speed-enabled', 'alt-speed-down', 'alt-speed-up', 'speed-limit-up', 'speed-limit-down']
     },
 
     alias : 'widget.networksettings',
 
     items : [{
         xtype : 'fieldset',
+        title : 'Bandwidth',
+        items : [{
+            xtype : 'fieldset',
+            title : 'Normal Mode',
+            items : [{
+                fieldLabel : 'Download',
+                allowBlank : false,
+                xtype : 'numberfield',
+                name : 'speed-limit-down'
+            }, {
+                fieldLabel : 'Upload',
+                allowBlank : false,
+                xtype : 'numberfield',
+                name : 'speed-limit-up'
+            }]
+        }, {
+            xtype : 'fieldset',
+            title : 'Throttled Mode',
+            items : [{
+                fieldLabel : 'Download',
+                allowBlank : false,
+                xtype : 'numberfield',
+                name : 'alt-speed-down'
+            }, {
+                fieldLabel : 'Upload',
+                allowBlank : false,
+                xtype : 'numberfield',
+                name : 'alt-speed-up'
+            }]
+        }]
+    }, {
+        xtype : 'fieldset',
         title : 'Peer Communication',
         items : [{
-            fieldLabel : 'Enable Micro Transport Protocol',
-            allowBlank : false,
-            xtype : 'checkbox'
-        }, {
             fieldLabel : 'Incoming TCP port number',
             xtype : 'numberfield',
             name : 'peer-port'

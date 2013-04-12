@@ -30,13 +30,17 @@ Ext.define('Clutch.controller.SettingsController', {
         });
     },
     onSettingsReceived : function(newSettings){
+      
       var speedComponents = Ext.ComponentQuery.query('speedchanger');
 
         Ext.each(speedComponents, function(c) {
+      
             c.setValue(newSettings);
+      
         });  
     },
     onSettingsChanged : function() {
+        
       Ext.create('widget.uxNotification', {
             title : 'Notification',
             position : 't',
@@ -53,7 +57,7 @@ Ext.define('Clutch.controller.SettingsController', {
     
     onSettingsNodeClick : function(treepanel, record, item, index, e, eOpts) {
 
-        var dialog = treepanel.up('settingsdialog').setActiveItem(record.raw.panel);
+        var dialog = treepanel.up('settingsdialog').changeActiveItem(index);
     },
 
     onCancelButtonClick : function(btn) {

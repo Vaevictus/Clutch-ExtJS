@@ -45,6 +45,7 @@ Ext.define('Clutch.controller.Main', {
 
         });
         dialog.show();
+        
     },
 
     onTorrentdetailsreceived : function(torrentData) {
@@ -67,6 +68,7 @@ Ext.define('Clutch.controller.Main', {
 
         var dialog = Ext.create('Clutch.view.settings.SettingsDialog');
         dialog.show();
+        //dialog.changeActiveItem(1);
     },
     onTorrentAdded : function(torrentDetails){
         this.showTorrentAddedNotification(arguments);

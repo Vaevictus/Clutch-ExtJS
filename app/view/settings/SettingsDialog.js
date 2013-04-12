@@ -36,7 +36,7 @@ Ext.define("Clutch.view.settings.SettingsDialog", {
         region : 'center'
 
     }],
-    
+
     buttons : [{
         text : 'Save',
         action : 'save'
@@ -44,14 +44,18 @@ Ext.define("Clutch.view.settings.SettingsDialog", {
         text : 'Cancel',
         action : 'cancel'
     }],
-    
+
     constructor : function(config) {
         this.callParent(arguments);
         this.initConfig(config);
     },
-    
-     applyCards : function(panels, oldValue) {
+
+    applyCards : function(panels, oldValue) {
+
+        var container = this.down('#cardcontainer');
+
         Ext.each(panels, function(panelName) {
+
             var root = this.down('treepanel').getRootNode(), createdPanel = Ext.createByAlias(panelName, {
                 itemId : panelName
             });
@@ -60,8 +64,8 @@ Ext.define("Clutch.view.settings.SettingsDialog", {
                 text : createdPanel.title,
                 panel : createdPanel
             });
-            var cardContainer = this.down('#cardcontainer');
-            
+
+            container.add(createdPanel);
 
         }, this);
         return panels;
@@ -70,9 +74,12 @@ Ext.define("Clutch.view.settings.SettingsDialog", {
     showFirstCard : function() {
         this.down('#cardcontainer').getLayout().setActiveItem(this.down('settingscardbase'));
     },
-    
-    changeActiveItem : function(card){
-         this.down('#cardcontainer').getLayout().setActiveItem(card);
+
+    changeActiveItem : function(card) {
+
+        var layout = this.down('#cardcontainer').getLayout();
+
+        layout.setActiveItem(card);
     },
 
     saveSettings : function() {

@@ -1,29 +1,82 @@
 Ext.define("Clutch.view.settings.SettingsDialog", {
 
-    extend : 'Clutch.view.settings.SettingsDialogBase',
+    extend : 'Ext.window.Window',
 
-    requires : ['Clutch.view.settings.GeneralSettings', 'Clutch.view.settings.TransfersSettings', 'Clutch.view.settings.NetworkSettings', 'Clutch.view.settings.BandwidthSettings', 'Clutch.view.settings.AdvancedSettings'],
+    requires : ['Clutch.view.settings.GeneralSettings', 'Clutch.view.settings.TransfersSettings', 'Clutch.view.settings.NetworkSettings', 'Clutch.view.settings.BandwidthSettings'],
 
     title : 'Settings',
 
+    constrain : true,
+
     alias : 'widget.settingsdialog',
+
+    layout : 'border',
 
     modal : true,
 
     config : {
-        cards : ['widget.generalsettings', 'widget.bandwidthsettings', 'widget.networksettings', 'widget.transferssettings', 'widget.advancedsettings']
+        cards : ['widget.generalsettings', 'widget.bandwidthsettings', 'widget.networksettings', 'widget.transferssettings']
     },
     width : 600,
 
     height : 600,
 
+    items : [{
+        xtype : 'treepanel',
+        region : 'west',
+        width : 150,
+        rootVisible : false,
+        root : {
+            children : []
+        }
+    }, {
+        xtype : 'panel',
+        itemId : 'cardcontainer',
+        layout : 'card',
+        region : 'center'
+
+    }],
+    
+    buttons : [{
+        text : 'Save',
+        action : 'save'
+    }, {
+        text : 'Cancel',
+        action : 'cancel'
+    }],
+    
     constructor : function(config) {
         this.callParent(arguments);
         this.initConfig(config);
     },
-   
+    
+     applyCards : function(panels, oldValue) {
+        Ext.each(panels, function(panelName) {
+            var root = this.down('treepanel').getRootNode(), createdPanel = Ext.createByAlias(panelName, {
+                itemId : panelName
+            });
+
+            root.appendChild({
+                text : createdPanel.title,
+                panel : createdPanel
+            });
+            var cardContainer = this.down('#cardcontainer');
+            
+
+        }, this);
+        return panels;
+    },
+
+    showFirstCard : function() {
+        this.down('#cardcontainer').getLayout().setActiveItem(this.down('settingscardbase'));
+    },
+    
+    changeActiveItem : function(card){
+         this.down('#cardcontainer').getLayout().setActiveItem(card);
+    },
+
     saveSettings : function() {
-        
+
         var currentCard = this.down('#cardcontainer').getLayout().getActiveItem();
         var values = currentCard.getValues();
         Clutch.util.RPC.sessionSet(values);

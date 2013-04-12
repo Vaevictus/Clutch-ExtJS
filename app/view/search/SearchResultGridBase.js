@@ -8,13 +8,16 @@ Ext.define("Clutch.view.search.SearchResultGridBase", {
     title : 'Search Results',
 
     config : {
+
         results : null,
 
         searchTerm : null,
 
         filterCat : 'all'
     },
+
     viewConfig : {
+
         emptyText : 'No results',
 
         stripeRows : true,
@@ -59,10 +62,13 @@ Ext.define("Clutch.view.search.SearchResultGridBase", {
         dataIndex : 'comments',
         flex : 1
     }],
+
     initComponent : function(cfg) {
+
         this.selModel = Ext.create('Ext.selection.RowModel', {
             mode : 'MULTI'
         });
+
         this.callParent(arguments);
     },
     // selModel : Ext.create('Ext.selection.RowModel', {
@@ -70,6 +76,7 @@ Ext.define("Clutch.view.search.SearchResultGridBase", {
     // }),
 
     applyResults : function(newValue, oldValue) {
+
         this.store.loadRawData(newValue);
         //must use loadRawData here as loadData does not supporting mapping in the fields which we need for other ext bugs
         return newValue;
@@ -78,35 +85,68 @@ Ext.define("Clutch.view.search.SearchResultGridBase", {
     applyFilterCat : function(cat, oldCat) {
 
         this.store.clearFilter(false);
+
         if (cat !== 'all') {
+
             this.store.filter('category', cat, true, true);
+
         }
+
         return cat;
     },
+
     applySearchTerm : function(s, oldValue) {
-        
+
         this.setTitle('Search Results: ' + s);
+
         return s;
     },
+
     downloadSelectedTorrents : function() {
-        
+
         var selected = this.getSelectionModel().getSelection();
+
         Ext.each(selected, function(record) {
+
             var url = record.get('torrentLink');
+
             this.downloadTorrent(url);
+
         }, this);
     },
+    
     downloadTorrent : function(url) {
+    
         Ext.create("Clutch.view.torrent.AddTorrentDialog", {
             url : url
         }).show();
+    
     },
+    
     openTorrentUrl : function() {
+
         var selected = this.getSelectionModel().getSelection();
-        if (selected.length < 1){
+
+        if (selected.length < 1) {
             return;
         }
+
         window.open(selected[0].get('summaryLink'))
+    },
+    
+    showMovieInfo : function() {
+        debugger;
+        var selected = this.getSelectionModel().getSelection(), detailsPanel = this.up('panel').down('searchresultdetailspanel'), movieInfoPanel = detailsPanel.down('movieinfo');
+
+        if (selected.length < 1) {
+            return;
+        }
+        
+        detailsPanel.expand();
+        
+        movieInfoPanel.show();
+        
+        movieInfoPanel.setTorrentSearchResult(selected[0]);
     }
 });
 /*

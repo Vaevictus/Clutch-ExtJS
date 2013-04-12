@@ -8,6 +8,7 @@ Ext.define('Clutch.view.search.properties.MovieInfo', {
     alias : 'widget.movieinfo',
 
     config : {
+
         torrentSearchResult : null,
 
         matchedMovies : []
@@ -29,6 +30,11 @@ Ext.define('Clutch.view.search.properties.MovieInfo', {
             header : 'Rating',
             dataIndex : 'rating'
         }],
+
+        viewConfig : {
+            emptyText : 'No results',
+            deferEmptyText : false
+        },
         store : Ext.create('Clutch.store.MovieInfoStore')
     }, {
         fieldLabel : 'Title',
@@ -54,46 +60,82 @@ Ext.define('Clutch.view.search.properties.MovieInfo', {
         width : 400,
         readOnly : true
     }],
-    
-    initComponent : function(cfg) {
+
+    tbar : [{
+        xtype : 'textfield',
+        emptyText : 'Enter search term',
+        itemId : 'moviesearchtext',
+        width : 300
+    }, {
+        xtype : 'button',
+        text : 'Go',
+        action : 'go'
+
+    }],
+
+    constructor : function(cfg) {
 
         this.callParent(arguments);
+
+        this.initConfig(cfg);
     },
 
     applyTorrentSearchResult : function(searchResult, oldValue) {
+        
+        var dirty = searchResult.get('name');
+        var withoutTags = Ext.util.Format.stripTags(dirty);
+        var title = this.cleanupTitle(withoutTags);
+
+        this.down('#moviesearchtext').setValue(title);
 
         if (this.isVisible() === true) {
-            this.searchForMoviesMatchingTorrentSearchResult(searchResult.get('name'));
+
+            this.search(title);
+
         }
+
         return searchResult;
     },
+    doManualSearch : function() {
 
-    searchForMoviesMatchingTorrentSearchResult : function(uglyTitle) {
-        var titleName = this.cleanupTitle(uglyTitle);
+        var searchTerm = this.down('#moviesearchtext').getValue();
 
-        console.log(uglyTitle + " becomes " + titleName);
+        this.search(searchTerm);
 
-        Clutch.util.RottenTomatoes.search(titleName, function(results, me) {
+    },
+
+    search : function(searchTerm) {
+        
+        this.down('gridpanel').getView().setLoading(true);
+
+        Clutch.util.RottenTomatoes.search(searchTerm, function(results, me) {
+            
+            me.down('gridpanel').getView().setLoading(false);
+                        
             var store = me.down('gridpanel').store;
+
             store.loadRawData(results);
+
             me.loadRecord(store.data.items[0]);
+
         }, this);
     },
 
     cleanupTitle : function(v) {
         //life.of.pi.(2012).blahhhhh
-        var withoutDots = v.replace(new RegExp('\\.','g')," ");
+        var withoutDots = v.replace(new RegExp('\\.', 'g'), " ");
 
         //life of pi (2012) blaahhhhhh
-        var withoutParentheses = withoutDots.replace(new RegExp('\\(','g')," ");
-        withoutParentheses = withoutParentheses.replace(new RegExp('\\)','g')," ");
+        var withoutParentheses = withoutDots.replace(new RegExp('\\(', 'g'), " ");
+        withoutParentheses = withoutParentheses.replace(new RegExp('\\)', 'g'), " ");
         //life of pi 2012 blahhhhhh
 
         //split on spaces
         var arrWords = withoutParentheses.split(' '), newTitle = '';
+
         for (var i = 0; i < arrWords.length; i++) {
             var word = arrWords[i];
-            
+
             newTitle += word + " ";
             if (isNaN(parseInt(word)) === false && parseInt(word) > 1900 && parseInt(word) < 2015)
                 break;

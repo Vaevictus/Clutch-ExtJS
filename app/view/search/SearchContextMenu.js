@@ -10,5 +10,8 @@ Ext.define('Clutch.view.search.SearchContextMenu', {
     }, {
         text : 'View source page',
         action : 'view'
+    },{
+        text : 'View movie information',
+        action : 'showmovieinfo'
     }]
 });

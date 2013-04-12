@@ -19,16 +19,16 @@ Ext.define('Clutch.controller.SearchController', {
                 itemdblclick : me.onSearchResultDoubleClick,
                 itemclick : me.onSearchResultSingleClick
             },
-            'searchresultgrid searchtoolbarbase searchfield' :{
+            'searchresultgrid searchtoolbarbase searchfield' : {
                 specialkey : me.onSearchFieldEnterPress
             },
-            'searchresultgrid searchtoolbarbase #gobutton' :{
+            'searchresultgrid searchtoolbarbase #gobutton' : {
                 click : me.onSearchGoButtonClick
             },
             'searchtree' : {
                 itemclick : me.onTreeNodeClick
             },
-           
+
             'commentsgrid' : {
                 show : me.onCommentsGridShow
             },
@@ -37,6 +37,12 @@ Ext.define('Clutch.controller.SearchController', {
             },
             'movieinfo gridpanel' : {
                 itemclick : me.onMovieResultChange
+            },
+            'movieinfo toolbar button[action=go]' : {
+                click : me.onManualMovieSearchClick
+            },
+            'movieinfo toolbar #moviesearchtext' : {
+                specialkey : me.onMovieTextFieldSpecialKey
             }
         });
         app.on({
@@ -46,16 +52,42 @@ Ext.define('Clutch.controller.SearchController', {
             scope : me
         });
     },
+    onMovieTextFieldSpecialKey : function(field, e) {
+
+        if (e.getKey() === e.ENTER) {
+
+            var grid = field.up('movieinfo');
+            
+            grid.doManualSearch();
+
+        }
+    },
+
+    onManualMovieSearchClick : function(btn) {
+
+        var moviePanel = btn.up('movieinfo');
+
+        moviePanel.doManualSearch();
+    },
+    
     onMovieResultChange : function(view, record, item, index, e, eOpts) {
+
         var panel = view.up('movieinfo');
+
         panel.loadRecord(record);
-        
+
     },
+    
     onAfterRenderPirateBayTop : function(topGrid) {
+    
         topGrid.loadResults();
+    
     },
+    
     onCommentsGridShow : function(commentsGrid) {
+    
         var url = commentsGrid.getValue();
+    
         commentsGrid.loadComments(url);
     },
 
@@ -64,35 +96,50 @@ Ext.define('Clutch.controller.SearchController', {
         grid.setLoading(true);
 
     },
+    
     onAfterSearch : function(searchResults, grid) {
+    
         var searchTree = grid.up('panel').down('searchtree'), cats = [];
+    
         grid.setLoading(false);
 
         Ext.each(searchResults, function(res) {
             Ext.Array.include(cats, res.category);
         });
+        
         searchTree.setCategories(cats);
+        
         grid.setResults(searchResults);
 
     },
+    
     onSearchFail : function(response, grid) {
+        
         grid.setLoading(false);
+        
         Ext.Msg.alert('Error', 'Error performing search: ' + response.error);
     },
+    
     onTreeNodeClick : function(treeview, record, item, index, e, eOpts) {
 
         var grid = treeview.up('panel').up('panel').down('searchresultgrid');
+        
         grid.setFilterCat(record.raw.filter);
 
     },
 
     onAfterRender : function(gridPanel) {
+    
         gridPanel.contextMenu.gridPanel = gridPanel;
+    
     },
 
     onContextMenu : function(view, record, item, index, e) {
+    
         e.stopEvent();
+    
         var contextMenu = view.up('searchresultgrid').contextMenu;
+    
         contextMenu.showAt(e.getXY());
     },
 
@@ -110,6 +157,9 @@ Ext.define('Clutch.controller.SearchController', {
                 break;
             case 'view':
                 grid.openTorrentUrl();
+                break;
+            case 'showmovieinfo':
+                grid.showMovieInfo();
                 break;
         }
     },
@@ -133,10 +183,13 @@ Ext.define('Clutch.controller.SearchController', {
         }
 
     },
+
+    onSearchGoButtonClick : function(btn) {
     
-    onSearchGoButtonClick : function(btn){
-         var grid = btn.up('gridpanel'), field = grid.down('searchfield');
-            grid.setSearchTerm(field.getValue());
+        var grid = btn.up('gridpanel'), field = grid.down('searchfield');
+    
+        grid.setSearchTerm(field.getValue());
+
     },
 
     onSearchResultSingleClick : function(view, record, item, index, e, eOpts) {

@@ -18,11 +18,11 @@ Ext.define('Clutch.view.search.piratebay.SearchResultGrid', {
         dataIndex : 'name'
     }, {
         header : 'Seeds',
-        width : 60,
+        width : 70,
         dataIndex : 'seeds'
     }, {
         header : 'Leechers',
-        width : 65,
+        width : 70,
         dataIndex : 'leechers'
     }, {
         header : 'Size',

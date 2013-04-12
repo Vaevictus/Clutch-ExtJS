@@ -32,11 +32,11 @@ Ext.define("Clutch.view.search.SearchResultGridBase", {
         dataIndex : 'name'
     }, {
         header : 'Seeds',
-        width : 50,
+        width : 70,
         dataIndex : 'seeds'
     }, {
         header : 'Leechers',
-        width : 50,
+        width : 70,
         dataIndex : 'leechers'
     }, {
         header : 'Size',
@@ -46,6 +46,7 @@ Ext.define("Clutch.view.search.SearchResultGridBase", {
         header : 'Date Added',
         xtype : 'datecolumn',
         dataIndex : 'pubDate',
+        width : 200,
         format : 'F j, Y, g:i a'
     }, {
         header : 'Downloads',

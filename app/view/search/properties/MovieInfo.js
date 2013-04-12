@@ -3,6 +3,8 @@ Ext.define('Clutch.view.search.properties.MovieInfo', {
     extend : 'Ext.form.Panel',
 
     requires : ['Clutch.store.MovieInfoStore'],
+    
+    autoScroll : true,
     //requires : ['Clutch.view.field.TorrentStateField', 'Clutch.view.field.BytesField','Clutch.view.field.TextTimeField','Clutch.view.field.TimestampField'],
 
     alias : 'widget.movieinfo',
@@ -36,28 +38,12 @@ Ext.define('Clutch.view.search.properties.MovieInfo', {
             deferEmptyText : false
         },
         store : Ext.create('Clutch.store.MovieInfoStore')
-    }, {
-        fieldLabel : 'Title',
-        name : 'title',
-        xtype : 'textfield',
-        readOnly : true,
-        grow : true
-    }, {
-        fieldLabel : 'Year',
-        name : 'year',
-        xtype : 'numberfield',
-        readOnly : true
-    }, {
-        fieldLabel : 'Rating',
-        name : 'rating',
-        xtype : 'numberfield',
-        readOnly : true
-    }, {
-        fieldLabel : 'Synopsis',
+    },{
+      //  fieldLabel : 'Synopsis',
         name : 'synopsis',
         xtype : 'textareafield',
         grow : true,
-        width : 400,
+        width : 350,
         readOnly : true
     }],
 

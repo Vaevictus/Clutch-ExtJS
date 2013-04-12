@@ -10,8 +10,6 @@ Ext.define('Clutch.view.search.piratebay.SearchResultGrid', {
 
     title : 'PirateBay Search Results',
 
-    contextMenu : Ext.create('Clutch.view.search.SearchContextMenu'),
-
     columns : [{
         header : 'Name',
         flex : 1,

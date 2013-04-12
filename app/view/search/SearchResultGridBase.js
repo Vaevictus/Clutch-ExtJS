@@ -27,8 +27,6 @@ Ext.define("Clutch.view.search.SearchResultGridBase", {
 
     alias : 'widget.searchresultgrid',
 
-    contextMenu : Ext.create('Clutch.view.search.SearchContextMenu'),
-
     columns : [{
         header : 'Name',
         flex : 1,
@@ -63,17 +61,16 @@ Ext.define("Clutch.view.search.SearchResultGridBase", {
         flex : 1
     }],
 
-    initComponent : function(cfg) {
-
-        this.selModel = Ext.create('Ext.selection.RowModel', {
+    constructor : function(cfg) {
+        this.callParent(arguments);
+        
+        this.getView().selModel = Ext.create('Ext.selection.RowModel', {
             mode : 'MULTI'
         });
-
-        this.callParent(arguments);
+        this.contextMenu = Ext.create('Clutch.view.search.SearchContextMenu', { gridPanel : this });
+        
+        this.initConfig(cfg);
     },
-    // selModel : Ext.create('Ext.selection.RowModel', {
-    // mode : 'MULTI'
-    // }),
 
     applyResults : function(newValue, oldValue) {
 
@@ -104,7 +101,7 @@ Ext.define("Clutch.view.search.SearchResultGridBase", {
 
     downloadSelectedTorrents : function() {
 
-        var selected = this.getSelectionModel().getSelection();
+        var selected = this.getView().getSelectionModel().getSelection();
 
         Ext.each(selected, function(record) {
 
@@ -125,7 +122,7 @@ Ext.define("Clutch.view.search.SearchResultGridBase", {
     
     openTorrentUrl : function() {
 
-        var selected = this.getSelectionModel().getSelection();
+        var selected = this.getView().getSelectionModel().getSelection();
 
         if (selected.length < 1) {
             return;
@@ -135,8 +132,8 @@ Ext.define("Clutch.view.search.SearchResultGridBase", {
     },
     
     showMovieInfo : function() {
-        debugger;
-        var selected = this.getSelectionModel().getSelection(), detailsPanel = this.up('panel').down('searchresultdetailspanel'), movieInfoPanel = detailsPanel.down('movieinfo');
+
+        var selected = this.getView().getSelectionModel().getSelection(), detailsPanel = this.up('panel').down('searchresultdetailspanel'), movieInfoPanel = detailsPanel.down('movieinfo');
 
         if (selected.length < 1) {
             return;

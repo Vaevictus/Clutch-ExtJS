@@ -17,6 +17,10 @@ Ext.define('Clutch.model.MovieInfo', {
     },{
         name : 'synopsis',
         type : 'string'
+    },{
+        name : 'alternate_ids'
+    },{
+        name : 'links'
     }]  
     
 });

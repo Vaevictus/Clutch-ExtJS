@@ -3,7 +3,7 @@ Ext.define('Clutch.view.search.properties.MovieInfo', {
     extend : 'Ext.form.Panel',
 
     requires : ['Clutch.store.MovieInfoStore'],
-    
+
     autoScroll : true,
     //requires : ['Clutch.view.field.TorrentStateField', 'Clutch.view.field.BytesField','Clutch.view.field.TextTimeField','Clutch.view.field.TimestampField'],
 
@@ -13,12 +13,16 @@ Ext.define('Clutch.view.search.properties.MovieInfo', {
 
         torrentSearchResult : null,
 
-        matchedMovies : []
+        matchedMovies : [],
+
+        imdbTemplate : 'http://www.imdb.com/title/tt{0}/'
     },
 
     items : [{
         xtype : 'gridpanel',
 
+        itemId : 'grid',
+        
         height : 200,
 
         columns : [{
@@ -38,8 +42,8 @@ Ext.define('Clutch.view.search.properties.MovieInfo', {
             deferEmptyText : false
         },
         store : Ext.create('Clutch.store.MovieInfoStore')
-    },{
-      //  fieldLabel : 'Synopsis',
+    }, {
+        //  fieldLabel : 'Synopsis',
         name : 'synopsis',
         xtype : 'textareafield',
         grow : true,
@@ -59,15 +63,27 @@ Ext.define('Clutch.view.search.properties.MovieInfo', {
 
     }],
 
+    bbar : [{
+        xtype : 'button',
+        action : 'viewimdblink',
+        text : 'View on IMDB'
+    }, '->', {
+        xtype : 'button',
+        action : 'viewrtlink',
+        text : 'View on Rotten Tomatoes'
+    }],
+
     constructor : function(cfg) {
 
         this.callParent(arguments);
 
         this.initConfig(cfg);
+        
+        
     },
 
     applyTorrentSearchResult : function(searchResult, oldValue) {
-        
+
         var dirty = searchResult.get('name');
         var withoutTags = Ext.util.Format.stripTags(dirty);
         var title = this.cleanupTitle(withoutTags);
@@ -91,18 +107,16 @@ Ext.define('Clutch.view.search.properties.MovieInfo', {
     },
 
     search : function(searchTerm) {
-        
-        this.down('gridpanel').getView().setLoading(true);
 
         Clutch.util.RottenTomatoes.search(searchTerm, function(results, me) {
+
+            var grid = me.down('#grid'),
+                store = grid.store;
             
-            me.down('gridpanel').getView().setLoading(false);
-                        
-            var store = me.down('gridpanel').store;
-
             store.loadRawData(results);
-
-            me.loadRecord(store.data.items[0]);
+            
+            grid.getView().getSelectionModel().select(0); 
+            
 
         }, this);
     },
@@ -128,6 +142,31 @@ Ext.define('Clutch.view.search.properties.MovieInfo', {
         }
         return newTitle.trim();
 
+    },
+
+    openIMDB : function() { debugger;
+       
+        var grid = this.down('gridpanel'), selected = grid.getView().getSelectionModel().getSelection()[0];
+
+        if (selected) {
+
+            var url = Ext.String.format(this.getImdbTemplate(), selected.get('alternate_ids').imdb);
+
+            window.open(url);
+        }
+
+    },
+
+    openRottenTomatoes : function() {
+
+        var grid = this.down('gridpanel'), selected = grid.getView().getSelectionModel().getSelection()[0];
+
+        if (selected) {
+
+            var url = selected.get('links').alternate;
+
+            window.open(url);
+        }
     }
 });
 

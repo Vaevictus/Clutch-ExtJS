@@ -36,13 +36,19 @@ Ext.define('Clutch.controller.SearchController', {
                 afterrender : me.onAfterRenderPirateBayTop
             },
             'movieinfo gridpanel' : {
-                itemclick : me.onMovieResultChange
+                select : me.onMovieResultChange
             },
             'movieinfo toolbar button[action=go]' : {
                 click : me.onManualMovieSearchClick
             },
             'movieinfo toolbar #moviesearchtext' : {
                 specialkey : me.onMovieTextFieldSpecialKey
+            },
+            'movieinfo toolbar button[action=viewimdblink]' : {
+                click : me.onViewImdbClick
+            },
+             'movieinfo toolbar button[action=viewrtlink]' : {
+                click : me.onViewRtClick
             }
         });
         app.on({
@@ -62,6 +68,18 @@ Ext.define('Clutch.controller.SearchController', {
 
         }
     },
+    
+    onViewImdbClick : function(btn){
+        
+      btn.up('movieinfo').openIMDB();  
+    
+    },
+    
+    onViewRtClick : function(btn){
+        
+      btn.up('movieinfo').openRottenTomatoes();  
+    
+    },
 
     onManualMovieSearchClick : function(btn) {
 
@@ -70,9 +88,11 @@ Ext.define('Clutch.controller.SearchController', {
         moviePanel.doManualSearch();
     },
     
-    onMovieResultChange : function(view, record, item, index, e, eOpts) {
+    onMovieResultChange : function(sm, record, item, index, e, eOpts) {
 
-        var panel = view.up('movieinfo');
+        debugger;
+        
+        var panel = sm.view.ownerCt.up('movieinfo');
 
         panel.loadRecord(record);
 

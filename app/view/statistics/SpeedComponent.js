@@ -45,7 +45,6 @@ Ext.define('Clutch.view.statistics.SpeedComponent', {
         this.callParent(arguments);
         this.initConfig(cfg);
 
-        //set up a task to refresh the disk space every 5 minutes
     },
 
     applySpeedUp : function(v, oldValue) {
@@ -64,18 +63,7 @@ Ext.define('Clutch.view.statistics.SpeedComponent', {
         return v;
     },
 
-    applyDownloadPath : function(path, oldPath) {
-        if (!path)
-            return '';
-
-        if (path != oldPath) {
-
-            this.refreshDiskSpaceFree(path);
-        }
-
-        return path;
-    },
-
+   
     applyFreeSpace : function(bytes, oldValue) {
 
         var comp = this.down('#diskfree'), niceSize = Ext.util.Format.fileSize (bytes);

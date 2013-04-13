@@ -24,8 +24,14 @@ Ext.define('Clutch.controller.StatsController', {
 
     onStatsReceived : function(data) {
 
+        var args = data.arguments;
+
         Ext.each(Ext.ComponentQuery.query('statsdialog'), function(dialog) {
-            dialog.setData(data.arguments);
+            dialog.setData(args);
+        });
+
+        Ext.each(Ext.ComponentQuery.query('#bottomtoolbar'), function(tb) {
+            tb.setStats(args);
         });
     },
 

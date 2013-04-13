@@ -5,12 +5,14 @@ Ext.define('Clutch.controller.SettingsController', {
     views : ['settings.SettingsDialog'],
 
     init : function(app) {
+        
         var me = this;
 
         app.on({
             settingschanged : me.onSettingsChanged,
             settingsreceived : me.onSettingsReceived
         });
+        
         me.control({
             'settingsdialog treepanel' : {
                 itemclick : me.onSettingsNodeClick
@@ -29,19 +31,16 @@ Ext.define('Clutch.controller.SettingsController', {
             }
         });
     },
-    onSettingsReceived : function(newSettings){
-      
-      var speedComponents = Ext.ComponentQuery.query('speedchanger');
+    onSettingsReceived : function(newSettings) {
 
-        Ext.each(speedComponents, function(c) {
-      
-            c.setValue(newSettings);
-      
-        });  
+        var cmp = Ext.ComponentQuery.query('#bottomtoolbar')[0];
+
+        cmp.setSettings(newSettings);
+ 
     },
     onSettingsChanged : function() {
-        
-      Ext.create('widget.uxNotification', {
+
+        Ext.create('widget.uxNotification', {
             title : 'Notification',
             position : 't',
             manager : 'instructions',
@@ -54,7 +53,7 @@ Ext.define('Clutch.controller.SettingsController', {
             slideBackAnimation : 'easeIn'
         }).show();
     },
-    
+
     onSettingsNodeClick : function(treepanel, record, item, index, e, eOpts) {
 
         var dialog = treepanel.up('settingsdialog').changeActiveItem(index);
@@ -64,6 +63,7 @@ Ext.define('Clutch.controller.SettingsController', {
 
         btn.up('settingsdialog').close();
     },
+    
     onSaveButtonClick : function(btn) {
 
         btn.up('settingsdialog').saveSettings();
@@ -75,6 +75,7 @@ Ext.define('Clutch.controller.SettingsController', {
 
     },
 
+    //todo - reimplement propertypanel in settings dialog, will use this function (but in the panel not the controller(!))
     onAdvancedPropertyChanged : function(editor, e, eOpts) {
         //persist the value to the server
         var params = {
@@ -85,8 +86,11 @@ Ext.define('Clutch.controller.SettingsController', {
         params.arguments[e.record.data.name] = e.value;
 
         Ext.Ajax.request({
+
             url : '/transmission/rpc',
+
             jsonData : params,
+
             headers : {
                 'X-Transmission-Session-Id' : window.sessionId
             },
@@ -98,10 +102,11 @@ Ext.define('Clutch.controller.SettingsController', {
             scope : this,
 
             failure : function(response) {
+               
                 var x = response.getResponseHeader('X-Transmission-Session-Id');
+               
                 if (x) {
                     window.sessionId = x;
-                    this.onRender(dialog);
                 }
             }
         });

@@ -382,6 +382,31 @@ Ext.define('Clutch.util.RPC', {
             }
         });
     },
+    
+    //not used yet
+    getFreeSpace : function(path, cb, scope){
+        debugger;
+        
+        var rpcParams = {
+            "method" : "free-space",
+            "arguments" : {
+                "path" : path
+            }
+        };
+
+        Ext.Ajax.request({
+            url : '/transmission/rpc',
+            jsonData : rpcParams,
+            headers : {
+                'X-Transmission-Session-Id' : window.sessionId
+            },
+            success : cb,
+            scope : scope,
+            failure : function(response) {
+                Ext.emptyFn
+            }
+        });
+    },
     parseTorrentState : function(v) {
         switch (v) {
             case 0:

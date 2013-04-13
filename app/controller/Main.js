@@ -8,7 +8,6 @@ Ext.define('Clutch.controller.Main', {
         app.on({
             torrentdetailsreceived : me.onTorrentdetailsreceived,
             torrentadded : me.onTorrentAdded,
-            statsreceived : me.onStatsReceived,
             torrentsstarted : me.onTorrentStarted,
             torrentsstopped : me.onTorrentStopped,
             torrentsremoved : me.onTorrentRemoved,
@@ -56,14 +55,7 @@ Ext.define('Clutch.controller.Main', {
         });
     },
 
-    onStatsReceived : function(data) {
-
-        var args = data.arguments;
-        Ext.each(Ext.ComponentQuery.query('speedcomponent'), function(control) {
-            control.setSpeedUp(args.uploadSpeed);
-            control.setSpeedDown(args.downloadSpeed);
-        });
-    },
+   
     showSettingsDialog : function() {
 
         var dialog = Ext.create('Clutch.view.settings.SettingsDialog');

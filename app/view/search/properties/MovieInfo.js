@@ -5,7 +5,6 @@ Ext.define('Clutch.view.search.properties.MovieInfo', {
     requires : ['Clutch.store.MovieInfoStore'],
 
     autoScroll : true,
-    //requires : ['Clutch.view.field.TorrentStateField', 'Clutch.view.field.BytesField','Clutch.view.field.TextTimeField','Clutch.view.field.TimestampField'],
 
     alias : 'widget.movieinfo',
 

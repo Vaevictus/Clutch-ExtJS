@@ -8,7 +8,7 @@ Ext.define('Clutch.controller.TorrentsController', {
     }, {
         ref : 'detailsPanel',
         selector : 'torrentdetailspanel'
-    },{
+    }, {
         ref : 'torrentTree',
         selector : 'torrenttree'
     }],
@@ -17,8 +17,8 @@ Ext.define('Clutch.controller.TorrentsController', {
 
     init : function(app) {
         var me = this;
-       
-         app.on({
+
+        app.on({
             torrentdetailsreceived : me.onTorrentdetailsreceived,
             scope : me
         });
@@ -66,7 +66,7 @@ Ext.define('Clutch.controller.TorrentsController', {
 
         });
     },
-    onTorrentdetailsreceived : function(response){
+    onTorrentdetailsreceived : function(response) {
         var torrents = response.arguments.torrents;
         this.getTorrentTree().setTorrents(torrents);
     },
@@ -176,10 +176,9 @@ Ext.define('Clutch.controller.TorrentsController', {
 
     //todo - actually use the rest of the values from the form
     onConfirmAddTorrent : function(btn) {
-        var dialog = btn.up('addtorrentdialog'), options = dialog.getValue();
-
-        Clutch.util.RPC.addTorrent(options);
-        dialog.close();
+        var dialog = btn.up('addtorrentdialog');
+        dialog.addTorrent();
+       
     },
     onCancelAddTorrent : function(btn) {
         btn.up('addtorrentdialog').close();

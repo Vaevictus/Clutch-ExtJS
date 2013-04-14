@@ -5,14 +5,20 @@
  */
 Ext.define('Clutch.util.RPC', {
     requires : ['Ext.TaskManager'],
+
     mixins : {
+
         observable : 'Ext.util.Observable'
+
     },
+
     singleton : true,
 
     config : {
 
-        checkInterval : 4000
+        checkInterval : 4000,
+
+        settings : null
 
     },
 
@@ -67,12 +73,12 @@ Ext.define('Clutch.util.RPC', {
 
     },
     getInitialSettings : function() {
-        
+
         this.sessionGet();
     },
 
     getAllPossibleSettings : function() {
-    
+
         var params = {
             "method" : "session-get",
             "arguments" : {
@@ -258,6 +264,16 @@ Ext.define('Clutch.util.RPC', {
             }
         });
     },
+
+    applySettings : function(settings, oldValue) {
+        if (settings === oldValue)
+            return settings;
+
+        Clutch.app.fireEvent('settingsreceived', settings);
+
+        return settings;
+    },
+
     sessionGet : function(requestedParams, callingPanel) {
         var params = {
             "method" : "session-get",
@@ -271,12 +287,13 @@ Ext.define('Clutch.util.RPC', {
                 'X-Transmission-Session-Id' : window.sessionId
             },
             success : function(response) {
+                var settings = Ext.JSON.decode(response.responseText)['arguments']
+
+                this.setSettings(settings);
 
                 if (callingPanel) {
-                    callingPanel.setValue(Ext.JSON.decode(response.responseText).arguments)
-                };
-                
-                Clutch.app.fireEvent('settingsreceived', Ext.JSON.decode(response.responseText).arguments);
+                    callingPanel.setValue(settings);
+                }
 
             },
             scope : this,
@@ -355,16 +372,9 @@ Ext.define('Clutch.util.RPC', {
         // 373    "priority-high"      | array       indices of high-priority file(s)
         // 374    "priority-low"       | array       indices of low-priority file(s)
         // 375    "priority-normal"    | array       indices of normal-priority file(s)
-
         var rpcParams = {
             "method" : "torrent-add",
-            "arguments" : {
-                "filename" : options.url,
-                "paused" : options.startPaused,
-                "bandwidthPriority" : options.bandwidthPriority,
-                "peer-limit" : options.peerLimit,
-                "download-dir" : options.downloadDirectory
-            }
+            "arguments" : options
         };
 
         Ext.Ajax.request({
@@ -382,11 +392,10 @@ Ext.define('Clutch.util.RPC', {
             }
         });
     },
-    
+
     //not used yet
-    getFreeSpace : function(path, cb, scope){
-        debugger;
-        
+    getFreeSpace : function(path, cb, scope) {
+
         var rpcParams = {
             "method" : "free-space",
             "arguments" : {

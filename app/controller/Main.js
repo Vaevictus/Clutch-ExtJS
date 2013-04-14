@@ -33,6 +33,7 @@ Ext.define('Clutch.controller.Main', {
     },
 
     showAddTorrentUrlDialog : function(item) {
+        
         Ext.create("Clutch.view.torrent.AddTorrentDialog", {
 
         }).show();

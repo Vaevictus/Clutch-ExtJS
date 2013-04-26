@@ -18,7 +18,8 @@ Ext.define('Clutch.view.search.SearchToolbar', {
         itemId : 'gobutton'
     }, {
         xtype : 'button',
-        text : 'Download Selected'
+        text : 'Download Selected',
+        itemId : 'downloadselected'
     }],
 
     constructor : function(cfg) {

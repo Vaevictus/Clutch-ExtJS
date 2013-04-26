@@ -2,8 +2,7 @@ Ext.define('Clutch.controller.SearchController', {
 
     extend : 'Ext.app.Controller',
 
-    //views : ['search.SearchResultGrid'],
-
+    
     requires : ['Clutch.util.IsoHunt', 'Clutch.util.PirateBay', 'Clutch.util.Harmoniser'],
 
     init : function(app) {
@@ -24,6 +23,9 @@ Ext.define('Clutch.controller.SearchController', {
             },
             'searchresultgrid searchtoolbarbase #gobutton' : {
                 click : me.onSearchGoButtonClick
+            },
+            'searchresultgrid searchtoolbarbase #downloadselected' : {
+                click : me.onDownloadSelectedClick
             },
             'searchtree' : {
                 itemclick : me.onTreeNodeClick
@@ -67,6 +69,14 @@ Ext.define('Clutch.controller.SearchController', {
             grid.doManualSearch();
 
         }
+    },
+    
+    onDownloadSelectedClick : function(btn){
+        debugger;
+        var grid = btn.up('searchresultgrid');
+        
+        grid.downloadSelectedTorrents();
+        
     },
     
     onViewImdbClick : function(btn){

@@ -12,9 +12,9 @@ Ext.define('Clutch.util.PirateBay', {
 
     config : {
 
-        apiUrl : 'http://apify.ifc0nfig.com/tpb/search?id={0}',
+        apiUrl : 'http://apify.ifc0nfig.com/tpb/search?id={0}&key=121a959a04d443c8a163f7603c043040',
 
-        topUrl : 'http://apify.ifc0nfig.com/tpb/top?id=all'
+        topUrl : 'http://apify.ifc0nfig.com/tpb/top?id=all&key=121a959a04d443c8a163f7603c043040'
 
     },
 

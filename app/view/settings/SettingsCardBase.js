@@ -3,12 +3,24 @@ Ext.define('Clutch.view.settings.SettingsCardBase', {
     extend : 'Ext.form.FormPanel',
 
     alias : 'widget.settingscardbase',
+    
+    inject : ['rpcService'],
+    
+    config : {
+        
+      rpcService : null  
+ 
+    },
 
     getValuesFromServer : function() {
 
         var myFields = this.getFields();
 
-        Clutch.util.RPC.sessionGet(myFields, this);
+        this.getRpcService().sessionGet(myFields).then(
+            function(obj){
+                this.setValue(obj['arguments']);     
+            }
+        );
 
     },
 

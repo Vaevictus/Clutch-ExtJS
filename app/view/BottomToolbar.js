@@ -1,7 +1,9 @@
 Ext.define('Clutch.view.BottomToolbar', {
 
     requires : ['Clutch.view.statistics.SpeedComponent', 'Clutch.view.settings.SpeedChanger', 'Clutch.view.statistics.ServerInfo'],
-
+    
+    controller : 'Clutch.controller.BottomToolbarController',
+    
     config : {
         
         settings : null,
@@ -29,7 +31,7 @@ Ext.define('Clutch.view.BottomToolbar', {
     }],
 
     applySettings : function(settings, oldValue) {
-        
+       
         var speedControl = this.down('speedcomponent'), speedChanger = this.down('speedchanger'), serverInfo = this.down('serverinfo');
 
         speedChanger.setValue(settings);

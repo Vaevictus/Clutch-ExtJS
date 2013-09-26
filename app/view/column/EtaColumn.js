@@ -1,4 +1,5 @@
 Ext.define('Clutch.view.column.EtaColumn', {
+   
     extend : 'Ext.grid.column.Column',
 
     alias : 'widget.etacolumn',

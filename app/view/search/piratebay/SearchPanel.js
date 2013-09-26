@@ -1,8 +1,10 @@
 Ext.define('Clutch.view.search.piratebay.SearchPanel', {
     
-    requires : ['Clutch.view.search.piratebay.SearchResultGrid','Clutch.view.search.SearchTree', 'Clutch.view.search.properties.DetailsPanel'],
+    requires : ['Clutch.view.search.piratebay.SearchResultGrid','Clutch.view.search.SearchTree', 'Clutch.view.search.properties.DetailsPanel', 'PirateBay.Search'],
     
     extend : 'Ext.panel.Panel',
+    
+    controller : 'Clutch.controller.PirateBaySearchController',
 
     alias : 'widget.piratebaysearchpanel',
 

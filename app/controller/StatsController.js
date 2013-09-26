@@ -1,42 +1,45 @@
 Ext.define('Clutch.controller.StatsController', {
 
-    extend : 'Ext.app.Controller',
+    extend : 'Deft.mvc.ViewController',
 
-    views : ['statistics.StatsDialog'],
+    inject : ['rpcService'],
 
-    init : function(app) {
-        var me = this;
-        app.on({
-            statsreceived : me.onStatsReceived
-        });
+    config : {
 
-        me.control({
-            'statsdialog  button[action=cancel]' : {
-                click : me.onCancelButtonClick
-            }
-        });
-        app.on({
-
-            statsreceived : me.onStatsReceived
-
-        });
+        rpcService : null
+    },
+    
+    observe : {
+        rpcService : {
+            'statsreceived' : 'onStatsReceived'
+        }
     },
 
+    control : {
+        btnCancel : {
+            selector : 'button[action=cancel]',
+            listeners : {
+                click : 'cancel'
+            }
+        }
+    },
+
+   
+   getStatsFromServer : function() {
+     
+     this.getRpcService().getStats();
+   },
+   
     onStatsReceived : function(data) {
 
         var args = data.arguments;
 
-        Ext.each(Ext.ComponentQuery.query('statsdialog'), function(dialog) {
-            dialog.setData(args);
-        });
-
-        Ext.each(Ext.ComponentQuery.query('#bottomtoolbar'), function(tb) {
-            tb.setStats(args);
-        });
+        this.getView().setData(args);
+       
     },
 
-    onCancelButtonClick : function(btn) {
+    cancel : function(btn) {
 
-        btn.up('statsdialog').close();
+        this.getView().close();
     }
 });

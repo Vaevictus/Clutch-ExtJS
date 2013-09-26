@@ -1,10 +1,13 @@
 Ext.define("Clutch.view.statistics.StatsDialog", {
+    
     extend : 'Ext.window.Window',
 
+    controller : 'Clutch.controller.StatsController',
+    
     title : 'Statistics',
     
     requires : ['Clutch.view.field.BytesField','Clutch.view.field.TextTimeField','Clutch.view.field.TimestampField'],
-    
+       
     alias : 'widget.statsdialog',
 
     constrain : true,

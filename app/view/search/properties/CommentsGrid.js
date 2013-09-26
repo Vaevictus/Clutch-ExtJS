@@ -30,7 +30,7 @@ Ext.define('Clutch.view.search.properties.CommentsGrid', {
 
         this.setLoading(true);
 
-        Clutch.util.IsoHunt.getComments(commentsUrl, this.processLoadedComments, this);
+        IsoHunt.getComments(commentsUrl, this.processLoadedComments, this);
 
     },
 

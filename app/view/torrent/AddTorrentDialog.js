@@ -4,12 +4,16 @@ Ext.define("Clutch.view.torrent.AddTorrentDialog", {
 
     alias : 'widget.addtorrentdialog',
 
+    inject : 'rpcService',
+
     constrain : true,
 
     closeAction : 'destroy',
 
     config : {
-        url : null
+        url : null,
+
+        rpcService : null
     },
 
     title : 'Add torrent',
@@ -61,9 +65,11 @@ Ext.define("Clutch.view.torrent.AddTorrentDialog", {
     }],
 
     buttons : [{
+        itemId : 'btnOK',
         text : 'OK',
         action : 'add-torrent'
     }, {
+        itemId : 'btnCancel',
         text : 'Cancel',
         action : 'cancel'
     }],
@@ -74,15 +80,16 @@ Ext.define("Clutch.view.torrent.AddTorrentDialog", {
     },
 
     applyUrl : function(newValue, oldValue) {
+        
         this.down('#url').setValue(newValue);
         return newValue;
     },
 
     getValue : function() {
-        
+
         var options = this.down('form').getValues();
         options['paused'] = options['start-added-torrents'] === 'on' ? true : false;
-        
+
         return options;
         // "filename" : options.url,
         // "paused" : options.startPaused,
@@ -94,25 +101,44 @@ Ext.define("Clutch.view.torrent.AddTorrentDialog", {
     show : function() {
 
         this.callParent(arguments);
+        
+        this.down('#btnOK').on('click', this.onBtnOKClick, this);
+         this.down('#btnCancel').on('click', this.onBtnCancelClick, this);
+        
+        this.getRpcService().getInitialSettings().then({
+            
+            success : function(rpcResponse) {
+                
+                var settings = rpcResponse.arguments;
+                
+                this.down('#start-added-torrents').setValue(settings['start-added-torrents']);
+                this.down('#peer-limit-per-torrent').setValue(settings['peer-limit-per-torrent']);
+                this.down('#download-dir').setValue(settings['download-dir']);
+            },
+            scope : this
+        });
 
-        var settings = Clutch.util.RPC.getSettings();
-        this.down('#start-added-torrents').setValue(settings['start-added-torrents']);
-        this.down('#peer-limit-per-torrent').setValue(settings['peer-limit-per-torrent']);
-        this.down('#download-dir').setValue(settings['download-dir']);
     },
     
+    onBtnOKClick : function(btn){
+      this.addTorrent();  
+    },
+    onBtnCancelClick : function(btn){
+      this.destroy();  
+    },
+
     addTorrent : function() {
-         
-         var form = this.down('form');
-         
-         if (form.isValid() === false){
-             return;
-         }
-         
-         var options = this.getValue();
-         
-         Clutch.util.RPC.addTorrent(options);
-         
-         this.close();
+
+        var form = this.down('form');
+
+        if (form.isValid() === false) {
+            return;
+        }
+
+        var options = this.getValue();
+
+        this.getRpcService().addTorrent(options);
+
+        this.close();
     }
 });

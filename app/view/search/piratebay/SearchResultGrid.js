@@ -1,11 +1,11 @@
 Ext.define('Clutch.view.search.piratebay.SearchResultGrid', {
-    
+
     alias : 'widget.piratebaysearchresultgrid',
-    
+
     extend : 'Clutch.view.search.SearchResultGridBase',
 
     requires : ['Clutch.view.search.SearchToolbar'],
-    
+
     store : Ext.create('Clutch.store.SearchResult'),
 
     title : 'PirateBay Search Results',
@@ -37,14 +37,14 @@ Ext.define('Clutch.view.search.piratebay.SearchResultGrid', {
         dataIndex : 'category',
         flex : 1
     }],
-    
+
     tbar : Ext.create('Clutch.view.search.SearchToolbar', {
         searchEmptyText : 'Search The Pirate Bay'
     }),
-    
-    applySearchTerm: function (v, oldValue){
-        
-        Clutch.util.PirateBay.search(v, this);
+
+    applySearchTerm : function(v, oldValue) {
+
+        PirateBay.Search.search(v, this);
         return this.callParent(arguments);
     }
 });

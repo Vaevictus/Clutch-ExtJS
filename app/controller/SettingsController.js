@@ -1,42 +1,67 @@
 Ext.define('Clutch.controller.SettingsController', {
 
-    extend : 'Ext.app.Controller',
+    extend : 'Deft.mvc.ViewController',
 
-    views : ['settings.SettingsDialog'],
-
-    init : function(app) {
-        
-        var me = this;
-
-        app.on({
-            settingschanged : me.onSettingsChanged,
-            settingsreceived : me.onSettingsReceived
-        });
-        
-        me.control({
-            'settingsdialog treepanel' : {
-                itemclick : me.onSettingsNodeClick
-            },
-            'settingsdialog  button[action=save]' : {
-                click : me.onSaveButtonClick
-            },
-            'settingsdialog  button[action=cancel]' : {
-                click : me.onCancelButtonClick
-            },
-            'settingsdialog settingscardbase' : {
-                activate : me.onShowSettingsCard
-            },
-            'advancedsettings' : {
-                edit : me.onAdvancedPropertyChanged
-            }
-        });
+   inject : ['rpcService'],
+    
+    config : {
+        rpcService : null
     },
+
+    control : {
+
+        treepanel : {
+            selector : 'treepanel',
+            listeners : {
+                itemclick : 'onSettingsNodeClick'
+            }
+        },
+        btnSave : {
+            selector : 'button[action=save]',
+            listeners : {
+                click : 'onSaveButtonClick'
+            }
+        },
+        btnCancel : {
+            selector : 'button[action=cancel]',
+            listeners : {
+                click : 'onCancelButtonClick'
+            }
+        },
+
+        settingsCard : {
+            selector : 'settingscardbase',
+
+            listeners : {
+                activate : 'onShowSettingsCard'
+            }
+        },
+        
+        advancedSettings : {
+            live : true,
+            selector : 'advancedsettings',
+            listeners : {
+                edit : 'onAdvancedPropertyChanged'
+            }
+        }
+    },
+
+    // init : function(app) {
+// 
+        // var me = this;
+// 
+        // app.on({
+            // settingschanged : me.onSettingsChanged,
+            // settingsreceived : me.onSettingsReceived
+        // });
+// 
+    // },
     onSettingsReceived : function(newSettings) {
 
         var cmp = Ext.ComponentQuery.query('#bottomtoolbar')[0];
 
         cmp.setSettings(newSettings);
- 
+
     },
     onSettingsChanged : function() {
 
@@ -61,54 +86,49 @@ Ext.define('Clutch.controller.SettingsController', {
 
     onCancelButtonClick : function(btn) {
 
-        btn.up('settingsdialog').close();
+      this.getView().close();
     },
-    
+
     onSaveButtonClick : function(btn) {
 
-        btn.up('settingsdialog').saveSettings();
+        this.saveSettings();
     },
 
     onShowSettingsCard : function(card) {
+        
+         var myFields = card.getFields();
 
-        card.getValuesFromServer();
+        this.getRpcService().sessionGet(myFields).then(
+            
+            function(rpcResponse){
+                
+                card.setValue(rpcResponse['arguments']);     
+            }
+        );
 
     },
 
     //todo - reimplement propertypanel in settings dialog, will use this function (but in the panel not the controller(!))
-    onAdvancedPropertyChanged : function(editor, e, eOpts) {
+    onAdvancedPropertyChanged : function(editor, e, eOpts) {//TODO this rpc call should be moved to transmissionrpc package
         //persist the value to the server
-        var params = {
-            "method" : "session-set",
-            "arguments" : {
-            }
-        };
-        params.arguments[e.record.data.name] = e.value;
-
-        Ext.Ajax.request({
-
-            url : '/transmission/rpc',
-
-            jsonData : params,
-
-            headers : {
-                'X-Transmission-Session-Id' : window.sessionId
+       
+        var params = []
+        params[e.record.data.name] = e.value;
+        
+        this.getRpcService().sessionSet(params).then({
+            success: function(rpcResponse){
+                e.grid.down('advancedsettings').setSource(rpcResponse.arguments);
             },
-            success : function(response) {
-                Clutch.app.fireEvent('settingssreceived', Ext.JSON.decode(response.responseText));
-                e.grid.down('advancedsettings').setSource(Ext.JSON.decode(response.responseText).arguments);
-
-            },
-            scope : this,
-
-            failure : function(response) {
-               
-                var x = response.getResponseHeader('X-Transmission-Session-Id');
-               
-                if (x) {
-                    window.sessionId = x;
-                }
-            }
+            scope : this
         });
+
+        
+    },
+    
+    saveSettings : function() {
+
+        var currentCard = this.getView().down('#cardcontainer').getLayout().getActiveItem();
+        var values = currentCard.getValues();
+        this.getRpcService().sessionSet(values);
     }
 });

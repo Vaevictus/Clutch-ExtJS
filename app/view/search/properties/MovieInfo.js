@@ -4,6 +4,8 @@ Ext.define('Clutch.view.search.properties.MovieInfo', {
 
     requires : ['Clutch.store.MovieInfoStore'],
 
+    inject : ['movieService'],
+
     autoScroll : true,
 
     alias : 'widget.movieinfo',
@@ -11,6 +13,8 @@ Ext.define('Clutch.view.search.properties.MovieInfo', {
     config : {
 
         torrentSearchResult : null,
+
+        movieService : null,
 
         matchedMovies : [],
 
@@ -21,7 +25,7 @@ Ext.define('Clutch.view.search.properties.MovieInfo', {
         xtype : 'gridpanel',
 
         itemId : 'grid',
-        
+
         height : 200,
 
         columns : [{
@@ -77,8 +81,7 @@ Ext.define('Clutch.view.search.properties.MovieInfo', {
         this.callParent(arguments);
 
         this.initConfig(cfg);
-        
-        
+
     },
 
     applyTorrentSearchResult : function(searchResult, oldValue) {
@@ -97,8 +100,7 @@ Ext.define('Clutch.view.search.properties.MovieInfo', {
 
         return searchResult;
     },
-    doManualSearch : function() {
-
+    doManualSearch : function() { 
         var searchTerm = this.down('#moviesearchtext').getValue();
 
         this.search(searchTerm);
@@ -107,17 +109,24 @@ Ext.define('Clutch.view.search.properties.MovieInfo', {
 
     search : function(searchTerm) {
 
-        Clutch.util.RottenTomatoes.search(searchTerm, function(results, me) {
+        this.getMovieService().search(searchTerm).then({
 
-            var grid = me.down('#grid'),
-                store = grid.store;
-            
-            store.loadRawData(results);
-            
-            grid.getView().getSelectionModel().select(0); 
-            
+            success : function(movies) {
+                
+                var grid = this.down('#grid'), store = grid.store;
+                store.loadRawData(movies);
 
-        }, this);
+                grid.getView().getSelectionModel().select(0);
+            },
+
+            failure : function(response) { 
+               
+            },
+
+            scope : this
+
+        });
+
     },
 
     cleanupTitle : function(v) {
@@ -143,8 +152,8 @@ Ext.define('Clutch.view.search.properties.MovieInfo', {
 
     },
 
-    openIMDB : function() { debugger;
-       
+    openIMDB : function() {
+
         var grid = this.down('gridpanel'), selected = grid.getView().getSelectionModel().getSelection()[0];
 
         if (selected) {
@@ -168,25 +177,3 @@ Ext.define('Clutch.view.search.properties.MovieInfo', {
         }
     }
 });
-
-/*1.18 MB of 497.6 MB (0.35%), 589.8 kB Unverified
- Activity
-
- Availability: 100%
- Downloaded:  815.1 kB
- Uploaded: 3.11 MB (Ratio: 3.81)
- State: Downloading
- Running Time: 4 minutes
- Remaining Time:  17 hours
- Last Activity: Active now
- Error: None
-
- Details
-
- Size: 497.6 MB (1,899 pieces @ 256.0 KiB)
- Location: /home/whitcombecr/Downloads
- Hash: 63db3c2bedc40505d1f548c3a8b3b05597420190
- Privacy: Public torrent
- Origin: Created by ruTorrent (PHP Class - Adrien Gibrat) on Mon Feb 18 2013
- Comment: Torrent downloaded from <a target="_blank" href="http://www.btscene.eu">http://www.btscene.eu</a>
- */

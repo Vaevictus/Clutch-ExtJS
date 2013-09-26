@@ -1,6 +1,8 @@
 Ext.define("Clutch.view.settings.SettingsDialog", {
 
     extend : 'Ext.window.Window',
+    
+    controller : 'Clutch.controller.SettingsController',
 
     requires : ['Clutch.view.settings.GeneralSettings', 'Clutch.view.settings.PeerSettings', 'Clutch.view.settings.TransfersSettings', 'Clutch.view.settings.NetworkSettings'],
 
@@ -48,6 +50,7 @@ Ext.define("Clutch.view.settings.SettingsDialog", {
     constructor : function(config) {
         this.callParent(arguments);
         this.initConfig(config);
+        this.showFirstCard();
     },
 
     applyCards : function(panels, oldValue) {
@@ -68,11 +71,15 @@ Ext.define("Clutch.view.settings.SettingsDialog", {
             container.add(createdPanel);
 
         }, this);
+        
+        
+        
         return panels;
     },
 
     showFirstCard : function() {
-        this.down('#cardcontainer').getLayout().setActiveItem(this.down('settingscardbase'));
+        
+        this.getController().onShowSettingsCard(this.down('#cardcontainer').getLayout().getActiveItem()); //TODO work around this hack, settings are not auto loaded for the first card as the activate event iss not firing
     },
 
     changeActiveItem : function(card) {
@@ -82,12 +89,7 @@ Ext.define("Clutch.view.settings.SettingsDialog", {
         layout.setActiveItem(card);
     },
 
-    saveSettings : function() {
-
-        var currentCard = this.down('#cardcontainer').getLayout().getActiveItem();
-        var values = currentCard.getValues();
-        Clutch.util.RPC.sessionSet(values);
-    }
+    
 });
 /*
  Session Requests

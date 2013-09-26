@@ -25,7 +25,7 @@ Ext.define("Clutch.view.search.SearchResultGridBase", {
         deferEmptyText : false
     },
 
-    alias : 'widget.searchresultgrid',
+    alias : 'widget.searchresultgridbase',
 
     columns : [{
         header : 'Name',

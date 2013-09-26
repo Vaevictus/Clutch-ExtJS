@@ -65,7 +65,7 @@ Ext.define('Clutch.view.statistics.SpeedComponent', {
 
    
     applyFreeSpace : function(bytes, oldValue) {
-
+        
         var comp = this.down('#diskfree'), niceSize = Ext.util.Format.fileSize (bytes);
         comp.setText(niceSize);
         return niceSize;

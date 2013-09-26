@@ -3,9 +3,13 @@ Ext.define('Clutch.view.settings.SpeedChanger', {
     alias : 'widget.speedchanger',
 
     extend : 'Ext.container.Container',
+    
+    inject : 'rpcService',
 
     config : {
-        value : undefined
+        value : undefined,
+            
+        rpcService : null        
     },
 
     items : [],
@@ -39,7 +43,7 @@ Ext.define('Clutch.view.settings.SpeedChanger', {
     },
     onItemToggle : function(btn, slowMode) {
 
-        Clutch.util.RPC.sessionSet({
+        this.getRpcService().sessionSet({
             "alt-speed-enabled" : slowMode
         });
         var text = this.getModeText(slowMode), icon = this.getModeIcon(slowMode), tooltip = this.getModeTooltip(slowMode);

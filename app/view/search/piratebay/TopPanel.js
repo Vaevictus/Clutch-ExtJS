@@ -2,6 +2,8 @@ Ext.define('Clutch.view.search.piratebay.TopPanel', {
 
     extend : 'Ext.panel.Panel',
     
+    controller : 'Clutch.controller.PirateBaySearchController',
+    
     requires : ['Clutch.view.search.piratebay.TopResultsGrid'],
 
     alias : 'widget.piratebaytoppanel',

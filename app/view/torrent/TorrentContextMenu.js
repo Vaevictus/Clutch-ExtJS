@@ -1,7 +1,13 @@
 Ext.define('Clutch.view.torrent.TorrentContextMenu', {
+   
     extend : 'Ext.menu.Menu',
 
     alias : 'widget.torrentcontextmenu',
+    
+    config : {
+          
+        grid : null
+    },
 
     items : [{
         text : 'Start',
@@ -20,5 +26,15 @@ Ext.define('Clutch.view.torrent.TorrentContextMenu', {
         text : 'Set transfer limits',
         action : 'throttle',
         iconCls : 'tree-completed'
-    }]
+    }],
+    
+    initComponent: function(){
+        this.callParent(arguments);
+       // this.on('click', this.onClick, this);
+    }
+    
+    // onClick: function() {
+        // debugger;
+        // //this.fireEvent('test');
+    // }
 }); 

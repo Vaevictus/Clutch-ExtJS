@@ -1,21 +1,27 @@
 Ext.define("Clutch.view.peer.PeersGrid", {
+   
     extend : 'Ext.grid.Panel',
 
     alias : 'widget.peersgrid',
 
     requires : ['Clutch.store.PeersStore'],
     
-    store : 'PeersStore',
+    //store : 'PeersStore',
 
     config : {
+        
         value : null
 
     },
 
     viewConfig : {
+    
         preserveScrollOnRefresh : true, //TODO - doesn't quite work how desired when there are many torrents in the grid
+      
         stripeRows : true,
+       
         emptyText : 'No Peers to show',
+       
         deferEmptyText : false
         
     },
@@ -45,14 +51,22 @@ Ext.define("Clutch.view.peer.PeersGrid", {
         header : 'Client',
         dataIndex : 'clientName'
     }],
+    
     selModel : new Ext.selection.RowModel({
         mode : 'SINGLE'
     }),
+    
+       initComponent : function() {
+        this.store = Ext.create('Clutch.store.PeersStore');
+        this.callParent(arguments);
+       
+    },
 
     
     applyValue : function(newValue, oldValue) {
         
         this.store.loadData(newValue);
+       
         return newValue;
     }
     

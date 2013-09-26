@@ -1,10 +1,16 @@
 Ext.define('Clutch.view.column.StatusColumn', {
     extend : 'Ext.grid.column.Column',
+    
+    inject : ['rpcService'],
+    
+    config : {
+        rpcService : null
+    },
 
     alias : 'widget.torrentstatuscolumn',
 
     renderer : function(value) {
-        return Clutch.util.RPC.parseTorrentState(value);
+        return this.getRpcService().parseTorrentState(value);
     }
 });
 

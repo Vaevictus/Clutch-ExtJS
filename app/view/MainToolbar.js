@@ -1,6 +1,8 @@
 Ext.define("Clutch.view.MainToolbar", {
     extend : 'Ext.toolbar.Toolbar',
 
+    controller : 'Clutch.controller.MainToolbarController',
+    
     alias : 'widget.torrenttoolbar',
 
     border : false,

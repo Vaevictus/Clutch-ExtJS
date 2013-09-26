@@ -29,7 +29,12 @@ Ext.define('Clutch.view.torrent.properties.TrackersGrid', {
        
         this.store.loadRawData(trackers);
         return trackers;
-    }  
+    },
+    
+    initComponent : function() {
+        this.callParent(arguments);
+        console.log('creating ' + this.$className);
+    }
     
 });
 

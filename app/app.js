@@ -1,19 +1,48 @@
+//<debug>
+Ext.Loader.setPath({
+    'Clutch' : 'app',
+    'Deft' : 'mobile/packages/deft/src/js',
+    'PirateBay' : 'mobile/packages/piratebay',
+    'Transmission' : 'mobile/packages/transmissionrpc',
+    'RottenTomatoes' : 'mobile/packages/rottentomatoes'
+
+});
+
+Ext.syncRequire(['Deft.mixin.Injectable', 'Deft.mixin.Controllable']);
+//</debug>
+
+
 Ext.application({
-    controllers : ['Main', 'TorrentsController', 'SettingsController', 'StatsController', 'SearchController'],
-
-    //views : ["Main"],
-
+    
+    //tores : ['TorrentTransfers'],
+    //controllers : ['BugFix'],
     name : 'Clutch',
 
-    autoCreateViewport : true,
+    autoCreateViewport : false, //do not set to true or the viewport will be created too early before injector config has happened
 
-    requires : ['Clutch.util.RPC', 'Clutch.util.RottenTomatoes'],
+    requires : ['Transmission.RPC','Clutch.view.torrent.TorrentsGrid','RottenTomatoes.MovieService'],
 
     launch : function() {
-
+       
         Ext.tip.QuickTipManager.init();
         Ext.QuickTips.init();
         
+        Deft.Injector.configure({
+            
+            torrentsStore : 'Clutch.store.TorrentTransfers',
+           
+            torrentsGrid : 'Clutch.view.torrent.TorrentsGrid',
+                       
+            pirateBayService : 'PirateBay.Search',
+
+            rpcService : 'Transmission.RPC',
+            
+            movieService : 'RottenTomatoes.MovieService',
+                        
+            contextMenu : 'Clutch.view.torrent.TorrentContextMenu'
+        
+        });
+
         /* Fixes a bug in Extjs 4.2 - see http://www.sencha.com/forum/showthread.php?260106-Tooltips-on-forms-and-grid-are-not-resizing-to-the-size-of-the-text/page3#24*/
         delete Ext.tip.Tip.prototype.minWidth;
 
@@ -21,9 +50,9 @@ Ext.application({
             Ext.supports.Direct2DBug = true;
         }
 
-        Clutch.util.RPC.startTorrentsCheckTask();
-        Clutch.util.RPC.getInitialSettings();
-
+        //Clutch.util.RPC.startTorrentsCheckTask();
+        //Clutch.util.RPC.getInitialSettings();
+        Ext.create('Clutch.view.Viewport');
     }
 });
 

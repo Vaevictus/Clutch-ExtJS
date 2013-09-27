@@ -3,9 +3,9 @@ Ext.define('mobile.controller.TorrentsListController', {
     inject : ['torrentsStore', 'rpcService'],
 
     control : {
-        torrentslist : {
-            disclose: 'onDisclose'
-        },
+        // torrentslist : {
+            // disclose: 'onDisclose'
+        // },
         addBtn: {
             selector: "toolbar > #btnAdd",
             listeners : {
@@ -17,13 +17,13 @@ Ext.define('mobile.controller.TorrentsListController', {
             listeners : {
                 tap: 'onBtnStartTap'
             }
-        }
-        // pauseBtn: {
-            // selector: "toolbar > #btnPause",
-            // listeners : {
-                // tap: 'onBtnPauseTap'
-            // }
-        // },
+        },
+        pauseBtn: {
+            selector: "toolbar > #btnPause",
+            listeners : {
+                tap: 'onBtnPauseTap'
+            }
+        },
         // removeBtn: {
             // selector: "toolbar > #btnRemove",
             // listeners : {
@@ -76,7 +76,7 @@ Ext.define('mobile.controller.TorrentsListController', {
     onBtnStartTap : function(btn){
         
         var torrentId = this.getSelectedTorrentId();
-        this.getRpcService().Transmission.startTorrent(torrentId).then(
+        this.getRpcService().startTorrent(torrentId).then(
              function() {
                  alert('started torrent');
              },
@@ -87,11 +87,25 @@ Ext.define('mobile.controller.TorrentsListController', {
         
     },
     
+    onBtnPauseTap : function(btn){
+        
+        var torrentId = this.getSelectedTorrentId();
+        this.getRpcService().pauseTorrents(torrentId).then(
+             function() {
+                 alert('Stopped Torrent');
+             },
+             function() {
+                 alert('Failed to stop torrent');
+             }
+         )   
+        
+    },
+    
     onBtnRemoveTap : function(btn){
     
      var torrentId = this.getSelectedTorrentId();
      
-        this.getRpcService().Transmission.removeTorrent(torrentId, false).then( 
+        this.getRpcService().removeTorrent(torrentId, false).then( 
              function() {
                  alert('removed torrent');
              },
@@ -132,7 +146,7 @@ Ext.define('mobile.controller.TorrentsListController', {
     loadTorrents : function(torrentArray){
         //load the torrents into the store which will update the grid
         var store = this.getTorrentsStore();
-        store.add(torrentArray);
+        store.setData(torrentArray);
        
     },
     onDisclose : function() {

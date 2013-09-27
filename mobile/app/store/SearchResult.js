@@ -14,9 +14,7 @@ Ext.define('mobile.store.SearchResult', {
     
     grouper : function(record) {
         return record.get('name')[0];
-    },
-    
-    sorters : 'name'
-    
+    }
+   
 
 });

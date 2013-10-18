@@ -17,7 +17,7 @@ Ext.define('Clutch.controller.PirateBaySearchController', {
             selector : 'searchtoolbarbase searchfield',
             live : true,
             listeners : {
-                specialkey : 'doSearch'
+                specialkey : 'doSearchFromEnterKey'
             }
         },
         btnGo : {
@@ -100,8 +100,11 @@ Ext.define('Clutch.controller.PirateBaySearchController', {
     },
 
     doSearch : function() {
+
         this.beforeSearch();
+        
         var searchTerm = this.getSearchField().getValue();
+        
         this.getPirateBayService().search(searchTerm).then({
             success : function(results) {
 
@@ -114,6 +117,15 @@ Ext.define('Clutch.controller.PirateBaySearchController', {
             scope : this
         })
     },
+
+    doSearchFromEnterKey : function(field, e) {
+
+        if (e.getKey() === e.ENTER) {
+            this.doSearch();
+        }
+
+    },
+
     onMovieTextFieldSpecialKey : function(field, e) {
 
         if (e.getKey() === e.ENTER) {
@@ -125,7 +137,7 @@ Ext.define('Clutch.controller.PirateBaySearchController', {
         }
     },
 
-    onDownloadSelectedClick : function(btn) { 
+    onDownloadSelectedClick : function(btn) {
         var grid = btn.up('searchresultgrid');
 
         grid.downloadSelectedTorrents();
@@ -151,7 +163,7 @@ Ext.define('Clutch.controller.PirateBaySearchController', {
         moviePanel.doManualSearch();
     },
 
-    onMovieResultChange : function(sm, record, item, index, e, eOpts) { 
+    onMovieResultChange : function(sm, record, item, index, e, eOpts) {
 
         var panel = sm.view.ownerCt.up('movieinfo');
 
@@ -159,7 +171,7 @@ Ext.define('Clutch.controller.PirateBaySearchController', {
 
     },
 
-    onAfterRenderPirateBayTop : function(topGrid) { 
+    onAfterRenderPirateBayTop : function(topGrid) {
         topGrid.loadResults();
 
     },
@@ -172,11 +184,11 @@ Ext.define('Clutch.controller.PirateBaySearchController', {
     },
 
     beforeSearch : function() {
-        
+
         var grid = this.getSearchGrid();
-        
+
         grid.setFilterCat('all');
-        
+
         grid.setLoading(true);
 
     },
@@ -219,10 +231,10 @@ Ext.define('Clutch.controller.PirateBaySearchController', {
     },
 
     onContextMenu : function(view, record, item, index, e) {
-        
+
         e.stopEvent();
         var grid = this.getSearchGrid();
-        grid.contextMenu.record = record;     
+        grid.contextMenu.record = record;
 
         grid.contextMenu.showAt(e.getXY());
     },

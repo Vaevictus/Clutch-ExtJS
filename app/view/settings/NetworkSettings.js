@@ -5,7 +5,7 @@ Ext.define('Clutch.view.settings.NetworkSettings', {
     title : 'Network',
 
     config : {
-        fields : ['peer-port', 'peer-port-random-on-start', 'port-forwarding-enabled', 'alt-speed-enabled', 'alt-speed-down', 'alt-speed-up', 'speed-limit-up', 'speed-limit-down']
+        fields : ['peer-port', 'peer-port-random-on-start', 'port-forwarding-enabled', 'alt-speed-enabled', 'alt-speed-down', 'alt-speed-up', 'speed-limit-up','speed-limit-up-enabled', 'speed-limit-down','speed-limit-down-enabled']
     },
 
     alias : 'widget.networksettings',
@@ -22,10 +22,19 @@ Ext.define('Clutch.view.settings.NetworkSettings', {
                 xtype : 'numberfield',
                 name : 'speed-limit-down'
             }, {
+                fieldLabel : 'Download limit enabled',
+                xtype : 'checkbox',
+                name : 'speed-limit-down-enabled'
+            }, {
                 fieldLabel : 'Upload',
                 allowBlank : false,
                 xtype : 'numberfield',
                 name : 'speed-limit-up'
+            },
+            {
+                fieldLabel : 'Upload limit enabled',
+                xtype : 'checkbox',
+                name : 'speed-limit-up-enabled'
             }]
         }, {
             xtype : 'fieldset',

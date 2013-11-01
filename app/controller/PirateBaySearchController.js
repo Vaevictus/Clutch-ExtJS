@@ -138,7 +138,8 @@ Ext.define('Clutch.controller.PirateBaySearchController', {
     },
 
     onDownloadSelectedClick : function(btn) {
-        var grid = btn.up('searchresultgrid');
+       
+        var grid = this.getSearchGrid();
 
         grid.downloadSelectedTorrents();
 

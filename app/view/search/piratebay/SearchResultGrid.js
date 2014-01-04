@@ -8,8 +8,6 @@ Ext.define('Clutch.view.search.piratebay.SearchResultGrid', {
 
     store : Ext.create('Clutch.store.SearchResult'),
 
-    title : 'PirateBay Search Results',
-
     columns : [{
         header : 'Name',
         flex : 1,
@@ -38,9 +36,6 @@ Ext.define('Clutch.view.search.piratebay.SearchResultGrid', {
         flex : 1
     }],
 
-    tbar : Ext.create('Clutch.view.search.SearchToolbar', {
-        searchEmptyText : 'Search The Pirate Bay'
-    }),
 
     applySearchTerm : function(v, oldValue) {
 

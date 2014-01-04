@@ -21,7 +21,7 @@ Ext.define('Clutch.controller.PirateBaySearchController', {
             }
         },
         btnGo : {
-            selector : 'searchresultgrid searchtoolbarbase #gobutton',
+            selector : '#gobutton',
             live : true,
             listeners : {
                 click : 'doSearch'
@@ -52,10 +52,24 @@ Ext.define('Clutch.controller.PirateBaySearchController', {
                 click : 'onDownloadSelectedClick'
             }
         },
+          btnTopDownloadSelected : {
+            selector : '#btnTopDownloadselected',
+            live : true,
+            listeners : {
+                click : 'onDownloadSelectedClick'
+            }
+        },
         searchTree : {
             selector : 'searchtree',
             listeners : {
                 itemclick : 'onTreeNodeClick'
+            }
+        },
+        btnRefresh : {
+            selector : '#btnRefresh',
+            live : true,
+            listeners : {
+                click : 'onRefreshBtnClick'
             }
         },
         // commentsGrid : {
@@ -98,13 +112,15 @@ Ext.define('Clutch.controller.PirateBaySearchController', {
         }
 
     },
-
+    onRefreshBtnClick : function() {
+         this.getSearchGrid().loadResults();
+    },
     doSearch : function() {
 
         this.beforeSearch();
-        
+
         var searchTerm = this.getSearchField().getValue();
-        
+
         this.getPirateBayService().search(searchTerm).then({
             success : function(results) {
 
@@ -138,9 +154,9 @@ Ext.define('Clutch.controller.PirateBaySearchController', {
     },
 
     onDownloadSelectedClick : function(btn) {
-       
-        var grid = this.getSearchGrid();
 
+        var grid = this.getSearchGrid();
+        debugger;
         grid.downloadSelectedTorrents();
 
     },
@@ -291,7 +307,7 @@ Ext.define('Clutch.controller.PirateBaySearchController', {
 
     onSearchResultSingleClick : function(view, record, item, index, e, eOpts) {
 
-        var grid = view.up('gridpanel'), detailsPanel = grid.up('panel').down('searchresultdetailspanel');
+        var grid = view.up('gridpanel'), detailsPanel = this.getView().down('searchresultdetailspanel');
         // selection = grid.getSelectionModel().getSelection()[0];
         //detailsPanel.expand();
         detailsPanel.setValue(record);
@@ -299,7 +315,7 @@ Ext.define('Clutch.controller.PirateBaySearchController', {
 
     onSearchResultDoubleClick : function(view, record, item, index, e, eOpts) {
 
-        var url = record.get('torrentLink'), detailsPanel = view.up('gridpanel').up('panel').down('searchresultdetailspanel');
+        var detailsPanel = this.getView().down('searchresultdetailspanel');
         detailsPanel.expand();
         // this.downloadTorrent(url);
 

@@ -6,12 +6,10 @@ Ext.define('Clutch.view.search.piratebay.TopResultsGrid', {
 
     store : Ext.create('Clutch.store.SearchResult'),
 
-    title : 'PirateBay Top Torrents',
-
     applySearchTerm : function(v, oldValue) {
         return v;
     },
-    tbar : [],
+    
 
     loadResults : function() { //TODO I dont like doing this here
 

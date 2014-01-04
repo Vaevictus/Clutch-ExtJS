@@ -5,8 +5,6 @@ Ext.define("Clutch.view.search.SearchResultGridBase", {
 
     store : Ext.create('Clutch.store.SearchResult'),
 
-    title : 'Search Results',
-
     config : {
 
         results : null,

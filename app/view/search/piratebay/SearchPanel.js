@@ -1,9 +1,9 @@
 Ext.define('Clutch.view.search.piratebay.SearchPanel', {
-    
-    requires : ['Clutch.view.search.piratebay.SearchResultGrid','Clutch.view.search.SearchTree', 'Clutch.view.search.properties.DetailsPanel', 'PirateBay.Search'],
-    
+
+    requires : ['Clutch.view.search.piratebay.SearchResultGrid', 'Clutch.view.search.SearchTree', 'Clutch.view.search.properties.DetailsPanel', 'PirateBay.Search'],
+
     extend : 'Ext.panel.Panel',
-    
+
     controller : 'Clutch.controller.PirateBaySearchController',
 
     alias : 'widget.piratebaysearchpanel',
@@ -20,9 +20,16 @@ Ext.define('Clutch.view.search.piratebay.SearchPanel', {
         collapsible : true,
         split : true
     }, {
-        xtype : 'piratebaysearchresultgrid',
+        xtype : 'panel',
         region : 'center',
-        title : 'PirateBay Search Results'
+        tbar : Ext.create('Clutch.view.search.SearchToolbar', {
+            searchEmptyText : 'Search The Pirate Bay'
+        }),
+
+        items : [{
+            xtype : 'piratebaysearchresultgrid',
+
+        }]
     }, {
         xtype : 'searchresultdetailspanel',
         region : 'east',
@@ -32,7 +39,6 @@ Ext.define('Clutch.view.search.piratebay.SearchPanel', {
         width : 400,
         hideComments : true
     }]
-   
 
 });
 

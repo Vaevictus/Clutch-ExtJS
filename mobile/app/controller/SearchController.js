@@ -19,6 +19,14 @@ Ext.define('mobile.controller.SearchController', {
             listeners : {
                 tap : 'doSearch'
             }
+        },
+        
+        btnDownladSelected : {
+            selector : 'toolbar > #btnDownloadSelected',
+            listeners : {
+                tap : 'downloadSelected'
+            }
+            
         }
         // pauseBtn: {
         // selector: "toolbar > #btnPause",
@@ -41,33 +49,28 @@ Ext.define('mobile.controller.SearchController', {
 
     },
 
-    onListItemTap : function(dataview, index, target, record, e, eOpts) {
-        var map, info, details;
+    downloadSelected : function() {
+        
+        var link = record.get('torrentLink');
+        var rpcService = this.getRpcService();
+        var options = {};
+        options.filename = link;
+        rpcService.getAllPossibleSettings().then(function(settings) { debugger;
+            options['download-dir'] = settings['download-dir'];
+            options['paused'] = false;
+            options['peer-limit'] = 200;
+            options['bandwidthPriority'] = 1;
 
-        if (record) {
-            details = Ext.create('CityBars.view.DetailPanel', {
-                title : 'Details',
-                controllerConfig : {
-                    record : record
-                }
+            rpcService.addTorrent(options).then(function() {
+                alert('Torrent added');
+            }, function() {
+                alert('something went wrong adding torrent from url');
             });
-
-            this.getView().push(details);
-        }
+        });
     },
 
     onBtnAddTap : function(btn) {
         //show form for paste of url, options for start
-    },
-
-    onBtnStartTap : function(btn) {
-
-        var torrentId = this.getSelectedTorrentId();
-        this.getRpcService().Transmission.startTorrent(torrentId).then(function() {
-            alert('started torrent');
-        }, function() {
-            alert('failed to start torrent');
-        })
     },
 
     doSearch : function(location, callback) {

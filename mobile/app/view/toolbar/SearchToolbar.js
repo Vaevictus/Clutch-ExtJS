@@ -20,12 +20,14 @@ Ext.define('mobile.view.toolbar.SearchToolbar', {
 
     config : {
         items : [{
-          xtype : 'searchfield',
-          itemId : 'searchBox'
-        },
-        {
+            xtype : 'searchfield',
+            itemId : 'searchBox'
+        }, {
             itemId : 'btnGo',
             text : 'Go'
+        }, {
+            itemId : 'btnDownloadSelected',
+            text : 'Download Selected'
         }],
 
         layout : {

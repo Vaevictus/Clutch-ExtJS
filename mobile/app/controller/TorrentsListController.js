@@ -1,41 +1,49 @@
 Ext.define('mobile.controller.TorrentsListController', {
+    
     extend : 'Deft.mvc.ViewController',
-    inject : ['torrentsStore', 'rpcService'],
 
+    inject : ['torrentsStore', 'rpcService', 'torrentDetailsPanel'],
+    
+    config : {
+    
+        torrentsStore : null,
+    
+        rpcService : null,
+        
+        torrentsList : null,
+        
+        torrentDetailsPanel : null
+
+    },
+    
     control : {
         // torrentslist : {
-            // disclose: 'onDisclose'
+        // disclose: 'onDisclose'
         // },
-        addBtn: {
-            selector: "toolbar > #btnAdd",
+        addBtn : {
+            selector : "toolbar > #btnAdd",
             listeners : {
-                tap: 'onBtnAddTap'
+                tap : 'onBtnAddTap'
             }
         },
-        startBtn: {
-            selector: "toolbar > #btnStart",
+        startBtn : {
+            selector : "toolbar > #btnStart",
             listeners : {
-                tap: 'onBtnStartTap'
+                tap : 'onBtnStartTap'
             }
         },
-        pauseBtn: {
-            selector: "toolbar > #btnPause",
+        pauseBtn : {
+            selector : "toolbar > #btnPause",
             listeners : {
-                tap: 'onBtnPauseTap'
+                tap : 'onBtnPauseTap'
             }
         },
         // removeBtn: {
-            // selector: "toolbar > #btnRemove",
-            // listeners : {
-                // tap: 'onBtnRemoveTap'
-            // }
+        // selector: "toolbar > #btnRemove",
+        // listeners : {
+        // tap: 'onBtnRemoveTap'
         // }
-    },
-
-    config : {
-        torrentsStore : null,
-        rpcService : null
-       
+        // }
     },
 
     init : function() {
@@ -57,76 +65,65 @@ Ext.define('mobile.controller.TorrentsListController', {
             this.getView().push(details);
         }
     },
-    
+
     getSelectedTorrentId : function() {
         var grid = this.getView().down('list');
-        
+
         var selected = grid.getSelection();
-        if (selected){
+        if (selected) {
             return selected[0].get('id');
         }
         return null;
-        
+
     },
 
-    onBtnAddTap : function(btn){
+    onBtnAddTap : function(btn) {
         //show form for paste of url, options for start
     },
-    
-    onBtnStartTap : function(btn){
-        
+
+    onBtnStartTap : function(btn) {
+
         var torrentId = this.getSelectedTorrentId();
-        this.getRpcService().startTorrent(torrentId).then(
-             function() {
-                 alert('started torrent');
-             },
-             function() {
-                 alert('failed to start torrent');
-             }
-         )   
-        
+        this.getRpcService().startTorrent(torrentId).then(function() {
+            alert('started torrent');
+        }, function() {
+            alert('failed to start torrent');
+        })
     },
-    
-    onBtnPauseTap : function(btn){
-        
+
+    onBtnPauseTap : function(btn) {
+
         var torrentId = this.getSelectedTorrentId();
-        this.getRpcService().pauseTorrents(torrentId).then(
-             function() {
-                 alert('Stopped Torrent');
-             },
-             function() {
-                 alert('Failed to stop torrent');
-             }
-         )   
-        
+        this.getRpcService().pauseTorrents(torrentId).then(function() {
+            alert('Stopped Torrent');
+        }, function() {
+            alert('Failed to stop torrent');
+        })
     },
-    
-    onBtnRemoveTap : function(btn){
-    
-     var torrentId = this.getSelectedTorrentId();
-     
-        this.getRpcService().removeTorrent(torrentId, false).then( 
-             function() {
-                 alert('removed torrent');
-             },
-             function() {
-                 alert('failed to remove torrent');
-             }
-         )  
+
+    onBtnRemoveTap : function(btn) {
+
+        var torrentId = this.getSelectedTorrentId();
+
+        this.getRpcService().removeTorrent(torrentId, false).then(function() {
+            alert('removed torrent');
+        }, function() {
+            alert('failed to remove torrent');
+        })
     },
-    getServerTorrents : function(location, callback) { 
+    getServerTorrents : function(location, callback) {
         // this.getView().setMasked({
-            // xtype : 'loadmask',
-            // indicator : true,
-            // message : 'Loading torrents from Transmission Daemon...'
+        // xtype : 'loadmask',
+        // indicator : true,
+        // message : 'Loading torrents from Transmission Daemon...'
         // });
-       
+
         this.getRpcService().getLoadedTorrents().then({
 
-            success : function(rpcResponse) { 
-              var torrents = rpcResponse.arguments.torrents;
-              
-              var task = Ext.create('Ext.util.DelayedTask', this.getServerTorrents, this);
+            success : function(rpcResponse) {
+                var torrents = rpcResponse.arguments.torrents;
+
+                var task = Ext.create('Ext.util.DelayedTask', this.getServerTorrents, this);
                 task.delay(1600);
                 this.loadTorrents(torrents);
             },
@@ -134,22 +131,20 @@ Ext.define('mobile.controller.TorrentsListController', {
                 var task = Ext.create('Ext.util.DelayedTask', this.getServerTorrents, this);
                 task.delay(1600);
             },
-               progress : function(error) {
-               
+            progress : function(error) {
+
             },
             scope : this
         });
 
-      
     },
-    
-    loadTorrents : function(torrentArray){
+
+    loadTorrents : function(torrentArray) {
         //load the torrents into the store which will update the grid
         var store = this.getTorrentsStore();
         store.setData(torrentArray);
-       
+
     },
-    onDisclose : function() {
-        debugger;
+    onDisclose : function() { debugger;
     }
-}); 
+});

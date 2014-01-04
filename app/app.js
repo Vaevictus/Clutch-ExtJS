@@ -1,14 +1,23 @@
+//todo only do this if there is no query string parameter forcing the full web gui
+var isPhone = function() {
+    return (/android|iphone/i.test(navigator.userAgent.toLowerCase()) && !(/ipad/i.test(navigator.userAgent.toLowerCase())));
+};
+
+if (isPhone() === true) {
+    location.href = '/transmission/web/mobile/index.html';
+}
+
 //<debug>
 Ext.Loader.setPath({
-    
+
     'Clutch' : 'app',
-    
+
     'Deft' : 'mobile/packages/deft/src/js',
-    
+
     'PirateBay' : 'mobile/packages/piratebay',
-    
+
     'Transmission' : 'mobile/packages/transmissionrpc',
-    
+
     'RottenTomatoes' : 'mobile/packages/rottentomatoes'
 
 });
@@ -16,36 +25,33 @@ Ext.Loader.setPath({
 Ext.syncRequire(['Deft.mixin.Injectable', 'Deft.mixin.Controllable']);
 //</debug>
 
-
 Ext.application({
-    
-    //tores : ['TorrentTransfers'],
-    //controllers : ['BugFix'],
+
     name : 'Clutch',
 
     autoCreateViewport : false, //do not set to true or the viewport will be created too early before injector config has happened
 
-    requires : ['Transmission.RPC','Clutch.view.torrent.TorrentsGrid','RottenTomatoes.MovieService'],
+    requires : ['Transmission.RPC', 'Clutch.view.torrent.TorrentsGrid', 'RottenTomatoes.MovieService'],
 
     launch : function() {
-       
+
         Ext.tip.QuickTipManager.init();
         Ext.QuickTips.init();
-        
+
         Deft.Injector.configure({
-            
+
             torrentsStore : 'Clutch.store.TorrentTransfers',
-           
+
             torrentsGrid : 'Clutch.view.torrent.TorrentsGrid',
-                       
+
             pirateBayService : 'PirateBay.Search',
 
             rpcService : 'Transmission.RPC',
-            
+
             movieService : 'RottenTomatoes.MovieService',
-                        
+
             contextMenu : 'Clutch.view.torrent.TorrentContextMenu'
-        
+
         });
 
         /* Fixes a bug in Extjs 4.2 - see http://www.sencha.com/forum/showthread.php?260106-Tooltips-on-forms-and-grid-are-not-resizing-to-the-size-of-the-text/page3#24*/

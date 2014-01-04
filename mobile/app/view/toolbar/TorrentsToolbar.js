@@ -21,22 +21,25 @@ Ext.define('mobile.view.toolbar.TorrentsToolbar', {
     config : {
         items : [{
             itemId : 'btnAdd',
-            iconCls : 'add',
+            text : 'Add'
+            //iconCls : 'add',
             //badgeText : 'Add Torrent'
         },
         {
             itemId : 'btnStart',
-            iconCls : 'arrow_right',
+            text : 'Start'
+            //iconCls : 'arrow_right',
             //text : 'Start'
         },{
             itemId : 'btnPause',
-            iconCls : 'pause',
+           // iconCls : 'pause',
+              text : 'Stop'
             //text : 'Stop'
         },
         {
             itemId : 'btnRemove',
-            iconCls : 'delete',
-            //text : 'Remove'
+            //iconCls : 'delete',
+            text : 'Remove'
         }],
 
         layout : {

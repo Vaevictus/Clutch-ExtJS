@@ -26,6 +26,7 @@ Ext.define('mobile.view.BottomTabs', {
             title : 'Torrents',
             iconCls : 'download',
             xtype : 'torrentslistcontainer'
+           
         },{
             title : 'PirateBay Search',
             iconCls: 'search',

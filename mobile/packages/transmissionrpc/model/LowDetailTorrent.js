@@ -54,7 +54,90 @@ Ext.define('Transmission.model.LowDetailTorrent', {
         }, {
             name : 'uploadLimited',
             type : 'auto'
+        }, {
+            name : 'peers'
+        }, {
+            name : 'peersConnected',
+            type : 'number'
+        }, {
+            name : 'peersFrom'
+        }, {
+            name : 'peersGettingFromUs'
+        }, {
+            name : 'peersSendingToUs'
+        }, {
+            name : 'realPeers',
+
+            convert : function(v, model) {
+
+                var allPeers = model.get('peers'), nonSeeds = 0;
+
+                Ext.each(allPeers, function(p) {
+                    debugger;
+                    if (p.progress < 1) {
+
+                        nonSeeds++;
+
+                    }
+                }, this);
+
+                return nonSeeds;
+            }
+        },{
+        name : 'realPeersSendingToUs',
+
+        convert : function(v, model) {
+
+            var allPeers = model.get('peers'), nonSeeds = 0;
+
+            Ext.each(allPeers, function(p) {
+
+                if (p.rateToClient > 0 && p.progress < 1) {
+
+                    nonSeeds++;
+
+                }
+            }, this);
+
+            return nonSeeds;
         }
+    }, {
+        name : 'realSeeds',
+
+        convert : function(v, model) {
+
+            var allPeers = model.get('peers'), seeds = 0;
+            
+            Ext.each(allPeers, function(p) {
+            
+                if (p.progress === 1) {
+                    debugger;
+                    seeds++;
+
+                }
+            }, this);
+            debugger;
+            return seeds;
+        }
+    }, {
+        name : 'realSeedsSendingToUs',
+
+        convert : function(v, model) {
+
+            var allPeers = model.get('peers'), seedsSendingToUs = 0;
+
+            Ext.each(allPeers, function(p) {
+
+                if (p.progress === 1 && p.rateToClient > 0) {
+
+                    seedsSendingToUs++;
+                }
+
+            }, this);
+
+            return seedsSendingToUs;
+        }
+    }
 
         /* BEGIN CALCULATED FIELDS BECAUSE TRANSMISSION-DAEOMON DOES NOT PROVIDE US WITH SEED SPEFICIFC PEER INFO*/
         // {

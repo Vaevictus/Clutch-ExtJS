@@ -55,6 +55,10 @@ Ext.application({
              
             torrentsStore: 'mobile.store.TorrentTransfers',
             
+            torrentDetailsPanel : 'mobile.view.TorrentDetailsForm',
+            
+            torrentsList : 'mobile.view.TorrentsList',
+            
             searchStore: 'mobile.store.SearchResult',
                       
             searchService : 'PirateBay.Search',

@@ -21,6 +21,9 @@ Ext.define('Clutch.view.search.piratebay.SearchPanel', {
         split : true
     }, {
         xtype : 'panel',
+        
+        layout : 'fit',
+        
         region : 'center',
         tbar : Ext.create('Clutch.view.search.SearchToolbar', {
             searchEmptyText : 'Search The Pirate Bay'

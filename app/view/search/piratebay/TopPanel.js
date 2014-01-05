@@ -19,6 +19,8 @@ Ext.define('Clutch.view.search.piratebay.TopPanel', {
     }, {
         xtype : 'panel',
         
+        layout : 'fit',
+        
         region : 'center',
         
         tbar : [{

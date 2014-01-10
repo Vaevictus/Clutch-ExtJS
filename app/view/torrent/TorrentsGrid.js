@@ -63,9 +63,14 @@ Ext.define('Clutch.view.torrent.TorrentsGrid', {
 
     }, {
         header : 'ETA',
-        flex : 1,
+        width : 140,
+        //flex : 1,
         dataIndex : 'eta',
         xtype : 'etacolumn'
+    },{
+        flex : 1,
+        header : 'Info',
+        dataIndex : 'errorString'
     }],
     selModel : new Ext.selection.RowModel({
         mode : 'MULTI'

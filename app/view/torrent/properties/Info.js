@@ -5,6 +5,8 @@ Ext.define('Clutch.view.torrent.properties.Info', {
     requires : ['Clutch.view.field.TorrentStateField', 'Clutch.view.field.BytesField','Clutch.view.field.TextTimeField','Clutch.view.field.TimestampField'],
     
     alias : 'widget.torrentinfo',
+    
+    layout : 'column',
 
     items : [{
         xtype : 'fieldset',

@@ -119,6 +119,34 @@ Ext.define('Transmission.RPC', {
 
         return this.invoke(rpcParams, 'settingsreceived');
     },
+    
+    setFilesToWanted: function(torrentId, filesWanted){
+      
+      var rpcParams = {
+          "method" : 'torrent-set',
+          "arguments" : {
+              "ids" : [torrentId],
+              "files-wanted": filesWanted
+          }
+      }
+      
+      return this.invoke(rpcParams, 'filessetwanted');
+        
+    },
+    
+     setFilesToNotWanted: function(torrentId, filesNotWanted){
+      
+      var rpcParams = {
+          "method" : 'torrent-set',
+          "arguments" : {
+              "ids" : [torrentId],
+              "files-unwanted": filesNotWanted
+          }
+      }
+      
+      return this.invoke(rpcParams, 'filessetnotwanted');
+        
+    },
 
     getStats : function() {
 
@@ -160,6 +188,14 @@ Ext.define('Transmission.RPC', {
         arr.push(id);
 
         return this.startTorrents(arr);
+    },
+    
+    portTest : function() {
+      var rpcParams = {
+          "method" : "port-test",
+          "arguments" : {}
+      }  
+      return this.invoke(rpcParams)
     },
 
     startTorrents : function(torrentIds) {

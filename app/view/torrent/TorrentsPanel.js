@@ -31,11 +31,12 @@ Ext.define('Clutch.view.torrent.TorrentsPanel', {
             collapsed : false
 
         }, this.getTorrentsGrid(), {
-            region : 'east',
+            region : 'south',
             xtype : 'torrentdetailspanel',
-            width : 500,
+            //width : 500,
+            height : '50%',
             collapsible : true,
-            collapsed : true,
+            collapsed : false,
             split : true
 
         })

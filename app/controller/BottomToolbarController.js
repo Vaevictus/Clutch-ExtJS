@@ -12,8 +12,15 @@ Ext.define('Clutch.controller.BottomToolbarController', {
     observe : {
         rpcService : {
             'statsreceived' : 'onStatsReceived',
-            'settingsreceived': 'onSettingsReceived'
+            'settingsreceived': 'onSettingsReceived',
+            'portstatusreceived' : 'onPortStatusReceived'
         }
+    },
+    
+    control: {
+      serverInfoContainer : {
+          selector : 'serverinfo'
+      }
     },
    
     
@@ -36,6 +43,12 @@ Ext.define('Clutch.controller.BottomToolbarController', {
  
       this.getView().setSettings(settings);  
   
+    },
+    onPortStatusReceived : function(rpcResponse){
+        var isOpen = rpcResponse.arguments['port-is-open'];
+      
+        this.getServerInfoContainer().setPortStatus(isOpen);
+      
     },
 
     cancel : function(btn) {

@@ -105,10 +105,18 @@ Ext.define('Transmission.RPC', {
     },
 
     getInitialSettings : function() {
-
+        
+        this.isPortOpen();
+        
         return this.sessionGet();
     },
 
+    isPortOpen : function() {
+      var rpcParams = {
+          "method" : "port-test"
+      }  
+       return this.invoke(rpcParams, 'portstatusreceived');
+    },
     getAllPossibleSettings : function() {
 
         var rpcParams = {

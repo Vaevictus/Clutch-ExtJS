@@ -7,11 +7,11 @@ Ext.Loader.setPath({
     
     'Clutch' : '/transmission/web/app/',
     
-    'Deft': 'packages/deft/src/js',
+    'Deft': '../packages/deft/src/js',
     
-    'PirateBay' : 'packages/piratebay',
+    'PirateBay' : '../packages/piratebay',
     
-    'Transmission' : 'packages/transmissionrpc',
+    'Transmission' : '../packages/transmissionrpc',
     
      'Ext.ux.touch.grid' : 'ux/Ext.ux.touch.grid'
     

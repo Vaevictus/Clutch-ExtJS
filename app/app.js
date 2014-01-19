@@ -12,13 +12,13 @@ Ext.Loader.setPath({
 
     'Clutch' : 'app',
 
-    'Deft' : 'mobile/packages/deft/src/js',
+    'Deft' : 'packages/deft/src/js',
 
-    'PirateBay' : 'mobile/packages/piratebay',
+    'PirateBay' : 'packages/piratebay',
 
-    'Transmission' : 'mobile/packages/transmissionrpc',
+    'Transmission' : 'packages/transmissionrpc',
 
-    'RottenTomatoes' : 'mobile/packages/rottentomatoes'
+    'RottenTomatoes' : 'packages/rottentomatoes'
 
 });
 

@@ -19,10 +19,21 @@ Ext.define('Clutch.controller.BottomToolbarController', {
     
     control: {
       serverInfoContainer : {
-          selector : 'serverinfo'
+          selector : 'serverinfo',
+          listeners : {
+              recheckport : 'onReCheckPortClick'
+          }
       }
     },
-   
+    
+    // observe : {
+        // 'portCheckTextItem.el' : {
+             // click : 'onPortInfoClick'
+        // }
+    // },
+   onReCheckPortClick : function(tbtextitem) {
+     this.getRpcService().isPortOpen();
+   },
     
     onStatsReceived : function(rpcResponse) {
         

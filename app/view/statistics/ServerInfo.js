@@ -24,11 +24,34 @@ Ext.define('Clutch.view.statistics.ServerInfo', {
         itemId : 'rpcversion'
     },
     {
+        
         xtype : 'tbtext',
         text : 'Port Status: Checking...',
         itemId : 'txtPortStatus'
+        
     }],
     
+    initComponent: function() {
+      
+      this.callParent();
+    
+      var tbitem = this.down('#txtPortStatus');
+      
+      tbitem.on('afterrender', this.onAfterRender,this);
+       
+      
+    },
+    onAfterRender: function(tbitem) {
+        
+        var el = tbitem.getEl();
+       
+        el.on('click', function() {
+          
+           this.down('#txtPortStatus').setText('Re-checking....');
+             this.fireEvent('recheckport');
+        },this);
+      
+    },
     applyServerVersion : function(v, oldValue){
         
         this.down('#serverversion').setText('Transmission Version: ' + v);
@@ -44,6 +67,7 @@ Ext.define('Clutch.view.statistics.ServerInfo', {
     },
     
     applyPortStatus : function(v, oldValue){
+        
         var text = v ? "Port Status: Open" : "Port Status: Closed"
         this.down('#txtPortStatus').setText(text);
         return v;

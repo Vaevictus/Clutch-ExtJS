@@ -48,18 +48,18 @@ Ext.define('Clutch.view.settings.PeerSettings', {
 
         }, {
             xtype : 'checkboxfield',
-            fieldLabel : 'Use PEX to find more peers',
+            boxLabel : 'Use PEX to find more peers',
             name : 'pex-enabled'
         }, {
             xtype : 'checkboxfield',
-            fieldLabel : 'Use DHT to find more peers',
+            boxLabel : 'Use DHT to find more peers',
             name : 'dht-enabled'
         }, {
             xtype : 'checkboxfield',
-            fieldLabel : 'Use LPD to find more peers',
+            boxLabel : 'Use LPD to find more peers',
             name : 'lpd-enabled'
         },{
-            fieldLabel : 'Enable Micro Transport Protocol',
+            boxLabel : 'Enable Micro Transport Protocol',
             allowBlank : false,
             name : 'utp-enabled',
             xtype : 'checkboxfield'
@@ -69,7 +69,7 @@ Ext.define('Clutch.view.settings.PeerSettings', {
         title : 'Blocklist',
         items : [{
             xtype : 'checkboxfield',
-            fieldLabel : 'Enable Blocklist',
+            boxLabel : 'Enable Blocklist',
             name : 'blocklist-enabled'
         }, {
             xtype : 'textfield',

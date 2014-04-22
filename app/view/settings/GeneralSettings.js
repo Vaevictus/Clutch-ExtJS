@@ -20,10 +20,10 @@ Ext.define('Clutch.view.settings.GeneralSettings', {
             name : 'download-dir',
             width : 400
         },{
-            boxLabel : 'Start torrents when added',
+            boxLabel : 'Pause torrents when added',
             xtype : 'checkboxfield',
             name : 'start-added-torrents',
-            tooltip : 'Torrents will be started right away'
+            tooltip : 'Torrents will be paused when added'
         },
         {
             boxLabel : 'Rename partial files',

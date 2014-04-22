@@ -36,7 +36,7 @@ Ext.define('Clutch.view.torrent.TorrentsPanel', {
             //width : 500,
             height : '50%',
             collapsible : true,
-            collapsed : false,
+            collapsed : true,
             split : true
 
         })

@@ -106,3 +106,19 @@ Ext.util.Format.secondsToWords = function(seconds) {
     return 'less then a second';
 
 };
+
+/*
+ * Custom package for theming
+ */
+Ext.define('Ext.util.Themes', 
+{
+	statics: {
+		applyTheme: function(themeUrl) {
+			Ext.util.CSS.swapStyleSheet("theme", themeUrl); 
+			viewport = Ext.ComponentQuery.query('viewport')[0];
+			// Refreshes the layout and sizes
+			viewport.doLayout();
+			viewport.doAutoRender();
+		}
+	}
+});

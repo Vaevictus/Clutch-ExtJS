@@ -63,4 +63,7 @@
 .fastmode {
 	background-image: url( ../../resources/images/slow_off.png ) !important;	
 }
+
+.themes {
+	background-image: url( ../../resources/images/theme.png ) !important;	
 }

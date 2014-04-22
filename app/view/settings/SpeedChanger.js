@@ -31,7 +31,7 @@ Ext.define('Clutch.view.settings.SpeedChanger', {
                 icon : this.getModeIcon(slowMode), //,
                 tooltip : this.getModeTooltip(slowMode), //
                 xtype : 'button',
-                scale : 'large',
+                scale : 'small',
                 toggleHandler : this.onItemToggle,
                 enableToggle : true,
                 scope : this,

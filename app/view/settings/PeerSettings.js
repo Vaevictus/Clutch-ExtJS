@@ -78,7 +78,8 @@ Ext.define('Clutch.view.settings.PeerSettings', {
         }, {
             xtype : 'button',
             text : 'update',
-            itemId : 'updateblocklist'
+            itemId : 'updateblocklist',
+			margin: '0 0 5 0',
         }]
     }]
 });

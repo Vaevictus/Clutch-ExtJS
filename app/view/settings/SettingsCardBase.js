@@ -6,10 +6,14 @@ Ext.define('Clutch.view.settings.SettingsCardBase', {
     
     inject : ['rpcService'],
     
+	autoScroll: true,
+	
+	defaults: {
+		margin: '0 0 0 10',
+	},
+	
     config : {
-        
-      rpcService : null  
- 
+      rpcService : null,	   
     },
 
     getValuesFromServer : function() {

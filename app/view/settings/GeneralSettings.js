@@ -18,7 +18,7 @@ Ext.define('Clutch.view.settings.GeneralSettings', {
             allowBlank : false,
             xtype : 'textfield',
             name : 'download-dir',
-            width : 400
+            width : 380
         },{
             boxLabel : 'Pause torrents when added',
             xtype : 'checkboxfield',

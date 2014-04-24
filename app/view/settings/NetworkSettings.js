@@ -1,41 +1,11 @@
-
-
-
-function printTime(t) {
-	if (t < 10) return ('0' + t);
-	return t;
-}
-
-function createTimeStore() {
-	var timeStore = Ext.create('Ext.data.Store', {
-		fields: ['label', 'value'],
-		data : [			
-			{'label' : 'test', 'value': 0}
-		],		
-	});
-	
-	for (i=0; i<24; i++) {
-		for (j=0;j<6;j++) {
-			var entry = {'label': '' + printTime(i) + ':' + printTime(j*10), 'value': String(i*60 + j*10)};
-			console.log(entry);
-			timeStore.data.add({'label': '' + printTime(i) + ':' + printTime(j*10), 'value': String(i*60 + j*10)});
-		}
-	}
-	return timeStore;
-}
-
-var timeStore = createTimeStore();
-
-
-
 Ext.define('Clutch.view.settings.NetworkSettings', {
-
+	
     extend : 'Clutch.view.settings.SettingsCardBase',
-
+	requires : ['Clutch.store.TimeChooserStore'],
     title : 'Network',
 
     config : {
-        fields : ['peer-port', 'peer-port-random-on-start', 'port-forwarding-enabled', 'alt-speed-enabled', 'alt-speed-down', 'alt-speed-up', 'speed-limit-up','speed-limit-up-enabled', 'speed-limit-down','speed-limit-down-enabled', 'alt-speed-time-enabled']
+        fields : ['peer-port', 'peer-port-random-on-start', 'port-forwarding-enabled', 'alt-speed-enabled', 'alt-speed-down', 'alt-speed-up', 'speed-limit-up','speed-limit-up-enabled', 'speed-limit-down','speed-limit-down-enabled', 'alt-speed-time-enabled', 'alt-speed-time-begin', 'alt-speed-time-end', 'alt-speed-time-day']
     },
 
     alias : 'widget.networksettings',
@@ -83,16 +53,46 @@ Ext.define('Clutch.view.settings.NetworkSettings', {
                 boxLabel : 'Scheduled Throttled Mode',
                 xtype : 'checkbox',
                 name : 'alt-speed-time-enabled'
-            },
-			{
+            }, {
 				xtype: 'combobox',
 				displayField: 'label',
 				valueField: 'value',
 				fieldLabel : 'From',
-				store: timeStore,
+				store: Ext.create('Clutch.store.TimeChooserStore'),
 				name : 'alt-speed-time-begin'
+			}, {
+				xtype: 'combobox',
+				displayField: 'label',
+				valueField: 'value',
+				fieldLabel : 'To',
+				store: Ext.create('Clutch.store.TimeChooserStore'),
+				name : 'alt-speed-time-end'
+			}, {
+				xtype: 'combobox',
+				displayField: 'label',
+				valueField: 'value',
+				fieldLabel : 'When',
+				store: Ext.create('Ext.data.Store', {
+					model: 'Clutch.model.TimeChooser',
+					type : 'json',
+					proxy : {
+						type : 'memory'
+					},
+					data: [
+						{label: 'Sunday', value: 1},
+						{label: 'Monday', value: 2},
+						{label: 'Tuesday', value: 4},
+						{label: 'Wednesday', value: 8},
+						{label: 'Thursday', value: 16},
+						{label: 'Friday', value: 32},
+						{label: 'Saturday', value: 64},
+						{label: 'Weekdays', value: 62},
+						{label: 'Weekends', value: 65},
+						{label: 'All Days', value: 127}
+					]						
+				}),
+				name : 'alt-speed-time-day'
 			}
-			
 			]
         }]
     }, {

@@ -74,7 +74,8 @@ Ext.define('Clutch.view.settings.PeerSettings', {
         }, {
             xtype : 'textfield',
             fieldLabel : 'Blocklist URL',
-            name : 'blocklist-url'
+            name : 'blocklist-url',
+			width : 380
         }, {
             xtype : 'button',
             text : 'update',

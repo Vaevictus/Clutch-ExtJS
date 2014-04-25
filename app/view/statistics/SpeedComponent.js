@@ -12,27 +12,30 @@ Ext.define('Clutch.view.statistics.SpeedComponent', {
     layout : 'absolute',
 
     items : [{
-        xtype : 'tbtext',
+        xtype : 'menuitem',
         text : 'Down: ',
+		iconCls : 'speeddown',
         x : 0
     }, {
-        xtype : 'tbtext',
+        xtype : 'menuitem',
         itemId : 'speeddown',
         x : 50
     }, {
-        xtype : 'tbtext',
+        xtype : 'menuitem',
         text : 'Up: ',
+		iconCls : 'speedup',
         x : 150
     }, {
-        xtype : 'tbtext',
+        xtype : 'menuitem',
         itemId : 'speedup',
         x : 200
     }, {
-        xtype : 'tbtext',
+        xtype : 'menuitem',
+		iconCls : 'diskfree',
         text : 'Disk free:',
         x : 300
     }, {
-        xtype : 'tbtext',
+        xtype : 'menuitem',
         itemId : 'diskfree',
         x : 380
     }, {

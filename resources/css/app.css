@@ -63,4 +63,19 @@
 .fastmode {
 	background-image: url( ../../resources/images/slow_off.png ) !important;	
 }
+
+.themes {
+	background-image: url( ../../resources/images/theme.png ) !important;	
+}
+
+.speedup {
+	background-image: url( ../../resources/images/up.png ) !important;	
+}
+
+.speeddown {
+	background-image: url( ../../resources/images/down.png ) !important;	
+}
+
+.diskfree {
+	background-image: url( ../../resources/images/disc_drive.png ) !important;	
 }

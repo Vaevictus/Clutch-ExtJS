@@ -35,8 +35,7 @@ Ext.define("Clutch.view.settings.SettingsDialog", {
         xtype : 'panel',
         itemId : 'cardcontainer',
         layout : 'card',
-        region : 'center'
-
+        region : 'center',
     }],
 
     buttons : [{

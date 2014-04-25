@@ -24,9 +24,14 @@ Ext.define('Clutch.view.BottomToolbar', {
 
     items : [{
         xtype : 'speedcomponent'
-    }, {
+    },
+	'|',
+	{
         xtype : 'speedchanger'
-    }, '->', {
+    },
+	'->', 
+	'|',
+	{
         xtype : 'serverinfo'
     }],
 

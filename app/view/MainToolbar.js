@@ -1,3 +1,6 @@
+
+
+
 Ext.define("Clutch.view.MainToolbar", {
     extend : 'Ext.toolbar.Toolbar',
 
@@ -8,6 +11,8 @@ Ext.define("Clutch.view.MainToolbar", {
     border : false,
 
     frame : false,
+	
+
 
     items : [{
 
@@ -85,7 +90,25 @@ Ext.define("Clutch.view.MainToolbar", {
             iconCls : 'resume-all',
             action : 'resume-all'
         }]
-    }, '->', {
+    }, 
+	{
+        xtype : 'splitbutton',
+        text : 'Themes',
+        itemId : 'btnThemes',
+        scale : 'large',
+        rowspan : 3,
+        iconAlign : 'top',
+        arrowAlign : 'right',
+        iconCls : 'themes',
+        menu : [
+			{ text: 'Default', handler: function(){ Ext.util.Themes.applyTheme("ext/resources/css/ext-all.css"); } },
+			// Theme::Gray
+			{ text: 'Gray', handler: function(){ Ext.util.Themes.applyTheme("ext/resources/css/ext-all-gray.css"); } },
+			// Theme::Access
+			{ text: 'Access', handler: function(){ Ext.util.Themes.applyTheme("ext/resources/css/ext-all-access.css"); } },
+		]
+    },
+	'->', {
         text : 'Statistics',
         itemId : 'btnStatistics',
         iconCls : 'info',

@@ -90,6 +90,12 @@ Ext.define('Clutch.controller.MainToolbarController', {
                 click : 'showAddTorrentUrlDialog'
             }
         },
+			
+		btnUploadTorrent : {
+            listeners : {
+                click : 'showAddTorrentFileDialog'
+            }
+        },	
 
         btnShowSettings : {
             selector : 'button[action=show-settings]',
@@ -135,6 +141,12 @@ Ext.define('Clutch.controller.MainToolbarController', {
 
     showAddTorrentUrlDialog : function(item) {
         Ext.create("Clutch.view.torrent.AddTorrentDialog", {
+
+        }).show();
+    },
+		
+	showAddTorrentFileDialog : function(item) {
+        Ext.create("Clutch.view.torrent.AddTorrentFileDialog", {
 
         }).show();
     },

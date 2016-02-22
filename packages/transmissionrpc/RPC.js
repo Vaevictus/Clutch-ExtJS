@@ -329,6 +329,17 @@ Ext.define('Transmission.RPC', {
         return this.invoke(rpcParams,'torrentadded');
     },
 
+    // Adds a torrent from a local .torrent file
+    // Options will provide the metainfo (base64-encoded .torrent content)
+    addTorrentFile : function(options) {
+        var rpcParams = {
+            "method" : "torrent-add",
+            "arguments" : options
+        };
+
+        return this.invoke(rpcParams,'torrentadded');
+    },
+
     //not used yet
     getFreeSpace : function(path, cb, scope) {
 
